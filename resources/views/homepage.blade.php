@@ -12,7 +12,7 @@
             font-family: 'Poppins', sans-serif;
         }
         .hero-section {
-            background: linear-gradient(135deg, #dc3545 0%, #d43d4c 100%);
+            background: #dc3545;
             min-height: 100vh;
             display: flex;
             align-items: center;

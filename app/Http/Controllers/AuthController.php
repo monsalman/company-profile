@@ -21,10 +21,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/homepage');
         }
 
-        return back()->with('error', 'Username atau password salah!');
+        return back()->with('error', 'Username atau password salah');
     }
 
     public function logout(Request $request)

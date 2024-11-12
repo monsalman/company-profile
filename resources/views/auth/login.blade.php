@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff3366 0%, #ff6b6b 100%);
+            background: #dc3545;
             min-height: 100vh;
             display: flex;
             align-items: center;
