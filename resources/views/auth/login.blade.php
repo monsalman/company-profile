@@ -22,13 +22,22 @@
             box-shadow: 0 0 25px rgba(0,0,0,0.1);
             width: 100%;
             max-width: 400px;
+            margin: 0 auto;
+        }
+        .container {
+            width: 100%;
+            padding: 0 15px;
+        }
+        .form-control:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="login-card">
                     <h3 class="text-center mb-4">Login</h3>
                     

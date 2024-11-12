@@ -100,7 +100,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero-section text-white">
+    <header id="beranda" class="hero-section text-white">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
