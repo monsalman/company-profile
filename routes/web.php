@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('homepage');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -15,10 +14,10 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/homepage', function () {
-        return view('homepage');
-    })->name('homepage');
+    Route::get('/homepage', [HomeController::class, 'index'])->name('homepage');
     Route::post('/settings/update-logo', [SettingController::class, 'updateLogo'])->name('settings.updateLogo');
+    Route::post('/slider', [HomeController::class, 'storeSlider'])->name('slider.store');
+    Route::delete('/slider/{id}', [HomeController::class, 'destroySlider'])->name('slider.destroy');
 });
 
 Route::fallback(function () {

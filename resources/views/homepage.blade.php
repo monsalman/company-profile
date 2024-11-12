@@ -62,6 +62,17 @@
             height: 3px;
             background: #ff3366;
         }
+        .modal-backdrop.delete-backdrop {
+            z-index: 1080;
+        }
+        #deleteConfirmationModal {
+            z-index: 1085;
+        }
+        /* Tambahkan style untuk backdrop modal delete */
+        .modal-backdrop.show {
+            opacity: 0.8;
+            background-color: #000;
+        }
     </style>
 </head>
 <body>
@@ -112,7 +123,50 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img src="hero-image.png" alt="Carousel slider" class="img-fluid">
+                    <div class="position-relative">
+                        <!-- Carousel -->
+                        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @forelse($sliderImages as $index => $slider)
+                                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                        <img src="{{ asset('storage/' . $slider->image) }}" class="d-block w-100" alt="Slider Image">
+                                        @auth
+                                            <button class="btn btn-warning btn-sm position-absolute top-0 end-0 m-2" 
+                                                onclick="deleteSlider({{ $slider->id }})"
+                                                style="z-index: 2;">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        @endauth
+                                    </div>
+                                @empty
+                                    <div class="carousel-item active">
+                                        <img src="{{ asset('hero-image.png') }}" class="d-block w-100" alt="Hero Slider">
+                                    </div>
+                                @endforelse
+                            </div>
+                            @if($sliderImages->count() > 1)
+                                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                            @endif
+                        </div>
+
+                        <!-- Tombol Edit/Tambah untuk Admin -->
+                        @auth
+                            <div class="d-flex gap-2 justify-content-center mt-3">
+                                <button class="btn btn-warning d-flex align-items-center gap-2 px-4" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#manageSliderModal"
+                                    style="transition: all 0.3s ease;">
+                                    <i class="bi bi-gear fs-5"></i>
+                                    <span>Kelola Slider</span>
+                                </button>
+                            </div>
+                        @endauth
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,7 +178,7 @@
             <h2 class="text-center section-title">Klien Kami</h2>
             <div class="row align-items-center justify-content-center">
                 <div class="col-4 col-md-2 mb-4">
-                    <img src="client1.png" alt="Carousel SliderClient" class="client-logo w-100">
+                    <img src="client1.png" alt="Carousel Client" class="client-logo w-100">
                 </div>
                 <!-- Tambahkan logo klien lainnya -->
             </div>
@@ -265,5 +319,186 @@
             </div>
         </div>
     </div>
+
+    <!-- Update Modal Kelola Slider -->
+    <div class="modal fade" id="manageSliderModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Kelola Slider</h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                </div>
+                <div class="modal-body">
+                    <!-- Form Tambah Slider Baru -->
+                    <form id="uploadSliderForm" action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+                        @csrf
+                        <div class="row align-items-end">
+                            <div class="col-md-8">
+                                <label class="form-label">Tambah Gambar Baru</label>
+                                <input type="file" class="form-control" name="image" required accept="image/*">
+                                <small class="text-muted">Ukuran maksimal: 2MB. Format: JPG, PNG, GIF</small>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-plus-circle me-2"></i>Upload
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <!-- Daftar Slider -->
+                    <h6 class="mb-3">Daftar Gambar Slider</h6>
+                    <div class="row g-3">
+                        @forelse($sliderImages as $slider)
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="position-relative">
+                                        <img src="{{ asset('storage/' . $slider->image) }}" 
+                                             class="card-img-top" 
+                                             alt="Slider"
+                                             style="height: 150px; object-fit: cover;">
+                                        <button class="btn btn-sm btn-warning position-absolute top-0 end-0 m-2" 
+                                                onclick="deleteSlider({{ $slider->id }})"
+                                                title="Hapus Slider">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="card-footer bg-light">
+                                        <small class="text-muted">
+                                            Ditambahkan: {{ $slider->created_at->diffForHumans(['parts' => 1, 'join' => ' ', 'syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) }}
+                                        </small>
+                                    </div>
+                                </div>
+                                <form id="delete-form-{{ $slider->id }}" 
+                                      action="{{ route('slider.destroy', $slider->id) }}" 
+                                      method="POST" 
+                                      style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </div>
+                        @empty
+                            <div class="col-12">
+                                <div class="alert alert-info mb-0">
+                                    Belum ada gambar slider. Silakan tambahkan gambar baru.
+                                </div>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tambahkan Modal Konfirmasi Delete -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus gambar ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let currentSliderId = null;
+    let deleteModal = null;
+    let manageModal = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+        manageModal = new bootstrap.Modal(document.getElementById('manageSliderModal'));
+        
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            const form = document.getElementById('delete-form-' + currentSliderId);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                closeDeleteModal();
+                
+                fetch(window.location.href)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        const sliderList = document.querySelector('.modal-body .row.g-3');
+                        const newSliderList = doc.querySelector('.modal-body .row.g-3');
+                        sliderList.innerHTML = newSliderList.innerHTML;
+                    });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Tambahkan event listener untuk form upload
+        document.getElementById('uploadSliderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset form
+                this.reset();
+                
+                // Refresh daftar slider
+                fetch(window.location.href)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        // Update daftar slider di modal
+                        const sliderList = document.querySelector('.modal-body .row.g-3');
+                        const newSliderList = doc.querySelector('.modal-body .row.g-3');
+                        sliderList.innerHTML = newSliderList.innerHTML;
+                        
+                        // Update carousel di halaman utama
+                        const carousel = document.querySelector('#heroCarousel .carousel-inner');
+                        const newCarousel = doc.querySelector('#heroCarousel .carousel-inner');
+                        carousel.innerHTML = newCarousel.innerHTML;
+                    });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+
+    function deleteSlider(id) {
+        currentSliderId = id;
+        deleteModal.show();
+        // Tambahkan class pada backdrop modal delete
+        document.querySelector('.modal-backdrop:last-child').classList.add('delete-backdrop');
+    }
+
+    function closeDeleteModal() {
+        deleteModal.hide();
+    }
+    </script>
 </body>
 </html>
