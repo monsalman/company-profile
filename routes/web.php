@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -17,4 +18,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('homepage');
     })->name('dashboard');
+    Route::post('/settings/update-logo', [SettingController::class, 'updateLogo'])->name('settings.updateLogo');
 });

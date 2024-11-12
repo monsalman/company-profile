@@ -69,9 +69,9 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
         <div class="container">
             <div class="d-flex align-items-center">
-                <img src="logo.png" alt="Logo" height="40">
+                <img src="{{ asset('storage/' . \App\Models\Setting::where('key', 'logo')->first()?->value ?? 'logo.png') }}" alt="Logo" height="40">
                 @auth
-                    <a href="#" class="ms-2 text-danger" data-bs-toggle="tooltip" title="Edit Logo">
+                    <a href="#" class="ms-2 text-danger" data-bs-toggle="modal" data-bs-target="#logoModal">
                         <i class="bi bi-pencil-square"></i>
                     </a>
                 @endauth
@@ -90,7 +90,7 @@
                         <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="nav-link border-0 bg-transparent">Logout</button>
+                                <button type="submit" class="nav-link border-0 bg-transparent text-danger">Logout</button>
                             </form>
                         </li>
                     @endauth
@@ -241,5 +241,29 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
+
+    <!-- Modal Edit Logo -->
+    <div class="modal fade" id="logoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Logo</h5>
+                </div>
+                <form action="{{ route('settings.updateLogo') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="logo" class="form-label">Pilih Logo Baru</label>
+                            <input type="file" class="form-control" id="logo" name="logo" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

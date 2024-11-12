@@ -16,12 +16,5 @@ class UserSeeder extends Seeder
             'email' => 'admin@digitalforte.co.id',
             'password' => Hash::make('admin123')
         ]);
-
-        User::create([
-            'name' => 'Staff DFI',
-            'username' => 'staff',
-            'email' => 'staff@digitalforte.co.id',
-            'password' => Hash::make('staff123')
-        ]);
     }
 }
