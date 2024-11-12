@@ -12,7 +12,7 @@
             font-family: 'Poppins', sans-serif;
         }
         .hero-section {
-            background: linear-gradient(135deg, #ff3366 0%, #ff6b6b 100%);
+            background: linear-gradient(135deg, #dc3545 0%, #d43d4c 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img src="hero-image.png" alt="Hero Image" class="img-fluid">
+                    <img src="hero-image.png" alt="Carousel slider" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -124,7 +124,7 @@
             <h2 class="text-center section-title">Klien Kami</h2>
             <div class="row align-items-center justify-content-center">
                 <div class="col-4 col-md-2 mb-4">
-                    <img src="client1.png" alt="Client" class="client-logo w-100">
+                    <img src="client1.png" alt="Carousel SliderClient" class="client-logo w-100">
                 </div>
                 <!-- Tambahkan logo klien lainnya -->
             </div>
