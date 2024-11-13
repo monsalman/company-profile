@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Forte Indonesia</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Setting::where('key', 'favicon')->first()?->value ?? 'favicon.png') }}?v={{ time() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -375,8 +376,70 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="logo" class="form-label">Pilih Logo Baru</label>
-                            <input type="file" class="form-control" id="logo" name="logo" accept="image/*" required>
+                            <div class="mb-3">
+                                <label class="form-label">Favicon Website</label>
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="position-relative">
+                                        <img id="faviconPreview" 
+                                             src="{{ asset('storage/' . \App\Models\Setting::where('key', 'favicon')->first()?->value ?? 'favicon.png') }}" 
+                                             alt="Favicon Preview" 
+                                             style="height: 32px; width: 32px; object-fit: contain; border: 1px solid #dee2e6; border-radius: 4px; padding: 2px;">
+                                        @php
+                                            $faviconSetting = \App\Models\Setting::where('key', 'favicon')->first();
+                                            $showFaviconClose = $faviconSetting && $faviconSetting->value && $faviconSetting->value !== 'favicon.png';
+                                        @endphp
+                                        @if($showFaviconClose)
+                                            <button type="button" 
+                                                class="btn-close position-absolute top-0 end-0" 
+                                                style="transform: translate(25%, -25%); 
+                                                    background-color: #dc3545;
+                                                    padding: 0.3rem;
+                                                    border-radius: 50%;
+                                                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                                    opacity: 0.9;"
+                                                    onclick="clearImage('favicon')"></button>
+                                        @endif
+                                    </div>
+                                </div>
+                                <input type="file" 
+                                       class="form-control" 
+                                       id="favicon" 
+                                       name="favicon" 
+                                       accept="image/x-icon,image/png,image/jpeg"
+                                       onchange="handleFileSelect(event, 'faviconPreview')">
+                            </div>
+                            <div class="mb-3">
+                                <label for="logo" class="form-label">Logo Website</label>
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="position-relative">
+                                        <img id="logoPreview" 
+                                             src="{{ asset('storage/' . \App\Models\Setting::where('key', 'logo')->first()?->value ?? 'logo.png') }}" 
+                                             alt="Logo Preview" 
+                                             style="height: 50px; width: auto; object-fit: contain; border: 1px solid #dee2e6; border-radius: 4px; padding: 2px;">
+                                        @php
+                                            $logoSetting = \App\Models\Setting::where('key', 'logo')->first();
+                                            $showLogoClose = $logoSetting && $logoSetting->value && $logoSetting->value !== 'logo.png';
+                                        @endphp
+                                        @if($showLogoClose)
+                                            <button type="button" 
+                                                    class="btn-close position-absolute top-0 end-0" 
+                                                    style="transform: translate(25%, -25%); 
+                                                           background-color: #dc3545;
+                                                           padding: 0.3rem;
+                                                           border-radius: 50%;
+                                                           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                                           opacity: 0.9;"
+                                                    onclick="clearImage('logo')"></button>
+                                        @endif
+                                    </div>
+                                </div>
+                                <input type="file" 
+                                       class="form-control" 
+                                       id="logo" 
+                                       name="logo" 
+                                       accept="image/*"
+                                       onchange="handleFileSelect(event, 'logoPreview')">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -561,6 +624,113 @@
     function refreshPage() {
         window.location.reload();
     }
+    </script>
+
+    <script>
+    function handleFileSelect(event, previewId) {
+        const file = event.target.files[0];
+        const preview = document.getElementById(previewId);
+        const type = previewId.replace('Preview', ''); // favicon atau logo
+        const closeButton = preview.parentElement.querySelector('.btn-close');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                
+                // Tambahkan tombol close jika belum ada
+                if (!closeButton) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'btn-close position-absolute top-0 end-0';
+                    button.style.cssText = `
+                        transform: translate(25%, -25%);
+                        background-color: #dc3545;
+                        padding: 0.3rem;
+                        border-radius: 50%;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        opacity: 0.9;
+                    `;
+                    button.onclick = () => clearImage(type);
+                    preview.parentElement.appendChild(button);
+                } else {
+                    closeButton.style.display = 'block';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function clearImage(type) {
+        const preview = document.getElementById(`${type}Preview`);
+        const input = document.getElementById(type);
+        const closeButton = preview.parentElement.querySelector('.btn-close');
+        
+        // Reset preview ke gambar default
+        preview.src = type === 'favicon' ? "{{ asset('favicon.png') }}" : "{{ asset('logo.png') }}";
+        
+        // Clear input file
+        input.value = '';
+        
+        // Sembunyikan tombol close
+        if (closeButton) {
+            closeButton.style.display = 'none';
+        }
+        
+        // Tambahkan hidden input untuk menandai penghapusan
+        const existingHidden = input.parentNode.querySelector(`input[name="remove_${type}"]`);
+        if (existingHidden) {
+            existingHidden.remove();
+        }
+        
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = `remove_${type}`;
+        hiddenInput.value = '1';
+        input.parentNode.appendChild(hiddenInput);
+    }
+
+    // Event handler untuk form submit
+    document.querySelector('#logoModal form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update favicon di browser
+                const faviconLink = document.querySelector('link[rel="icon"]');
+                if (faviconLink) {
+                    const newPath = data.favicon_removed ? 
+                        "{{ asset('favicon.png') }}" : 
+                        "{{ asset('storage/') }}/" + (data.favicon_path || faviconLink.href.split('?')[0].split('/').pop());
+                    faviconLink.href = newPath + "?v=" + data.timestamp;
+                }
+                
+                // Tutup modal
+                const modal = document.getElementById('logoModal');
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+
+                // Refresh halaman setelah modal tertutup
+                setTimeout(() => {
+                    window.location.reload();
+                }, 300); // Delay 300ms untuk memastikan modal tertutup dengan mulus
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
     </script>
 </body>
 </html>
