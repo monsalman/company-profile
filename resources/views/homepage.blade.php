@@ -376,70 +376,79 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <div class="mb-3">
-                                <label class="form-label">Favicon Website</label>
-                                <div class="d-flex align-items-center gap-3 mb-2">
-                                    <div class="position-relative">
+                            <label class="form-label">Favicon Website</label>
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="position-relative" style="min-height: 32px;">
+                                    @php
+                                        $faviconSetting = \App\Models\Setting::where('key', 'favicon')->first();
+                                    @endphp
+                                    
+                                    @if($faviconSetting?->value && $faviconSetting->value !== 'favicon.png')
                                         <img id="faviconPreview" 
-                                             src="{{ asset('storage/' . \App\Models\Setting::where('key', 'favicon')->first()?->value ?? 'favicon.png') }}" 
+                                             src="{{ asset('storage/' . $faviconSetting->value) }}" 
                                              alt="Favicon Preview" 
-                                             style="height: 32px; width: 32px; object-fit: contain; border: 1px solid #dee2e6; border-radius: 4px; padding: 2px;">
-                                        @php
-                                            $faviconSetting = \App\Models\Setting::where('key', 'favicon')->first();
-                                            $showFaviconClose = $faviconSetting && $faviconSetting->value && $faviconSetting->value !== 'favicon.png';
-                                        @endphp
-                                        @if($showFaviconClose)
-                                            <button type="button" 
+                                             style="height: 32px; width: 32px; object-fit: contain; border-radius: 4px; padding: 2px;">
+                                        <button type="button" 
                                                 class="btn-close position-absolute top-0 end-0" 
                                                 style="transform: translate(25%, -25%); 
-                                                    background-color: #dc3545;
-                                                    padding: 0.3rem;
-                                                    border-radius: 50%;
-                                                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                                                    opacity: 0.9;"
-                                                    onclick="clearImage('favicon')"></button>
-                                        @endif
-                                    </div>
+                                                       background-color: #dc3545;
+                                                       padding: 0.3rem;
+                                                       border-radius: 50%;
+                                                       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                                       opacity: 0.9;"
+                                                onclick="clearImage('favicon')">
+                                        </button>
+                                    @else
+                                        <img id="faviconPreview" 
+                                             src="{{ asset('favicon.png') }}" 
+                                             alt="Favicon Preview" 
+                                             style="height: 32px; width: 32px; object-fit: contain; border-radius: 4px; padding: 2px;">
+                                    @endif
                                 </div>
-                                <input type="file" 
-                                       class="form-control" 
-                                       id="favicon" 
-                                       name="favicon" 
-                                       accept="image/x-icon,image/png,image/jpeg"
-                                       onchange="handleFileSelect(event, 'faviconPreview')">
                             </div>
-                            <div class="mb-3">
-                                <label for="logo" class="form-label">Logo Website</label>
-                                <div class="d-flex align-items-center gap-3 mb-2">
-                                    <div class="position-relative">
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="favicon" 
+                                   name="favicon" 
+                                   accept="image/x-icon,image/png,image/jpeg"
+                                   onchange="handleFileSelect(event, 'faviconPreview')">
+                        </div>
+                        <div class="mb-3">
+                            <label for="logo" class="form-label">Logo Website</label>
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="position-relative">
+                                    @php
+                                        $logoSetting = \App\Models\Setting::where('key', 'logo')->first();
+                                    @endphp
+                                    
+                                    @if($logoSetting?->value && $logoSetting->value !== 'logo.png')
                                         <img id="logoPreview" 
-                                             src="{{ asset('storage/' . \App\Models\Setting::where('key', 'logo')->first()?->value ?? 'logo.png') }}" 
+                                             src="{{ asset('storage/' . $logoSetting->value) }}" 
                                              alt="Logo Preview" 
-                                             style="height: 50px; width: auto; object-fit: contain; border: 1px solid #dee2e6; border-radius: 4px; padding: 2px;">
-                                        @php
-                                            $logoSetting = \App\Models\Setting::where('key', 'logo')->first();
-                                            $showLogoClose = $logoSetting && $logoSetting->value && $logoSetting->value !== 'logo.png';
-                                        @endphp
-                                        @if($showLogoClose)
-                                            <button type="button" 
-                                                    class="btn-close position-absolute top-0 end-0" 
-                                                    style="transform: translate(25%, -25%); 
-                                                           background-color: #dc3545;
-                                                           padding: 0.3rem;
-                                                           border-radius: 50%;
-                                                           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                                                           opacity: 0.9;"
-                                                    onclick="clearImage('logo')"></button>
-                                        @endif
-                                    </div>
+                                             style="height: 50px; width: auto; object-fit: contain; border-radius: 4px; padding: 2px;">
+                                        <button type="button" 
+                                                class="btn-close position-absolute top-0 end-0" 
+                                                style="transform: translate(25%, -25%); 
+                                                       background-color: #dc3545;
+                                                       padding: 0.3rem;
+                                                       border-radius: 50%;
+                                                       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                                       opacity: 0.9;"
+                                                onclick="clearImage('logo')"></button>
+                                    @else
+                                        <img id="logoPreview" 
+                                             src="{{ asset('logo.png') }}" 
+                                             alt="Logo Preview" 
+                                             style="height: 50px; width: auto; object-fit: contain; border-radius: 4px; padding: 2px;">
+                                    @endif
                                 </div>
-                                <input type="file" 
-                                       class="form-control" 
-                                       id="logo" 
-                                       name="logo" 
-                                       accept="image/*"
-                                       onchange="handleFileSelect(event, 'logoPreview')">
                             </div>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="logo" 
+                                   name="logo" 
+                                   accept="image/*"
+                                   onchange="handleFileSelect(event, 'logoPreview')">
                         </div>
                     </div>
                     <div class="modal-footer">
