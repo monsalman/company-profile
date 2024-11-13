@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Setting;
+use App\Models\Icon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class SettingController extends Controller
+class IconController extends Controller
 {
     public function updateLogo(Request $request)
     {
@@ -21,23 +21,23 @@ class SettingController extends Controller
         $logoRemoved = false;
 
         if ($request->hasFile('logo') || $request->has('remove_logo')) {
-            $setting = Setting::where('key', 'logo')->first();
+            $icon = Icon::where('key', 'logo')->first();
             
             if ($request->has('remove_logo')) {
-                if ($setting && $setting->value && $setting->value !== 'logo.png') {
-                    Storage::disk('public')->delete($setting->value);
+                if ($icon && $icon->value && $icon->value !== 'logo.png') {
+                    Storage::disk('public')->delete($icon->value);
                 }
-                Setting::updateOrCreate(
+                Icon::updateOrCreate(
                     ['key' => 'logo'],
                     ['value' => 'logo.png']
                 );
                 $logoRemoved = true;
             } elseif ($request->hasFile('logo')) {
-                if ($setting && $setting->value && $setting->value !== 'logo.png') {
-                    Storage::disk('public')->delete($setting->value);
+                if ($icon && $icon->value && $icon->value !== 'logo.png') {
+                    Storage::disk('public')->delete($icon->value);
                 }
                 $logoPath = $request->file('logo')->store('logo', 'public');
-                Setting::updateOrCreate(
+                Icon::updateOrCreate(
                     ['key' => 'logo'],
                     ['value' => $logoPath]
                 );
@@ -45,23 +45,23 @@ class SettingController extends Controller
         }
 
         if ($request->hasFile('favicon') || $request->has('remove_favicon')) {
-            $setting = Setting::where('key', 'favicon')->first();
+            $icon = Icon::where('key', 'favicon')->first();
             
             if ($request->has('remove_favicon')) {
-                if ($setting && $setting->value && $setting->value !== 'favicon.png') {
-                    Storage::disk('public')->delete($setting->value);
+                if ($icon && $icon->value && $icon->value !== 'favicon.png') {
+                    Storage::disk('public')->delete($icon->value);
                 }
-                Setting::updateOrCreate(
+                Icon::updateOrCreate(
                     ['key' => 'favicon'],
                     ['value' => 'favicon.png']
                 );
                 $faviconRemoved = true;
             } elseif ($request->hasFile('favicon')) {
-                if ($setting && $setting->value && $setting->value !== 'favicon.png') {
-                    Storage::disk('public')->delete($setting->value);
+                if ($icon && $icon->value && $icon->value !== 'favicon.png') {
+                    Storage::disk('public')->delete($icon->value);
                 }
                 $faviconPath = $request->file('favicon')->store('favicon', 'public');
-                Setting::updateOrCreate(
+                Icon::updateOrCreate(
                     ['key' => 'favicon'],
                     ['value' => $faviconPath]
                 );

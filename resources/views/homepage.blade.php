@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Forte Indonesia</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Setting::where('key', 'favicon')->first()?->value ?? 'favicon.png') }}?v={{ time() }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Icon::where('key', 'favicon')->first()?->value ?? 'favicon.png') }}?v={{ time() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -155,13 +155,17 @@
         .btn-light:active, .btn-outline-light:active {
             transform: translateY(-1px);
         }
+        .slider-controls {
+            position: relative;
+            z-index: 3;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
         <div class="container">
             <div class="d-flex align-items-center">
-                <img src="{{ asset('storage/' . \App\Models\Setting::where('key', 'logo')->first()?->value ?? 'logo.png') }}" alt="Logo" height="40">
+                <img src="{{ asset('storage/' . \App\Models\Icon::where('key', 'logo')->first()?->value ?? 'logo.png') }}" alt="Logo" height="40">
                 @auth
                     <a href="#" class="ms-2 text-danger" data-bs-toggle="modal" data-bs-target="#logoModal">
                         <i class="bi bi-pencil-square"></i>
@@ -227,7 +231,7 @@
                         </div>
 
                         @auth
-                            <div class="d-flex gap-2 justify-content-center mt-3">
+                            <div class="d-flex gap-2 justify-content-center mt-3 slider-controls">
                                 <button class="btn btn-warning d-flex align-items-center gap-2 px-4" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#manageSliderModal"
@@ -372,7 +376,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Logo</h5>
                 </div>
-                <form action="{{ route('settings.updateLogo') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('icons.updateLogo') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
@@ -380,7 +384,7 @@
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="position-relative" style="min-height: 32px;">
                                     @php
-                                        $faviconSetting = \App\Models\Setting::where('key', 'favicon')->first();
+                                        $faviconSetting = \App\Models\Icon::where('key', 'favicon')->first();
                                     @endphp
                                     
                                     @if($faviconSetting?->value && $faviconSetting->value !== 'favicon.png')
@@ -418,7 +422,7 @@
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="position-relative">
                                     @php
-                                        $logoSetting = \App\Models\Setting::where('key', 'logo')->first();
+                                        $logoSetting = \App\Models\Icon::where('key', 'logo')->first();
                                     @endphp
                                     
                                     @if($logoSetting?->value && $logoSetting->value !== 'logo.png')
@@ -468,7 +472,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="refreshPage()"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="uploadSliderForm" action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+                    <form id="uploadSliderForm" action="{{ route('heroslider.store') }}" method="POST" enctype="multipart/form-data" class="mb-4">
                         @csrf
                         <div class="row align-items-end">
                             <div class="col-md-8">
@@ -509,7 +513,7 @@
                                     </div>
                                 </div>
                                 <form id="delete-form-{{ $slider->id }}" 
-                                      action="{{ route('slider.destroy', $slider->id) }}" 
+                                      action="{{ route('heroslider.destroy', $slider->id) }}" 
                                       method="POST" 
                                       style="display: none;">
                                     @csrf

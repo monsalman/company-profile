@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IconController;
+use App\Http\Controllers\HeroSliderController;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HeroSliderController::class, 'index']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -14,10 +14,10 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/homepage', [HomeController::class, 'index'])->name('homepage');
-    Route::post('/settings/update-logo', [SettingController::class, 'updateLogo'])->name('settings.updateLogo');
-    Route::post('/slider', [HomeController::class, 'storeSlider'])->name('slider.store');
-    Route::delete('/slider/{id}', [HomeController::class, 'destroySlider'])->name('slider.destroy');
+    Route::get('/homepage', [HeroSliderController::class, 'index'])->name('homepage');
+    Route::post('/icons/update-logo', [IconController::class, 'updateLogo'])->name('icons.updateLogo');
+    Route::post('/heroslider', [HeroSliderController::class, 'storeHeroSlider'])->name('heroslider.store');
+    Route::delete('/heroslider/{id}', [HeroSliderController::class, 'destroyHeroSlider'])->name('heroslider.destroy');
 });
 
 Route::fallback(function () {
