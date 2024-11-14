@@ -375,6 +375,76 @@
             width: 24px;
             height: 24px;
         }
+
+        /* Styles untuk animasi navbar desktop */
+        .navbar-nav .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #dc3545;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            opacity: 0;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #dc3545;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+            opacity: 1;
+        }
+
+        /* Style khusus untuk tombol logout */
+        .navbar-nav .nav-link.text-danger {
+            color: #dc3545 !important;
+        }
+
+        .navbar-nav button.nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav button.nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #dc3545;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            opacity: 0;
+        }
+
+        .navbar-nav button.nav-link:hover::after {
+            width: 100%;
+            opacity: 1;
+        }
+
+        /* Animasi untuk active state */
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+            opacity: 1;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -1221,6 +1291,51 @@
         deleteClientModal.hide();
         currentClientId = null;
     }
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mendapatkan semua nav-link
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+        
+        // Fungsi untuk mengupdate active state
+        function updateActiveState() {
+            const currentHash = window.location.hash || '#beranda';
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentHash) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Event listener untuk scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const scrollPosition = window.scrollY + 100; // Offset untuk navbar
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + sectionHeight)) {
+                    const correspondingLink = document.querySelector(`.navbar-nav .nav-link[href="#${section.id}"]`);
+                    if (correspondingLink) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        correspondingLink.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Event listener untuk hash change
+        window.addEventListener('hashchange', updateActiveState);
+        
+        // Initial state
+        updateActiveState();
+    });
     </script>
 </body>
 </html>
