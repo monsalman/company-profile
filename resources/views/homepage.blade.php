@@ -327,6 +327,54 @@
         #deleteClientConfirmationModal {
             z-index: 1085;
         }
+
+        /* Tambahkan styles untuk sidebar */
+        .offcanvas {
+            width: 280px !important;
+        }
+
+        .offcanvas-header {
+            padding: 1.5rem;
+            background: #dc3545;
+        }
+
+        .offcanvas-title {
+            color: white;
+            font-weight: 600;
+        }
+
+        .offcanvas .nav-link {
+            padding: 0.8rem 1.5rem;
+            color: #333;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .offcanvas .nav-link:hover {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            padding-left: 1.8rem;
+        }
+
+        .offcanvas .nav-link.active {
+            color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            width: 24px;
+            height: 24px;
+        }
     </style>
 </head>
 <body>
@@ -340,9 +388,10 @@
                     </a>
                 @endauth
             </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#beranda">Beranda</a></li>
@@ -359,6 +408,30 @@
                         </li>
                     @endauth
                 </ul>
+            </div>
+
+            <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="navbarOffcanvas">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title">Menu</h5>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#beranda" data-bs-dismiss="offcanvas">Beranda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tentang" data-bs-dismiss="offcanvas">Tentang Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#layanan" data-bs-dismiss="offcanvas">Layanan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portofolio" data-bs-dismiss="offcanvas">Portofolio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#informasi" data-bs-dismiss="offcanvas">Informasi</a></li>
+                        @auth
+                            <li class="nav-item">
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="nav-link border-0 bg-transparent text-danger w-100 text-start">Logout</button>
+                                </form>
+                            </li>
+                        @endauth
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
