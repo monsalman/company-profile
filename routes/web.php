@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IconController;
 use App\Http\Controllers\HeroSliderController;
+use App\Http\Controllers\ClientSliderController;
 
 Route::get('/', [HeroSliderController::class, 'index']);
 
@@ -18,6 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/icons/update-logo', [IconController::class, 'updateLogo'])->name('icons.updateLogo');
     Route::post('/heroslider', [HeroSliderController::class, 'storeHeroSlider'])->name('heroslider.store');
     Route::delete('/heroslider/{id}', [HeroSliderController::class, 'destroyHeroSlider'])->name('heroslider.destroy');
+    Route::post('/clientslider', [ClientSliderController::class, 'store'])->name('clientslider.store');
+    Route::delete('/clientslider/{id}', [ClientSliderController::class, 'destroy'])->name('clientslider.destroy');
 });
 
 Route::fallback(function () {

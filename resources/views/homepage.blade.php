@@ -44,19 +44,14 @@
             box-shadow: 0 10px 30px rgba(255, 51, 102, 0.1);
         }
         .client-logo {
-            filter: grayscale(100%);
-            opacity: 0.6;
             transition: all 0.3s ease;
-            max-height: 60px;
+            max-height: 85px;
+            width: 100%;
             object-fit: contain;
-        }
-        .client-logo:hover {
-            filter: grayscale(0%);
-            opacity: 1;
         }
         .section-title {
             position: relative;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         .section-title::after {
             content: '';
@@ -196,7 +191,7 @@
 
         @media (max-width: 767.98px) {
             .section-title {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
                 margin-bottom: 2rem;
             }
             
@@ -217,8 +212,8 @@
             }
             
             .client-logo {
-                max-height: 40px;
-                margin: 10px 0;
+                max-height: 60px;
+                margin: 5px 0;
             }
             
             .navbar-brand img {
@@ -227,6 +222,16 @@
             
             .modal-dialog {
                 margin: 10px;
+            }
+            
+            .client-slide {
+                flex: 0 0 200px;
+                min-width: 200px;
+                padding: 0 5px;
+            }
+            
+            .client-slider {
+                gap: 0;
             }
         }
 
@@ -263,11 +268,64 @@
                 padding: 6px 10px !important;
                 font-size: 0.75rem !important;
             }
+            
+            .client-logo {
+                max-height: 50px;
+            }
+            
+            .client-slide {
+                flex: 0 0 180px;
+                min-width: 180px;
+                padding: 0 3px;
+            }
         }
 
         .btn-large {
             padding: 15px 30px;
             font-size: 1.25rem;
+        }
+
+        .client-slider-container {
+            overflow: hidden;
+            padding: 20px 0;
+            position: relative;
+            background: transparent;
+        }
+        
+        .client-slider {
+            display: flex;
+            animation: slideClient 60s linear infinite;
+            gap: 2px;
+            width: fit-content;
+        }
+        
+        .client-slide {
+            flex: 0 0 250px;
+            min-width: 250px;
+            padding: 0 10px;
+        }
+        
+        @keyframes slideClient {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-250px * (var(--slide-count) / 2)));
+            }
+        }
+        
+        .client-slider:hover {
+            animation-play-state: paused;
+        }
+
+        .modal-backdrop.delete-client-backdrop {
+            z-index: 1080;
+            opacity: 0.8;
+            background-color: #000;
+        }
+
+        #deleteClientConfirmationModal {
+            z-index: 1085;
         }
     </style>
 </head>
@@ -360,10 +418,39 @@
     <section class="py-5 bg-light" style="padding-top: 1rem;">
         <div class="container">
             <h2 class="text-center section-title">Klien Kami</h2>
-            <div class="row align-items-center justify-content-center">
-                <div class="col-4 col-md-2 mb-4">
-                    <img src="client1.png" alt="Slider Client" class="client-logo w-100">
+            
+            <div class="client-slider-container">
+                <div class="client-slider" style="--slide-count: {{ $clientSliders->count() * 2 }}">
+                    @forelse($clientSliders as $client)
+                        <div class="client-slide">
+                            <img src="{{ asset('storage/' . $client->image) }}" 
+                                 alt="Client Logo" 
+                                 class="client-logo">
+                        </div>
+                    @empty
+                        <div class="client-slide">
+                            <img src="client1.png" alt="Default Client" class="client-logo">
+                        </div>
+                    @endforelse
+                    
+                    @foreach($clientSliders as $client)
+                        <div class="client-slide">
+                            <img src="{{ asset('storage/' . $client->image) }}" 
+                                 alt="Client Logo" 
+                                 class="client-logo">
+                        </div>
+                    @endforeach
                 </div>
+                
+                @auth
+                    <div class="text-center mt-4">
+                        <button class="btn btn-warning" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#manageClientModal">
+                            <i class="bi bi-gear"></i> Kelola Client
+                        </button>
+                    </div>
+                @endauth
             </div>
         </div>
     </section>
@@ -587,8 +674,8 @@
                         <div class="row align-items-end">
                             <div class="col-md-8">
                                 <label class="form-label">Tambah Gambar Baru</label>
-                                <input type="file" class="form-control" name="image" required accept="image/*">
-                                <small class="text-muted">Ukuran maksimal: 2MB. Format: JPG, PNG, GIF</small>
+                                <input type="file" class="form-control" name="images[]" required accept="image/*" multiple>
+                                <small class="text-muted">Ukuran maksimal: 2MB per file. Format: JPG, PNG, GIF. Bisa pilih lebih dari 1 file.</small>
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary w-100">
@@ -702,9 +789,14 @@
         document.getElementById('uploadSliderForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const formData = new FormData(this);
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Uploading...';
+            
             fetch(this.action, {
                 method: 'POST',
-                body: new FormData(this),
+                body: formData,
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -712,24 +804,33 @@
             .then(response => response.json())
             .then(data => {
                 this.reset();
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
                 
-                fetch(window.location.href)
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        
-                        const sliderList = document.querySelector('.modal-body .row.g-3');
-                        const newSliderList = doc.querySelector('.modal-body .row.g-3');
-                        sliderList.innerHTML = newSliderList.innerHTML;
-                        
-                        const carousel = document.querySelector('#heroCarousel .carousel-inner');
-                        const newCarousel = doc.querySelector('#heroCarousel .carousel-inner');
-                        carousel.innerHTML = newCarousel.innerHTML;
-                    });
+                if (data.success) {
+                    // Refresh tampilan
+                    fetch(window.location.href)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            
+                            // Update daftar slider di modal
+                            const sliderList = document.querySelector('.modal-body .row.g-3');
+                            const newSliderList = doc.querySelector('.modal-body .row.g-3');
+                            sliderList.innerHTML = newSliderList.innerHTML;
+                            
+                            // Update carousel di halaman
+                            const carousel = document.querySelector('#heroCarousel .carousel-inner');
+                            const newCarousel = doc.querySelector('#heroCarousel .carousel-inner');
+                            carousel.innerHTML = newCarousel.innerHTML;
+                        });
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
             });
         });
     });
@@ -854,6 +955,199 @@
             console.error('Error:', error);
         });
     });
+    </script>
+
+    <div class="modal fade" id="manageClientModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Kelola Client</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="refreshPage()"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadClientForm" action="{{ route('clientslider.store') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+                        @csrf
+                        <div class="row align-items-end">
+                            <div class="col-md-8">
+                                <label class="form-label">Tambah Logo Client</label>
+                                <input type="file" class="form-control" name="images[]" required accept="image/*" multiple>
+                                <small class="text-muted">Ukuran maksimal: 2MB per file. Format: JPG, PNG, GIF. Bisa pilih lebih dari 1 file.</small>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-plus-circle me-2"></i>Upload
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <h6 class="mb-3">Daftar Logo Client</h6>
+                    <div class="row g-3">
+                        @forelse($clientSliders as $client)
+                            <div class="col-md-4" data-client-id="{{ $client->id }}">
+                                <div class="card h-100">
+                                    <div class="position-relative">
+                                        <img src="{{ asset('storage/' . $client->image) }}" 
+                                             class="card-img-top p-2" 
+                                             alt="Client Logo"
+                                             style="height: 100px; object-fit: contain;">
+                                        <button class="btn btn-sm btn-warning position-absolute top-0 end-0 m-2" 
+                                                onclick="deleteClient({{ $client->id }})"
+                                                title="Hapus Client">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="card-footer bg-light">
+                                        <small class="text-muted">
+                                            Ditambahkan: {{ $client->created_at->diffForHumans(['parts' => 1, 'join' => ' ', 'syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) }}
+                                        </small>
+                                    </div>
+                                </div>
+                                <form id="delete-client-form-{{ $client->id }}" 
+                                      action="{{ route('clientslider.destroy', $client->id) }}" 
+                                      method="POST" 
+                                      style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </div>
+                        @empty
+                            <div class="col-12">
+                                <div class="alert alert-info mb-0">
+                                    Belum ada logo client. Silakan tambahkan logo baru.
+                                </div>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteClientConfirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus logo client ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteClient">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let currentClientId = null;
+    let deleteClientModal = null;
+    let manageClientModal = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        deleteClientModal = new bootstrap.Modal(document.getElementById('deleteClientConfirmationModal'));
+        manageClientModal = new bootstrap.Modal(document.getElementById('manageClientModal'));
+        
+        document.getElementById('confirmDeleteClient').addEventListener('click', function() {
+            if (currentClientId) {
+                const form = document.getElementById('delete-client-form-' + currentClientId);
+                
+                fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Tutup modal
+                        deleteClientModal.hide();
+                        
+                        // Refresh tampilan
+                        const clientElement = document.querySelector(`[data-client-id="${currentClientId}"]`);
+                        if (clientElement) {
+                            clientElement.remove();
+                        }
+                        
+                        // Reset currentClientId
+                        currentClientId = null;
+                        
+                        // Refresh halaman untuk memperbarui tampilan
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+
+        document.getElementById('uploadClientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Uploading...';
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.reset();
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
+                
+                if (data.success) {
+                    // Refresh tampilan
+                    fetch(window.location.href)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            
+                            // Update daftar client di modal
+                            const clientList = document.querySelector('#manageClientModal .row.g-3');
+                            const newClientList = doc.querySelector('#manageClientModal .row.g-3');
+                            clientList.innerHTML = newClientList.innerHTML;
+                            
+                            // Update slider client di halaman
+                            const clientSlider = document.querySelector('.client-slider');
+                            const newClientSlider = doc.querySelector('.client-slider');
+                            clientSlider.innerHTML = newClientSlider.innerHTML;
+                        });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
+            });
+        });
+    });
+
+    function deleteClient(id) {
+        currentClientId = id;
+        deleteClientModal.show();
+        document.querySelector('.modal-backdrop:last-child').classList.add('delete-client-backdrop');
+    }
+
+    function closeDeleteClientModal() {
+        deleteClientModal.hide();
+        currentClientId = null;
+    }
     </script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HeroImage;
+use App\Models\ClientSlider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,33 +12,53 @@ class HeroSliderController extends Controller
     public function index()
     {
         $sliderImages = HeroImage::orderBy('created_at', 'desc')->get();
+        $clientSliders = ClientSlider::orderBy('order')->get();
             
-        return view('homepage', compact('sliderImages'));
+        return view('homepage', compact('sliderImages', 'clientSliders'));
     }
 
     public function storeHeroSlider(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $path = $request->file('image')->store('hero-images', 'public');
+        $success = true;
+        $messages = [];
+        $sliders = [];
 
-        $slider = HeroImage::create([
-            'image' => $path,
-            'order' => HeroImage::count(),
-            'is_active' => true
-        ]);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                try {
+                    $path = $image->store('hero-images', 'public');
+
+                    $slider = HeroImage::create([
+                        'image' => $path,
+                        'order' => HeroImage::count(),
+                        'is_active' => true
+                    ]);
+
+                    $sliders[] = [
+                        'id' => $slider->id,
+                        'image_url' => Storage::url($path)
+                    ];
+                    $messages[] = 'Hero Slider berhasil ditambahkan';
+                } catch (\Exception $e) {
+                    $success = false;
+                    $messages[] = 'Gagal mengunggah salah satu gambar slider';
+                }
+            }
+        }
 
         if ($request->ajax()) {
             return response()->json([
-                'success' => true,
-                'slider_id' => $slider->id,
-                'image_url' => Storage::url($path)
+                'success' => $success,
+                'sliders' => $sliders,
+                'messages' => $messages
             ]);
         }
 
-        return redirect()->back()->with('success', 'Hero Slider berhasil ditambahkan');
+        return redirect()->back()->with('success', implode(', ', $messages));
     }
 
     public function destroyHeroSlider($id)
