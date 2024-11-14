@@ -66,7 +66,7 @@
             transform: translateX(-50%);
             width: 50px;
             height: 3px;
-            background: #ff3366;
+            background: #E31E2D;
         }
         .modal-backdrop.delete-backdrop {
             z-index: 1080;
@@ -159,6 +159,116 @@
             position: relative;
             z-index: 3;
         }
+
+        /* Responsive styles */
+        @media (max-width: 991.98px) {
+            .hero-section {
+                padding: 100px 0 60px;
+                min-height: auto;
+            }
+            
+            .hero-content {
+                text-align: center;
+                /* margin-bottom: 40px; */
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem !important;
+            }
+            
+            .hero-content .lead {
+                font-size: 1rem;
+            }
+            
+            .hero-content .d-flex {
+                justify-content: center;
+            }
+            
+            .service-card {
+                margin-bottom: 20px;
+            }
+            
+            .btn-light, .btn-outline-light {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            
+            h5[style*="font-size: 3.5rem"] {
+                font-size: 2rem !important;
+            }
+            
+            .service-card {
+                margin-bottom: 15px;
+            }
+            
+            .service-card h4 {
+                font-size: 1.2rem;
+            }
+            
+            .service-card p {
+                font-size: 0.9rem;
+            }
+            
+            .client-logo {
+                max-height: 40px;
+                margin: 10px 0;
+            }
+            
+            .navbar-brand img {
+                height: 30px;
+            }
+            
+            .modal-dialog {
+                margin: 10px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .hero-content .d-flex {
+                justify-content: center;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                gap: 8px !important;
+            }
+            
+            .btn-light, .btn-outline-light {
+                width: auto !important;
+                margin: 0 !important;
+                padding: 8px 12px !important;
+                font-size: 0.8rem !important;
+                white-space: nowrap;
+                min-width: 0 !important;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem !important;
+            }
+            
+            .hero-content .lead {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem !important;
+            }
+        }
+
+        /* Tambahkan breakpoint khusus untuk iPhone SE */
+        @media (max-width: 375px) {
+            .btn-light, .btn-outline-light {
+                padding: 6px 10px !important;
+                font-size: 0.75rem !important;
+            }
+        }
+
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 1.25rem;
+        }
     </style>
 </head>
 <body>
@@ -198,15 +308,15 @@
     <header id="beranda" class="hero-section text-white">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6 hero-content">
-                    <h1 class="display-4 fw-bold mb-4">Digitalisasi Bisnis Anda</h1>
+                <div class="col-lg-6 hero-content order-2 order-lg-1">
+                    <h1 class="fw-bold mb-4" style="font-size: 2.7rem;">Digitalisasi Bisnis Anda</h1>
                     <p class="lead mb-4">Mengefisiensikan Bisnis Anda dengan menjadikannya terstruktur, termonitor dan tepat sasaran dengan teknologi terkini dan user friendly</p>
                     <div class="d-flex gap-3">
-                        <a href="#kontak" class="btn btn-light btn-lg px-4">Mulai Sekarang</a>
-                        <a href="#layanan" class="btn btn-outline-light btn-lg px-4">Pelajari Lebih Lanjut</a>
+                        <a href="#kontak" class="btn btn-light btn-lg px-4 btn-large">Mulai Sekarang</a>
+                        <a href="#layanan" class="btn btn-outline-light btn-lg px-4 btn-large">Pelajari Lebih Lanjut</a>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
                     <div class="position-relative">
                         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
@@ -247,7 +357,7 @@
         </div>
     </header>
 
-    <section class="py-5 bg-light">
+    <section class="py-5 bg-light" style="padding-top: 1rem;">
         <div class="container">
             <h2 class="text-center section-title">Klien Kami</h2>
             <div class="row align-items-center justify-content-center">
@@ -270,7 +380,7 @@
             </div>
 
             <div class="row g-4">
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-4">
                     <div class="service-card card">
                         <div class="card-body text-center p-4">
                             <i class="bi bi-globe fs-1 text-danger mb-3"></i>
@@ -279,7 +389,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-4">
                     <div class="service-card card">
                         <div class="card-body text-center p-4">
                             <i class="bi bi-phone fs-1 text-primary mb-3"></i>
@@ -288,7 +398,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-4">
                     <div class="service-card card">
                         <div class="card-body text-center p-4">
                             <i class="bi bi-pc-display fs-1 text-primary mb-3"></i>
@@ -307,7 +417,7 @@
             </div>
             
             <div class="row g-4">
-                <div class="col-md-3">
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="service-card card">
                         <div class="card-body text-center p-4">
                             <i class="bi bi-gear fs-1 text-danger mb-3"></i>
@@ -316,7 +426,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="service-card card">
                         <div class="card-body text-center p-4">
                             <i class="bi bi-wordpress fs-1 text-danger mb-3"></i>
@@ -325,7 +435,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="service-card card">
                         <div class="card-body text-center p-4">
                             <i class="bi bi-headset fs-1 text-danger mb-3"></i>
@@ -334,7 +444,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="service-card card">
                         <div class="card-body text-center p-4">
                             <i class="bi bi-people fs-1 text-danger mb-3"></i>
