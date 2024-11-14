@@ -37,7 +37,7 @@
     <div class="container">
         <div class="error-page">
             <div class="logo">
-                <img src="{{ asset('storage/' . \App\Models\Setting::where('key', 'logo')->first()?->value ?? 'logo.png') }}" 
+                <img src="{{ asset('storage/' . \App\Models\Icon::where('key', 'logo')->first()?->value ?? 'logo.png') }}" 
                      alt="Logo" 
                      height="60">
             </div>
