@@ -52,6 +52,7 @@
         .section-title {
             position: relative;
             margin-bottom: 2rem;
+            font-size: 1.5rem;
         }
         .section-title::after {
             content: '';
@@ -281,8 +282,41 @@
         }
 
         .btn-large {
-            padding: 15px 30px;
-            font-size: 1.25rem;
+            padding: 10px 24px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 991.98px) {
+            .btn-large {
+                padding: 15px 30px;
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .hero-content .d-flex {
+                justify-content: center;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                gap: 8px !important;
+            }
+            
+            .btn-large {
+                padding: 12px 20px !important;
+                font-size: 1rem !important;
+                white-space: nowrap;
+                min-width: 0 !important;
+            }
+        }
+
+        /* Tambahkan breakpoint khusus untuk iPhone SE */
+        @media (max-width: 375px) {
+            .btn-large {
+                padding: 10px 16px !important;
+                font-size: 0.9rem !important;
+            }
         }
 
         .client-slider-container {
@@ -390,127 +424,259 @@
             position: absolute;
             width: 0;
             height: 2px;
-            bottom: 0;
-            left: 50%;
-            background-color: #dc3545;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-            opacity: 0;
+            bottom: -5px;
+            left: 0;
+            background: #dc3545;
+            transition: width 0.3s ease;
+            border-radius: 3px;
         }
 
         .navbar-nav .nav-link:hover {
             color: #dc3545;
         }
 
-        .navbar-nav .nav-link:hover::after {
-            width: 100%;
-            opacity: 1;
-        }
-
-        /* Style khusus untuk tombol logout */
-        .navbar-nav .nav-link.text-danger {
-            color: #dc3545 !important;
-        }
-
-        .navbar-nav button.nav-link {
-            position: relative;
-            padding: 0.5rem 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-nav button.nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background-color: #dc3545;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-            opacity: 0;
-        }
-
-        .navbar-nav button.nav-link:hover::after {
-            width: 100%;
-            opacity: 1;
-        }
-
         /* Animasi untuk active state */
         .navbar-nav .nav-link.active::after {
             width: 100%;
-            opacity: 1;
         }
 
         .navbar-nav .nav-link.active {
             color: #dc3545;
         }
+
+        /* Reset style Bootstrap default */
+        .navbar-nav .nav-link {
+            border: none !important;
+            background: none !important;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        /* Hapus semua style default Bootstrap saat hover/focus/active */
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link:focus,
+        .navbar-nav .nav-link:active,
+        .navbar-nav .nav-link.active {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        /* Style untuk garis bawah - hanya untuk active state */
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #dc3545;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Hanya tampilkan garis bawah saat active dan tetap ada saat hover */
+        .navbar-nav .nav-link.active::after,
+        .navbar-nav .nav-link.active:hover::after {
+            width: 100%;
+        }
+
+        /* Warna teks saat hover dan active */
+        .navbar-nav .nav-link:hover {
+            color: #dc3545;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #dc3545;
+        }
+
+        /* Tambahkan smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Sesuaikan padding section untuk navbar fixed */
+        section {
+            scroll-margin-top: 70px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .nav-link:active::after {
+                width: 100%;
+            }
+        }
+
+        /* Hapus style navbar lama dan tambahkan yang baru */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            color: #333 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover i {
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #dc3545;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #dc3545 !important;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: rgba(255, 255, 255, 0.98);
+                border-radius: 10px;
+                padding: 1rem;
+                margin-top: 1rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-link {
+                padding: 0.8rem 1rem !important;
+                border-radius: 5px;
+            }
+
+            .nav-link:hover {
+                background: rgba(220, 53, 69, 0.1);
+            }
+        }
+
+        /* Hapus hover effect untuk garis bawah pada link yang tidak active */
+        .navbar-nav .nav-link:not(.active):hover::after {
+            width: 0;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <div class="d-flex align-items-center">
-                <img src="{{ asset('storage/' . \App\Models\Icon::where('key', 'logo')->first()?->value ?? 'logo.png') }}" alt="Logo" height="40">
+                <img src="{{ asset('storage/' . \App\Models\Icon::where('key', 'logo')->first()?->value ?? 'logo.png') }}" 
+                     alt="Logo" 
+                     height="40">
                 @auth
-                    <a href="#" class="ms-2 text-danger" data-bs-toggle="modal" data-bs-target="#logoModal">
+                    <a href="#" class="ms-2 text-white" data-bs-toggle="modal" data-bs-target="#logoModal">
                         <i class="bi bi-pencil-square"></i>
                     </a>
                 @endauth
             </div>
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
+
+            <!-- Tampilan Desktop -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#beranda">Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#tentang">Tentang Kami</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portofolio">Portofolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#informasi">Informasi</a></li>
+                <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                    <li class="nav-item"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portofolio"><i class="bi bi-briefcase me-1"></i>Portofolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
                     @auth
                         <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="nav-link border-0 bg-transparent text-danger">Logout</button>
+                                <button type="submit" class="nav-link border-0 bg-transparent">
+                                    <i class="bi bi-box-arrow-right me-1"></i>Logout
+                                </button>
                             </form>
                         </li>
                     @endauth
                 </ul>
             </div>
 
-            <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="navbarOffcanvas">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title">Menu</h5>
-                    <button type="button" class="btn-close text-white" data-bs-dismiss="offcanvas"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#beranda" data-bs-dismiss="offcanvas">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#tentang" data-bs-dismiss="offcanvas">Tentang Kami</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#layanan" data-bs-dismiss="offcanvas">Layanan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portofolio" data-bs-dismiss="offcanvas">Portofolio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#informasi" data-bs-dismiss="offcanvas">Informasi</a></li>
-                        @auth
-                            <li class="nav-item">
-                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="nav-link border-0 bg-transparent text-danger w-100 text-start">Logout</button>
-                                </form>
-                            </li>
-                        @endauth
-                    </ul>
-                </div>
-            </div>
+            <!-- Tombol Toggle Sidebar Mobile -->
+            <button class="navbar-toggler d-lg-none border-0 d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+                <i class="bi bi-list text-danger fs-4"></i>
+                <span class="text-danger" style="font-size: 14px;">Menu</span>
+            </button>
         </div>
     </nav>
+
+    <!-- Sidebar Mobile -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileSidebar">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <!-- <button type="button" class="btn-close text-white" data-bs-dismiss="offcanvas"></button> -->
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#beranda">
+                        <i class="bi bi-house-door me-2"></i>Beranda
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tentang">
+                        <i class="bi bi-person me-2"></i>Tentang Kami
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#layanan">
+                        <i class="bi bi-gear me-2"></i>Layanan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#portofolio">
+                        <i class="bi bi-briefcase me-2"></i>Portofolio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#informasi">
+                        <i class="bi bi-info-circle me-2"></i>Informasi
+                    </a>
+                </li>
+                @auth
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="nav-link w-100 text-start border-0 bg-transparent">
+                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                            </button>
+                        </form>
+                    </li>
+                @endauth
+            </ul>
+        </div>
+    </div>
 
     <header id="beranda" class="hero-section text-white">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 hero-content order-2 order-lg-1">
-                    <h1 class="fw-bold mb-4" style="font-size: 2.7rem;">Digitalisasi Bisnis Anda</h1>
+                    <h1 class="fw-bold mb-4" style="font-size: 3rem;">Digitalisasi Bisnis Anda</h1>
                     <p class="lead mb-4">Mengefisiensikan Bisnis Anda dengan menjadikannya terstruktur, termonitor dan tepat sasaran dengan teknologi terkini dan user friendly</p>
                     <div class="d-flex gap-3">
                         <a href="#kontak" class="btn btn-light btn-lg px-4 btn-large">Mulai Sekarang</a>
@@ -558,7 +724,7 @@
         </div>
     </header>
 
-    <section class="py-5 bg-light" style="padding-top: 1rem;">
+    <section class="py-5 bg-light" style="padding-top: 1rem !important;">
         <div class="container">
             <h2 class="text-center section-title">Klien Kami</h2>
             
@@ -598,9 +764,9 @@
         </div>
     </section>
 
-    <section id="layanan" class="py-5">
+    <section id="layanan" class="py-5" style="padding-top: 0 !important;">
         <div class="container">
-            <h2 class="text-center section-title">Layanan Kami</h2>
+            <h2 class="text-center section-title" style="margin-top: 10px;">Layanan Kami</h2>
             
             <div class="text-start mb-5">
                 <h5 class="mb-4" style="color: #E31E2D; font-size: 3.5rem; font-weight: bold;">Service Custom Development</h5>
@@ -1295,46 +1461,49 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Mendapatkan semua nav-link
         const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
         
-        // Fungsi untuk mengupdate active state
-        function updateActiveState() {
-            const currentHash = window.location.hash || '#beranda';
-            
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentHash) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
-
-        // Event listener untuk scroll
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section');
-            const scrollPosition = window.scrollY + 100; // Offset untuk navbar
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
+        // Event listener untuk click pada nav-link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + sectionHeight)) {
-                    const correspondingLink = document.querySelector(`.navbar-nav .nav-link[href="#${section.id}"]`);
-                    if (correspondingLink) {
-                        navLinks.forEach(link => link.classList.remove('active'));
-                        correspondingLink.classList.add('active');
-                    }
+                // Hapus active class dari semua link
+                navLinks.forEach(link => link.classList.remove('active'));
+                
+                // Tambahkan active class ke link yang diklik
+                this.classList.add('active');
+                
+                // Ambil target section
+                const targetId = this.getAttribute('href').split('#')[1];
+                const targetSection = document.getElementById(targetId);
+                
+                // Scroll ke section dengan smooth behavior
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update URL tanpa reload
+                    history.pushState(null, null, `#${targetId}`);
                 }
             });
         });
 
-        // Event listener untuk hash change
-        window.addEventListener('hashchange', updateActiveState);
-        
-        // Initial state
-        updateActiveState();
+        // Set initial active state
+        function setInitialActiveState() {
+            const currentHash = window.location.hash || '#beranda';
+            const activeLink = document.querySelector(`.navbar-nav .nav-link[href="${currentHash}"]`);
+            
+            if (activeLink) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                activeLink.classList.add('active');
+            }
+        }
+
+        // Jalankan initial state
+        setInitialActiveState();
     });
     </script>
 </body>
