@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -830,34 +831,48 @@
             </div>
 
             <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card card">
-                        <div class="card-body text-center p-4">
-                            <i class="bi bi-globe fs-1 text-danger mb-3"></i>
-                            <h4>Website Development</h4>
-                            <p class="text-muted">Membangun Website Bisnis maupun Professional bagi Bisnis anda dengan teknologi terkini dan tampilan menarik</p>
+                @forelse($serviceCards as $card)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="service-card card">
+                            <div class="card-body text-center p-4">
+                                <img src="{{ asset('storage/' . $card->image) }}" alt="{{ $card->title }}" class="mb-3" style="height: 150px; width: auto;">
+                                <h4>{{ $card->title }}</h4>
+                                <p class="text-muted">{{ $card->description }}</p>
+                                @auth
+                                    <div class="mt-3">
+                                        <button type="button" 
+                                                class="btn btn-sm btn-warning me-2" 
+                                                onclick="editServiceCard('{{ $card->id }}', '{{ $card->title }}', '{{ $card->description }}', '{{ asset('storage/' . $card->image) }}')"
+                                                title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-danger" 
+                                                onclick="deleteServiceCard('{{ $card->id }}')"
+                                                title="Hapus">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                @endauth
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card card">
-                        <div class="card-body text-center p-4">
-                            <i class="bi bi-phone fs-1 text-primary mb-3"></i>
-                            <h4>Mobile Development</h4>
-                            <p class="text-muted">Membangung ataupun mengembangkan aplikasi mobile berbasis android maupun IOS yang dapat disesuaikan dengan kebutuhan bisnis</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card card">
-                        <div class="card-body text-center p-4">
-                            <i class="bi bi-pc-display fs-1 text-primary mb-3"></i>
-                            <h4>Software Development</h4>
-                            <p class="text-muted">Membangun Software berbasis website ataupun desktop yang dapat disesuaikan dengan kebutuhan bisnis maupun department anda untuk mempermudah kinerja tim ataupun kolaborasi</p>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                    @auth
+                        <div class="col-12 text-center">
+                            <p>Belum ada service card. Silakan tambahkan.</p>
+                        </div>  
+                    @endauth
+                @endforelse
             </div>
+
+            @auth
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-warning" onclick="showAddServiceCardModal()">
+                        <i class="bi bi-plus-circle me-2"></i>Tambah Service Card
+                    </button>
+                </div>
+            @endauth
 
             <div class="text-start mb-5 mt-5">
                 <h5 class="mb-4" style="color: #E31E2D; font-size: 3.5rem; font-weight: bold;">
@@ -1316,6 +1331,63 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Add/Edit Service Card -->
+    <div class="modal fade" id="serviceCardModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Service Card</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="serviceCardForm" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id" id="serviceCardId">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Gambar</label>
+                            <input type="file" class="form-control" name="image" id="image" accept="image/*">
+                            <small class="text-muted">Format: JPG, PNG, GIF. Maksimal 2MB</small>
+                            <div id="imagePreview" class="mt-2 text-center" style="display: none;">
+                                <img src="" alt="Preview" style="max-height: 150px;">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" id="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Delete Service Card -->
+    <div class="modal fade" id="deleteServiceCardModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus service card ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDeleteServiceCard()">Hapus</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1789,6 +1861,165 @@
         .catch(error => {
             console.error('Error:', error);
         });
+    });
+    </script>
+    <script>
+    let serviceCardModal;
+    let deleteServiceCardModal;
+    let currentServiceCardId;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi modal
+        serviceCardModal = new bootstrap.Modal(document.getElementById('serviceCardModal'));
+        deleteServiceCardModal = new bootstrap.Modal(document.getElementById('deleteServiceCardModal'));
+
+        // Handle form submission
+        const serviceCardForm = document.getElementById('serviceCardForm');
+        if (serviceCardForm) {
+            serviceCardForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData(this);
+                    const id = formData.get('id');
+                    const url = id ? `/service-cards/${id}` : '/service-cards';
+                    
+                    // Tambahkan method_field untuk PUT request
+                    if (id) {
+                        formData.append('_method', 'PUT');
+                    }
+
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
+
+                    const response = await fetch(url, {
+                        method: 'POST', // Selalu gunakan POST, _method akan menentukan method sebenarnya
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(Object.values(errorData.errors).flat().join('\n'));
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        serviceCardModal.hide();
+                        window.location.reload();
+                    } else {
+                        throw new Error(data.message || 'Terjadi kesalahan');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan: ' + error.message);
+                } finally {
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Simpan';
+                }
+            });
+        }
+
+        // Event listener untuk preview gambar
+        const imageInput = document.getElementById('image');
+        if (imageInput) {
+            imageInput.addEventListener('change', function(e) {
+                const preview = document.getElementById('imagePreview');
+                const previewImg = preview.querySelector('img');
+                const file = e.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+
+    function showAddServiceCardModal() {
+        document.getElementById('serviceCardForm').reset();
+        document.getElementById('serviceCardId').value = '';
+        serviceCardModal.show();
+    }
+
+    function editServiceCard(id, title, description, imageUrl) {
+        // Ambil data dari button yang diklik
+        const button = event.target.closest('button');
+        
+        // Reset form
+        document.getElementById('serviceCardForm').reset();
+        
+        // Set nilai-nilai form
+        document.getElementById('serviceCardId').value = id;
+        document.getElementById('title').value = title;
+        document.getElementById('description').value = description;
+        
+        // Set preview gambar jika ada
+        const preview = document.getElementById('imagePreview');
+        const previewImg = preview.querySelector('img');
+        if (imageUrl) {
+            previewImg.src = imageUrl;
+            preview.style.display = 'block';
+        } else {
+            preview.style.display = 'none';
+        }
+        
+        // Tampilkan modal
+        serviceCardModal.show();
+    }
+
+    function deleteServiceCard(id) {
+        currentServiceCardId = id;
+        deleteServiceCardModal.show();
+    }
+
+    function confirmDeleteServiceCard() {
+        fetch(`/service-cards/${currentServiceCardId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                deleteServiceCardModal.hide();
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
+
+    <script>
+    document.getElementById('image').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = preview.querySelector('img');
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
     });
     </script>
 </body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HeroImage;
 use App\Models\ClientSlider;
+use App\Models\ServiceCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,8 +14,9 @@ class HeroSliderController extends Controller
     {
         $sliderImages = HeroImage::orderBy('created_at', 'desc')->get();
         $clientSliders = ClientSlider::orderBy('order')->get();
+        $serviceCards = ServiceCard::orderBy('created_at', 'desc')->get();
             
-        return view('homepage', compact('sliderImages', 'clientSliders'));
+        return view('homepage', compact('sliderImages', 'clientSliders', 'serviceCards'));
     }
 
     public function storeHeroSlider(Request $request)

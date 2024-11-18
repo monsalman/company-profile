@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientSliderController;
 use App\Http\Controllers\HeroContentController;
 use App\Http\Controllers\PageTitleController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\ServiceCardController;
 
 Route::get('/', [HeroSliderController::class, 'index']);
 
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/page-titles/update', [PageTitleController::class, 'update'])->name('page-titles.update');
     Route::post('/layanan/update', [LayananController::class, 'update'])->name('layanan.update');
     Route::post('/layanan/update-retail', [LayananController::class, 'updateRetail'])->name('layanan.update-retail');
+    Route::resource('service-cards', ServiceCardController::class);
 });
 
 Route::fallback(function () {
