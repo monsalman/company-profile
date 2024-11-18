@@ -830,7 +830,7 @@
                 </p>
             </div>
 
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 @forelse($serviceCards as $card)
                     <div class="col-md-6 col-lg-4">
                         <div class="service-card card">
@@ -888,44 +888,50 @@
                 </p>
             </div>
             
-            <div class="row g-4">
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="service-card card">
-                        <div class="card-body text-center p-4">
-                            <i class="bi bi-gear fs-1 text-danger mb-3"></i>
-                            <h4>Content Maintenance</h4>
-                            <p class="text-muted">Membangun Website Bisnis maupun Professional dengan teknologi terkini dan tampilan menarik</p>
+            <div class="row g-4 justify-content-center">
+                @forelse($retailServices as $service)
+                    <div class="col-12 col-md-6 col-lg-3"> <!-- Ubah dari col-lg-4 menjadi col-lg-3 untuk 4 card per baris -->
+                        <div class="service-card card">
+                            <div class="card-body text-center p-4">
+                                <img src="{{ asset('storage/' . $service->image) }}" 
+                                     alt="{{ $service->title }}" 
+                                     class="mb-3" 
+                                     style="height: 100px; width: auto;"> <!-- Ubah dari height: 64px menjadi height: 100px -->
+                                <h4 style="font-size: 1rem;">{{ $service->title }}</h4> <!-- Perkecil ukuran title -->
+                                <p class="text-muted" style="font-size: 0.9rem;">{{ $service->description }}</p> <!-- Perkecil ukuran description -->
+                                @auth
+                                    <div class="mt-3">
+                                        <button type="button" 
+                                                class="btn btn-sm btn-warning me-2" 
+                                                onclick="editRetailServiceCard('{{ $service->id }}', '{{ $service->title }}', '{{ $service->description }}', '{{ asset('storage/' . $service->image) }}')"
+                                                title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-danger" 
+                                                onclick="deleteRetailServiceCard('{{ $service->id }}')"
+                                                title="Hapus">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                @endauth
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="service-card card">
-                        <div class="card-body text-center p-4">
-                            <i class="bi bi-wordpress fs-1 text-danger mb-3"></i>
-                            <h4>WordPress Development</h4>
-                            <p class="text-muted">Membangun aplikasi mobile berbasis Android maupun iOS sesuai kebutuhan bisnis</p>
-                        </div>
+                @empty
+                    <div class="col-12 text-center">
+                        <p class="text-muted">Belum ada retail service</p>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="service-card card">
-                        <div class="card-body text-center p-4">
-                            <i class="bi bi-headset fs-1 text-danger mb-3"></i>
-                            <h4>Customer Service</h4>
-                            <p class="text-muted">Membangun Software berbasis website atau desktop untuk meningkatkan efisiensi tim</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="service-card card">
-                        <div class="card-body text-center p-4">
-                            <i class="bi bi-people fs-1 text-danger mb-3"></i>
-                            <h4>Customer Service</h4>
-                            <p class="text-muted">Membangun Software berbasis website atau desktop untuk meningkatkan efisiensi tim</p>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
+            
+            @auth
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-warning" onclick="showAddRetailServiceCardModal()">
+                        <i class="bi bi-plus-circle me-2"></i>Tambah Retail Card
+                    </button>
+                </div>
+            @endauth
         </div>
     </section>
 
@@ -1388,6 +1394,93 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-danger" onclick="confirmDeleteServiceCard()">Hapus</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Add/Edit Retail Service -->
+    <div class="modal fade" id="retailServiceCardModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Retail Service Card</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="retailServiceCardForm" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id" id="retailServiceCardId">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Gambar</label>
+                            <input type="file" class="form-control" name="image" id="retailServiceCardImage" accept="image/*">
+                            <small class="text-muted">Format: JPG, PNG, GIF. Maksimal 2MB</small>
+                            <div id="retailServiceCardImagePreview" class="mt-2 text-center" style="display: none;">
+                                <img src="" alt="Preview" style="max-height: 150px;">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" id="retailServiceCardTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" id="retailServiceCardDescription" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Delete Retail Service -->
+    <div class="modal fade" id="deleteRetailServiceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus retail service ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDeleteRetailService()">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hapus atau ubah modal lama (untuk edit judul/deskripsi) -->
+    <div class="modal fade" id="editRetailTitleModal" tabindex="-1"> <!-- Ubah ID menjadi editRetailTitleModal -->
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Retail Service Title</h5>
+                </div>
+                <form action="{{ route('layanan.update-retail') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Judul</label>
+                            <input type="text" class="form-control" name="title" 
+                                   value="{{ \App\Models\Layanan::where('key', 'service_retail')->first()?->title ?? 'Retail Service' }}" 
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi</label>
+                            <textarea class="form-control" name="description" rows="4" required>{{ \App\Models\Layanan::where('key', 'service_retail')->first()?->description ?? 'Deskripsi default' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -2021,6 +2114,151 @@
             preview.style.display = 'none';
         }
     });
+    </script>
+
+    <!-- Tambahkan script untuk retail service -->
+    <script>
+    let retailServiceCardModal;
+    let currentRetailServiceCardId = null;
+    let deleteRetailServiceCardModal;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi modal
+        retailServiceCardModal = new bootstrap.Modal(document.getElementById('retailServiceCardModal'));
+        // Inisialisasi modal delete
+        deleteRetailServiceCardModal = new bootstrap.Modal(document.getElementById('deleteRetailServiceModal'));
+
+        // Handle form submission
+        const retailServiceCardForm = document.getElementById('retailServiceCardForm');
+        if (retailServiceCardForm) {
+            retailServiceCardForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData(this);
+                    const id = formData.get('id');
+                    const url = id ? `/retail-services/${id}` : '/retail-services';
+                    
+                    // Tambahkan method_field untuk PUT request
+                    if (id) {
+                        formData.append('_method', 'PUT');
+                    }
+
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
+
+                    const response = await fetch(url, {
+                        method: 'POST', // Selalu gunakan POST, _method akan menentukan method sebenarnya
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(Object.values(errorData.errors).flat().join('\n'));
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        retailServiceCardModal.hide();
+                        window.location.reload();
+                    } else {
+                        throw new Error(data.message || 'Terjadi kesalahan');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan: ' + error.message);
+                } finally {
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Simpan';
+                }
+            });
+        }
+
+        // Preview image
+        const retailServiceCardImage = document.getElementById('retailServiceCardImage');
+        if (retailServiceCardImage) {
+            retailServiceCardImage.addEventListener('change', function(e) {
+                const preview = document.getElementById('retailServiceCardImagePreview');
+                const previewImg = preview.querySelector('img');
+                const file = e.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+
+    function showAddRetailServiceCardModal() {
+        document.getElementById('retailServiceCardForm').reset();
+        document.getElementById('retailServiceCardId').value = '';
+        document.getElementById('retailServiceCardImagePreview').style.display = 'none';
+        retailServiceCardModal.show();
+    }
+
+    // Fungsi untuk edit retail service card
+    function editRetailServiceCard(id, title, description, imageUrl) {
+        // Reset form
+        document.getElementById('retailServiceCardForm').reset();
+        
+        // Set nilai-nilai form
+        document.getElementById('retailServiceCardId').value = id;
+        document.getElementById('retailServiceCardTitle').value = title;
+        document.getElementById('retailServiceCardDescription').value = description;
+        
+        // Set preview gambar jika ada
+        const preview = document.getElementById('retailServiceCardImagePreview');
+        const previewImg = preview.querySelector('img');
+        if (imageUrl) {
+            previewImg.src = imageUrl;
+            preview.style.display = 'block';
+        } else {
+            preview.style.display = 'none';
+        }
+        
+        // Tampilkan modal
+        retailServiceCardModal.show();
+    }
+
+    // Fungsi untuk menampilkan modal konfirmasi delete
+    function deleteRetailServiceCard(id) {
+        currentRetailServiceCardId = id;
+        deleteRetailServiceCardModal.show();
+    }
+
+    // Fungsi untuk mengeksekusi delete
+    function confirmDeleteRetailService() {
+        fetch(`/retail-services/${currentRetailServiceCardId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                deleteRetailServiceCardModal.hide();
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat menghapus data');
+        });
+    }
     </script>
 </body>
 </html>
