@@ -15,8 +15,8 @@ class HeroSliderController extends Controller
     {
         $sliderImages = HeroImage::orderBy('created_at', 'desc')->get();
         $clientSliders = ClientSlider::orderBy('order')->get();
-        $serviceCards = ServiceCard::orderBy('created_at', 'desc')->get();
-        $retailServices = RetailService::orderBy('created_at', 'desc')->get();
+        $serviceCards = ServiceCard::orderBy('created_at', 'asc')->get();
+        $retailServices = RetailService::orderBy('created_at', 'asc')->get();
             
         return view('homepage', compact('sliderImages', 'clientSliders', 'serviceCards', 'retailServices'));
     }

@@ -1130,13 +1130,15 @@
         </div>
     </div>
 
+    <!-- Update modal Edit Hero Content -->
     <div class="modal fade" id="heroContentModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Hero Content</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('hero-content.update') }}" method="POST">
+                <form action="{{ route('hero-content.update') }}" method="POST" id="heroContentForm">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
