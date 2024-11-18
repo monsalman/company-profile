@@ -1105,12 +1105,12 @@
                         <div class="mb-3">
                             <label class="form-label">Title</label>
                             <input type="text" class="form-control" name="title" 
-                                   value="{{ $heroContent?->title }}" 
+                                   value="{{ $heroContent?->title ?? 'Digital Forte Indonesia' }}" 
                                    required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows="3" required>{{ $heroContent?->description }}</textarea>
+                            <textarea class="form-control" name="description" rows="3" required>{{ $heroContent?->description ?? 'Mengefisiensikan Bisnis Anda dengan menjadikannya terstruktur, termonitor dan tepat sasaran dengan teknologi terkini dan user frendly' }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
