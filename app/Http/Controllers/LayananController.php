@@ -24,4 +24,17 @@ class LayananController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function updateRetail(Request $request)
+    {
+        $layanan = Layanan::updateOrCreate(
+            ['key' => 'service_retail'],
+            [
+                'title' => $request->title,
+                'description' => $request->description
+            ]
+        );
+
+        return response()->json(['success' => true]);
+    }
 } 

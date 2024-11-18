@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/hero-content/update', [HeroContentController::class, 'update'])->name('hero-content.update');
     Route::post('/page-titles/update', [PageTitleController::class, 'update'])->name('page-titles.update');
     Route::post('/layanan/update', [LayananController::class, 'update'])->name('layanan.update');
+    Route::post('/layanan/update-retail', [LayananController::class, 'updateRetail'])->name('layanan.update-retail');
 });
 
 Route::fallback(function () {
