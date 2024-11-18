@@ -6,6 +6,7 @@ use App\Http\Controllers\IconController;
 use App\Http\Controllers\HeroSliderController;
 use App\Http\Controllers\ClientSliderController;
 use App\Http\Controllers\HeroContentController;
+use App\Http\Controllers\PageTitleController;
 
 Route::get('/', [HeroSliderController::class, 'index']);
 
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/clientslider', [ClientSliderController::class, 'store'])->name('clientslider.store');
     Route::delete('/clientslider/{id}', [ClientSliderController::class, 'destroy'])->name('clientslider.destroy');
     Route::post('/hero-content/update', [HeroContentController::class, 'update'])->name('hero-content.update');
+    Route::post('/page-titles/update', [PageTitleController::class, 'update'])->name('page-titles.update');
 });
 
 Route::fallback(function () {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Forte Indonesia</title>
+    <title>{{ \App\Models\PageTitle::where('key', 'homepage')->first()?->value ?? 'Belum di konfigurasi' }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Icon::where('key', 'favicon')->first()?->value ?? 'favicon.png') }}?v={{ time() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -583,6 +583,31 @@
         .navbar-nav .nav-link:not(.active):hover::after {
             width: 0;
         }
+
+        .nav-button-logout {
+            color: #333;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+            border: none;
+            background: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-button-logout:hover {
+            color: #dc3545;
+        }
+
+        .nav-button-logout i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-button-logout:hover i {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -593,25 +618,30 @@
                      alt="Logo" 
                      height="40">
                 @auth
-                    <a href="#" class="ms-2 text-white" data-bs-toggle="modal" data-bs-target="#logoModal">
-                        <i class="bi bi-pencil-square"></i>
+                    <a href="#" class="ms-2 text-white d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#logoModal">
+                        <i class="bi bi-pencil-square text-danger me-1"></i>
+                        <span class="text-danger" style="font-size: 14px;">Edit Logo</span>
+                    </a>
+                    <a href="#" class="ms-2 text-white d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#pageTitlesModal">
+                        <i class="bi bi-gear text-danger me-1"></i>
+                        <span class="text-danger" style="font-size: 14px;">Edit Title</span>
                     </a>
                 @endauth
             </div>
 
             <!-- Tampilan Desktop -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto d-none d-lg-flex">
-                    <li class="nav-item"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portofolio"><i class="bi bi-briefcase me-1"></i>Portofolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#portofolio"><i class="bi bi-briefcase me-1"></i>Portofolio</a></li>
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
                     @auth
-                        <li class="nav-item">
+                        <li class="nav-item d-none d-lg-block">
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="nav-link border-0 bg-transparent">
+                                <button type="submit" class="btn btn-link nav-button-logout">
                                     <i class="bi bi-box-arrow-right me-1"></i>Logout
                                 </button>
                             </form>
@@ -663,10 +693,10 @@
                 </li>
                 @auth
                     <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="nav-link w-100 text-start border-0 bg-transparent">
-                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                            <button type="submit" class="btn btn-link nav-button-logout">
+                                <i class="bi bi-box-arrow-right me-1"></i>Logout
                             </button>
                         </form>
                     </li>
@@ -883,14 +913,6 @@
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    </script>
-
     <div class="modal fade" id="logoModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1072,11 +1094,10 @@
     </div>
 
     <div class="modal fade" id="heroContentModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Hero Content</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="{{ route('hero-content.update') }}" method="POST">
                     @csrf
@@ -1187,6 +1208,51 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="pageTitlesModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Page Titles</h5>
+                </div>
+                <form action="{{ route('page-titles.update') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Homepage Title</label>
+                            <input type="text" class="form-control" name="homepage_title" 
+                                   value="{{ \App\Models\PageTitle::where('key', 'homepage')->first()?->value ?? 'Digital Forte Indonesia' }}" 
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Login Page Title</label>
+                            <input type="text" class="form-control" name="login_title" 
+                                   value="{{ \App\Models\PageTitle::where('key', 'login')->first()?->value ?? 'Login - Digital Forte Indonesia' }}" 
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">404 Page Title</label>
+                            <input type="text" class="form-control" name="error_404_title" 
+                                   value="{{ \App\Models\PageTitle::where('key', 'error_404')->first()?->value ?? '404 - Halaman Tidak Ditemukan' }}" 
+                                   required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 
     <script>
     let currentSliderId = null;
@@ -1580,7 +1646,7 @@
     });
     </script>
     <script>
-    document.querySelector('#heroContentModal form').addEventListener('submit', function(e) {
+    document.querySelector('#pageTitlesModal form').addEventListener('submit', function(e) {
         e.preventDefault();
         
         fetch(this.action, {
@@ -1593,11 +1659,8 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Tutup modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('heroContentModal'));
+                const modal = bootstrap.Modal.getInstance(document.getElementById('pageTitlesModal'));
                 modal.hide();
-                
-                // Refresh halaman
                 window.location.reload();
             }
         })
