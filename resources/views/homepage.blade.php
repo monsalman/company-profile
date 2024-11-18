@@ -200,7 +200,9 @@
             }
             
             h5[style*="font-size: 3.5rem"] {
-                font-size: 2rem !important;
+                font-size: 1.5rem !important;
+                line-height: 1.2 !important;
+                white-space: nowrap !important;
             }
             
             .service-card {
@@ -814,9 +816,16 @@
             <h2 class="text-center section-title" style="margin-top: 10px;">Layanan Kami</h2>
             
             <div class="text-start mb-5">
-                <h5 class="mb-4" style="color: #E31E2D; font-size: 3.5rem; font-weight: bold;">Service Custom Development</h5>
+                <h5 class="mb-4" style="color: #E31E2D; font-size: 3.5rem; font-weight: bold;">
+                    {{ \App\Models\Layanan::where('key', 'service_custom')->first()?->title ?? 'Belum di konfigurasi' }}
+                    @auth
+                        <a href="#" class="ms-2 text-danger" style="font-size: 2rem;" data-bs-toggle="modal" data-bs-target="#layananModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    @endauth
+                </h5>
                 <p style="color: #666; font-size: 1rem; line-height: 1.4; max-width: 1200px;">
-                    Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.
+                    {{ \App\Models\Layanan::where('key', 'service_custom')->first()?->description ?? 'Belum di konfigurasi' }}
                 </p>
             </div>
 
@@ -1246,6 +1255,35 @@
         </div>
     </div>
 
+    <div class="modal fade" id="layananModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Layanan</h5>
+                </div>
+                <form action="{{ route('layanan.update') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Judul</label>
+                            <input type="text" class="form-control" name="title" 
+                                   value="{{ \App\Models\Layanan::where('key', 'service_custom')->first()?->title ?? 'Service Custom Development' }}" 
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi</label>
+                            <textarea class="form-control" name="description" rows="4" required>{{ \App\Models\Layanan::where('key', 'service_custom')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -1660,6 +1698,30 @@
         .then(data => {
             if (data.success) {
                 const modal = bootstrap.Modal.getInstance(document.getElementById('pageTitlesModal'));
+                modal.hide();
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+    </script>
+    <script>
+    document.querySelector('#layananModal form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('layananModal'));
                 modal.hide();
                 window.location.reload();
             }
