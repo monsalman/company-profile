@@ -619,12 +619,12 @@
             z-index: 1080;
         }
 
-        /* Tambahkan style untuk modal delete selected */
+        /* Pastikan modal delete confirmation berada di atas backdrop */
         #deleteSelectedSlidersConfirmationModal {
             z-index: 1085;
         }
 
-        /* Pastikan modal berada di atas backdrop */
+        /* Pastikan modal dialog berada di atas backdrop */
         .modal-dialog {
             position: relative;
             z-index: 1090;
@@ -805,6 +805,51 @@
         .modal-dialog {
             position: relative;
             z-index: 1090;
+        }
+
+        /* Tambahkan style untuk backdrop gelap */
+        .modal-backdrop.delete-confirmation-backdrop {
+            opacity: 0.8;
+            background-color: #000;
+            z-index: 1080;
+        }
+
+        /* Pastikan modal delete confirmation berada di atas backdrop */
+        #deleteConfirmationModal {
+            z-index: 1085;
+        }
+
+        /* Pastikan modal dialog berada di atas backdrop */
+        .modal-dialog {
+            position: relative;
+            z-index: 1090;
+        }
+
+        /* Style untuk modal kelola client saat modal konfirmasi muncul */
+        .modal.fade.show.dim-background {
+            background-color: rgba(0, 0, 0, 0.9) !important; /* Opacity konsisten 0.9 */
+        }
+
+        .modal.fade.show.dim-background .modal-content {
+            opacity: 1 !important;
+            background-color: #fff !important;
+        }
+
+        /* Style untuk modal konfirmasi */
+        #deleteSelectedConfirmationModal {
+            z-index: 1060;
+        }
+
+        /* Style untuk dialog konfirmasi */
+        #deleteSelectedConfirmationModal .modal-dialog {
+            z-index: 1070;
+        }
+
+        /* Overlay gelap di belakang modal konfirmasi */
+        .modal-backdrop.delete-confirmation-backdrop {
+            opacity: 0.9 !important; /* Opacity konsisten 0.9 */
+            background-color: rgba(0, 0, 0, 0.9) !important;
+            z-index: 1055;
         }
     </style>
 </head>
@@ -1347,7 +1392,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1">
+    <!-- Update modal konfirmasi delete slider -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1357,7 +1403,7 @@
                     <p>Apakah Anda yakin ingin menghapus gambar ini?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
                 </div>
             </div>
@@ -1746,8 +1792,8 @@
     </div>
 
     <!-- Update modal konfirmasi delete -->
-    <div class="modal fade" id="deleteSelectedConfirmationModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" onclick="event.stopPropagation()">
+    <div class="modal fade" id="deleteSelectedConfirmationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Konfirmasi Hapus</h5>
@@ -1764,6 +1810,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Tambahkan form tersembunyi untuk delete -->
+    <form id="delete-form" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -1783,33 +1835,37 @@
         manageModal = new bootstrap.Modal(document.getElementById('manageSliderModal'));
         
         document.getElementById('confirmDelete').addEventListener('click', function() {
-            const form = document.getElementById('delete-form-' + currentSliderId);
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                closeDeleteModal();
+            if (currentSliderId) {
+                const form = document.getElementById('delete-form');
+                form.action = `/heroslider/${currentSliderId}`; // Set action URL
                 
-                fetch(window.location.href)
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
+                fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Tutup modal
+                        deleteModal.hide();
                         
-                        const sliderList = document.querySelector('.modal-body .row.g-3');
-                        const newSliderList = doc.querySelector('.modal-body .row.g-3');
-                        sliderList.innerHTML = newSliderList.innerHTML;
-                    });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                        // Hapus elemen dari DOM
+                        const sliderElement = document.querySelector(`[data-slider-id="${currentSliderId}"]`);
+                        if (sliderElement) {
+                            sliderElement.remove();
+                        }
+                        
+                        // Reset currentSliderId
+                        currentSliderId = null;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
         });
 
         document.getElementById('uploadSliderForm').addEventListener('submit', function(e) {
@@ -1864,7 +1920,8 @@
     function deleteSlider(id) {
         currentSliderId = id;
         deleteModal.show();
-        document.querySelector('.modal-backdrop:last-child').classList.add('delete-backdrop');
+        // Tambahkan class untuk backdrop gelap
+        document.querySelector('.modal-backdrop:last-child').classList.add('delete-confirmation-backdrop');
     }
 
     function closeDeleteModal() {
@@ -2017,9 +2074,6 @@
                         
                         // Reset currentClientId
                         currentClientId = null;
-                        
-                        // Refresh halaman untuk memperbarui tampilan
-                        window.location.reload();
                     }
                 })
                 .catch(error => {
@@ -2539,42 +2593,45 @@
             checkbox.addEventListener('change', function() {
                 updateDeleteSelectedButton();
             });
-        });
     });
 
+    // Event listener untuk tombol hapus terpilih
+    const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+    if (deleteSelectedBtn) {
+        deleteSelectedBtn.addEventListener('click', function() {
+            confirmDeleteSelected();
+        });
+    }
+    });
+
+    // Fungsi untuk menampilkan modal konfirmasi
     function confirmDeleteSelected() {
-        selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
+        const selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
                             .map(checkbox => checkbox.value);
         
-        if (selectedClientIds.length > 0) {
-            // Update jumlah item yang dipilih di modal konfirmasi
-            document.getElementById('selectedCount').textContent = selectedClientIds.length;
-            
-            // Tampilkan modal
-            deleteSelectedModal.show();
-            // Tambahkan class khusus untuk backdrop
-            document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-backdrop');
+        if (selectedClientIds.length === 0) {
+            alert('Pilih minimal satu item untuk dihapus');
+            return;
         }
+
+        // Update text jumlah item yang akan dihapus di modal
+        document.getElementById('selectedCount').textContent = selectedClientIds.length;
+        
+        // Tambahkan class untuk menggelapkan background tapi bukan modal content
+        document.getElementById('manageClientModal').classList.add('dim-background');
+        
+        // Tampilkan modal konfirmasi
+        deleteSelectedModal.show();
+        
+        // Tambahkan class khusus untuk backdrop
+        document.querySelector('.modal-backdrop:last-child').classList.add('delete-confirmation-backdrop');
     }
 
-    function closeDeleteConfirmation() {
-        deleteSelectedModal.hide();
-        // Hapus class backdrop
-        const backdrop = document.querySelector('.delete-selected-backdrop');
-        if (backdrop) {
-            backdrop.classList.remove('delete-selected-backdrop');
-        }
-    }
-
-    // Tambahkan event listener untuk click di luar modal
-    document.getElementById('deleteSelectedConfirmationModal').addEventListener('click', function(event) {
-        if (event.target === this) {
-            closeDeleteConfirmation();
-        }
-    });
-
-    // Modifikasi fungsi deleteSelectedClients
+    // Fungsi untuk menghapus item yang dipilih (dipanggil dari modal konfirmasi)
     function deleteSelectedClients() {
+        const selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
+                            .map(checkbox => checkbox.value);
+        
         // Dapatkan referensi button
         const deleteBtn = document.getElementById('confirmDeleteBtn');
         const originalContent = deleteBtn.innerHTML;
@@ -2594,51 +2651,125 @@
                 ids: selectedClientIds
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                // Tutup modal konfirmasi
-                deleteSelectedModal.hide();
-                
-                // Reset semua checkbox dan tampilan
-                document.querySelectorAll('.client-checkbox:checked').forEach(checkbox => {
-                    checkbox.checked = false;
-                    checkbox.closest('.card').classList.remove('selected');
+                // Hapus elemen dari DOM
+                selectedClientIds.forEach(id => {
+                    const clientElement = document.querySelector(`[data-client-id="${id}"]`);
+                    if (clientElement) {
+                        clientElement.remove();
+                    }
                 });
-                
-                // Reset selectedClientIds
-                selectedClientIds = [];
-                
-                // Reset tombol Pilih Semua
+
+                // Reset state
+                selectedClientIds.length = 0;
                 isAllSelected = false;
-                const selectAllBtn = document.getElementById('selectAllBtn');
-                selectAllBtn.classList.remove('btn-secondary');
-                selectAllBtn.classList.add('btn-outline-secondary');
                 
-                // Update tampilan tombol hapus terpilih
+                // Update UI
                 updateDeleteSelectedButton();
                 
-                // Refresh tampilan
-                fetch(window.location.href)
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        
-                        // Update daftar client di modal
-                        const clientList = document.querySelector('#manageClientModal .row.g-3');
-                        const newClientList = doc.querySelector('#manageClientModal .row.g-3');
-                        if (clientList && newClientList) {
-                            clientList.innerHTML = newClientList.innerHTML;
-                        }
-                        
-                        // Update slider client di halaman
-                        const clientSlider = document.querySelector('.client-slider');
-                        const newClientSlider = doc.querySelector('.client-slider');
-                        if (clientSlider && newClientSlider) {
-                            clientSlider.innerHTML = newClientSlider.innerHTML;
-                        }
-                    });
+                // Tutup modal
+                deleteSelectedModal.hide();
+                
+                // Optional: Refresh halaman
+                window.location.reload();
+            } else {
+                throw new Error(data.message || 'Terjadi kesalahan saat menghapus');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat menghapus data');
+        })
+        .finally(() => {
+            // Reset button state
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = originalContent;
+        });
+    }
+
+    function closeDeleteConfirmation() {
+        deleteSelectedModal.hide();
+        // Hapus class dim-background saat modal konfirmasi ditutup
+        document.getElementById('manageClientModal').classList.remove('dim-background');
+        
+        // Hapus class backdrop
+        const backdrop = document.querySelector('.modal-backdrop.delete-confirmation-backdrop');
+        if (backdrop) {
+            backdrop.classList.remove('delete-confirmation-backdrop');
+        }
+    }
+
+    // Tambahkan event listener untuk click di luar modal
+    document.getElementById('deleteSelectedConfirmationModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeDeleteConfirmation();
+        }
+    });
+
+    // Modifikasi fungsi deleteSelectedClients
+    function deleteSelectedClients() {
+        // Dapatkan ID yang dipilih
+        const selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
+                                .map(checkbox => checkbox.value);
+        
+        if (selectedClientIds.length === 0) {
+            alert('Pilih minimal satu item untuk dihapus');
+            return;
+        }
+
+        // Dapatkan referensi button
+        const deleteBtn = document.getElementById('confirmDeleteBtn');
+        const originalContent = deleteBtn.innerHTML;
+        
+        // Disable button dan tampilkan loading
+        deleteBtn.disabled = true;
+        deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menghapus...';
+        
+        fetch('/clientslider/delete-multiple', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                ids: selectedClientIds
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Hapus elemen dari DOM
+                selectedClientIds.forEach(id => {
+                    const clientElement = document.querySelector(`[data-client-id="${id}"]`);
+                    if (clientElement) {
+                        clientElement.remove();
+                    }
+                });
+
+                // Reset state
+                selectedClientIds.length = 0;
+                isAllSelected = false;
+                
+                // Update UI
+                updateDeleteSelectedButton();
+                
+                // Tutup modal
+                deleteSelectedModal.hide();
+            } else {
+                throw new Error(data.message || 'Terjadi kesalahan saat menghapus');
             }
         })
         .catch(error => {
@@ -2844,24 +2975,19 @@
     }
 
     function confirmDeleteSelectedSliders() {
-        const selectedSliderIds = Array.from(document.querySelectorAll('.slider-checkbox:checked'))
-                                 .map(checkbox => checkbox.value);
+        const selectedCount = document.querySelectorAll('.slider-checkbox:checked').length;
+        document.getElementById('selectedSlidersCount').textContent = selectedCount;
         
-        if (selectedSliderIds.length > 0) {
-            document.getElementById('selectedSlidersCount').textContent = selectedSliderIds.length;
-            deleteSelectedSlidersModal.show();
-            // Tambahkan class ke backdrop
-            document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-backdrop');
-        }
+        const deleteSelectedModal = new bootstrap.Modal(document.getElementById('deleteSelectedSlidersConfirmationModal'));
+        deleteSelectedModal.show();
+        
+        // Tambahkan class untuk backdrop gelap
+        document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-backdrop');
     }
 
     function closeDeleteSlidersConfirmation() {
-        deleteSelectedSlidersModal.hide();
-        // Hapus class dari backdrop saat modal ditutup
-        const backdrop = document.querySelector('.modal-backdrop.delete-selected-backdrop');
-        if (backdrop) {
-            backdrop.classList.remove('delete-selected-backdrop');
-        }
+        const modal = bootstrap.Modal.getInstance(document.getElementById('deleteSelectedSlidersConfirmationModal'));
+        modal.hide();
     }
 
     function deleteSelectedSliders() {
