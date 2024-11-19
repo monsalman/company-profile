@@ -620,7 +620,7 @@
         }
 
         /* Tambahkan style untuk modal delete selected */
-        #deleteSelectedConfirmationModal {
+        #deleteSelectedSlidersConfirmationModal {
             z-index: 1085;
         }
 
@@ -785,6 +785,26 @@
             .nav-link i {
                 transition: transform 0.3s ease;
             }
+        }
+
+        /* Style untuk kedua modal konfirmasi delete */
+        #deleteSelectedConfirmationModal,
+        #deleteSelectedSlidersConfirmationModal {
+            z-index: 1085;
+        }
+
+        /* Style untuk backdrop kedua modal */
+        .modal-backdrop.delete-selected-backdrop,
+        .modal-backdrop.delete-selected-sliders-backdrop {
+            opacity: 0.8;
+            background-color: #000;
+            z-index: 1080;
+        }
+
+        /* Pastikan modal berada di atas backdrop */
+        .modal-dialog {
+            position: relative;
+            z-index: 1090;
         }
     </style>
 </head>
@@ -1219,6 +1239,7 @@
         </div>
     </div>
 
+    <!-- Update bagian modal manageSliderModal -->
     <div class="modal fade" id="manageSliderModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -1245,12 +1266,39 @@
 
                     <hr class="my-4">
 
-                    <h6 class="mb-3">Daftar Gambar Slider</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0">Daftar Gambar Slider</h6>
+                        <div class="d-flex gap-2">
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2" 
+                                    id="selectAllSliderBtn"
+                                    onclick="toggleSelectAllSliders()">
+                                <i class="bi bi-check-all"></i>
+                                <span>Pilih Semua</span>
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-danger btn-sm d-flex align-items-center gap-2" 
+                                    id="deleteSelectedSlidersBtn" 
+                                    style="display: none;"
+                                    onclick="confirmDeleteSelectedSliders()">
+                                <i class="bi bi-trash"></i>
+                                <span>Hapus Terpilih (<span id="selectedSliderCount">0</span>)</span>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="row g-3">
                         @forelse($sliderImages as $slider)
-                            <div class="col-md-4">
-                                <div class="card h-100">
+                            <div class="col-md-4" data-slider-id="{{ $slider->id }}">
+                                <div class="card h-100" onclick="toggleSliderCheckbox(event, {{ $slider->id }})">
                                     <div class="position-relative">
+                                        <div class="position-absolute top-0 start-0 m-2">
+                                            <input type="checkbox" 
+                                                   class="form-check-input slider-checkbox" 
+                                                   value="{{ $slider->id }}"
+                                                   style="transform: scale(1.2);"
+                                                   onclick="handleCheckboxClick(event, this)">
+                                        </div>
                                         <img src="{{ asset('storage/' . $slider->image) }}" 
                                              class="card-img-top" 
                                              alt="Slider"
@@ -1263,17 +1311,10 @@
                                     </div>
                                     <div class="card-footer bg-light">
                                         <small class="text-muted">
-                                            Ditambahkan: {{ $slider->created_at->diffForHumans(['parts' => 1, 'join' => ' ', 'syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) }}
+                                            Ditambahkan: {{ $slider->created_at->diffForHumans() }}
                                         </small>
                                     </div>
                                 </div>
-                                <form id="delete-form-{{ $slider->id }}" 
-                                      action="{{ route('heroslider.destroy', $slider->id) }}" 
-                                      method="POST" 
-                                      style="display: none;">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
                             </div>
                         @empty
                             <div class="col-12">
@@ -1283,6 +1324,26 @@
                             </div>
                         @endforelse
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tambahkan modal konfirmasi delete multiple -->
+    <div class="modal fade" id="deleteSelectedSlidersConfirmationModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus <span id="selectedSlidersCount">0</span> gambar slider yang dipilih?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeDeleteSlidersConfirmation()">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteSlidersBtn" onclick="deleteSelectedSliders()">
+                        <i class="bi bi-trash me-2"></i>Hapus
+                    </button>
                 </div>
             </div>
         </div>
@@ -1359,7 +1420,7 @@
                             </div>
                         </div>
                     </form>
-
+                    
                     <hr class="my-4">
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -1382,7 +1443,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="row g-3">
                         @forelse($clientSliders as $client)
                             <div class="col-md-4" data-client-id="{{ $client->id }}">
@@ -2698,6 +2759,196 @@
             selectAllBtn.classList.remove('btn-secondary');
             selectAllBtn.classList.add('btn-outline-secondary');
         }
+    }
+    </script>
+
+    <script>
+    let isAllSlidersSelected = false;
+    let deleteSelectedSlidersModal;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        deleteSelectedSlidersModal = new bootstrap.Modal(document.getElementById('deleteSelectedSlidersConfirmationModal'));
+    });
+
+    function toggleSliderCheckbox(event, sliderId) {
+        if (event.target.closest('.btn-warning')) {
+            return;
+        }
+        
+        const checkbox = event.currentTarget.querySelector('.slider-checkbox');
+        const card = event.currentTarget;
+        
+        checkbox.checked = !checkbox.checked;
+        
+        if (checkbox.checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+        
+        updateDeleteSelectedSlidersButton();
+    }
+
+    function toggleSelectAllSliders() {
+        isAllSlidersSelected = !isAllSlidersSelected;
+        const checkboxes = document.querySelectorAll('.slider-checkbox');
+        const selectAllBtn = document.getElementById('selectAllSliderBtn');
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isAllSlidersSelected;
+            const card = checkbox.closest('.card');
+            if (isAllSlidersSelected) {
+                card.classList.add('selected');
+                selectAllBtn.classList.remove('btn-outline-secondary');
+                selectAllBtn.classList.add('btn-secondary');
+            } else {
+                card.classList.remove('selected');
+                selectAllBtn.classList.remove('btn-secondary');
+                selectAllBtn.classList.add('btn-outline-secondary');
+            }
+        });
+        
+        updateDeleteSelectedSlidersButton();
+    }
+
+    function updateDeleteSelectedSlidersButton() {
+        const totalCheckboxes = document.querySelectorAll('.slider-checkbox').length;
+        const selectedCount = document.querySelectorAll('.slider-checkbox:checked').length;
+        const deleteSelectedBtn = document.getElementById('deleteSelectedSlidersBtn');
+        const selectedItemCount = document.getElementById('selectedSliderCount');
+        const selectAllBtn = document.getElementById('selectAllSliderBtn');
+        
+        if (selectedCount > 0) {
+            deleteSelectedBtn.style.display = 'flex';
+            selectedItemCount.textContent = selectedCount;
+            
+            if (selectedCount === totalCheckboxes) {
+                isAllSlidersSelected = true;
+                selectAllBtn.classList.remove('btn-outline-secondary');
+                selectAllBtn.classList.add('btn-secondary');
+            } else {
+                isAllSlidersSelected = false;
+                selectAllBtn.classList.remove('btn-secondary');
+                selectAllBtn.classList.add('btn-outline-secondary');
+            }
+        } else {
+            deleteSelectedBtn.style.display = 'none';
+            selectedItemCount.textContent = '0';
+            
+            isAllSlidersSelected = false;
+            selectAllBtn.classList.remove('btn-secondary');
+            selectAllBtn.classList.add('btn-outline-secondary');
+        }
+    }
+
+    function confirmDeleteSelectedSliders() {
+        const selectedSliderIds = Array.from(document.querySelectorAll('.slider-checkbox:checked'))
+                                 .map(checkbox => checkbox.value);
+        
+        if (selectedSliderIds.length > 0) {
+            document.getElementById('selectedSlidersCount').textContent = selectedSliderIds.length;
+            deleteSelectedSlidersModal.show();
+            // Tambahkan class ke backdrop
+            document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-backdrop');
+        }
+    }
+
+    function closeDeleteSlidersConfirmation() {
+        deleteSelectedSlidersModal.hide();
+        // Hapus class dari backdrop saat modal ditutup
+        const backdrop = document.querySelector('.modal-backdrop.delete-selected-backdrop');
+        if (backdrop) {
+            backdrop.classList.remove('delete-selected-backdrop');
+        }
+    }
+
+    function deleteSelectedSliders() {
+        const selectedSliderIds = Array.from(document.querySelectorAll('.slider-checkbox:checked'))
+                                 .map(checkbox => checkbox.value);
+        
+        const deleteBtn = document.getElementById('confirmDeleteSlidersBtn');
+        const originalContent = deleteBtn.innerHTML;
+        
+        deleteBtn.disabled = true;
+        deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menghapus...';
+        
+        fetch('/heroslider/delete-multiple', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                ids: selectedSliderIds
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Tutup modal konfirmasi delete
+                deleteSelectedSlidersModal.hide();
+                
+                // Hapus item yang sudah dihapus dari tampilan
+                selectedSliderIds.forEach(id => {
+                    const sliderElement = document.querySelector(`[data-slider-id="${id}"]`);
+                    if (sliderElement) {
+                        sliderElement.remove();
+                    }
+                });
+                
+                // Reset checkbox dan tampilan
+                document.querySelectorAll('.slider-checkbox:checked').forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.closest('.card').classList.remove('selected');
+                });
+                
+                // Reset tombol pilih semua
+                isAllSlidersSelected = false;
+                const selectAllBtn = document.getElementById('selectAllSliderBtn');
+                selectAllBtn.classList.remove('btn-secondary');
+                selectAllBtn.classList.add('btn-outline-secondary');
+                
+                // Update tombol hapus terpilih
+                updateDeleteSelectedSlidersButton();
+                
+                // Tampilkan pesan sukses jika diperlukan
+                // ... (optional)
+                
+                // Hapus backdrop modal konfirmasi
+                const backdrop = document.querySelector('.modal-backdrop.delete-selected-sliders-backdrop');
+                if (backdrop) {
+                    backdrop.classList.remove('delete-selected-sliders-backdrop');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat menghapus data');
+        })
+        .finally(() => {
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = originalContent;
+        });
+    }
+    </script>
+
+    <script>
+    function handleCheckboxClick(event, checkbox) {
+        event.stopPropagation();
+        
+        // Dapatkan card parent
+        const card = checkbox.closest('.card');
+        
+        // Toggle class selected berdasarkan status checkbox
+        if (checkbox.checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+        
+        // Update tampilan tombol delete selected
+        updateDeleteSelectedSlidersButton();
     }
     </script>
 </body>

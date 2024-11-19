@@ -3,24 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\HeroImage;
-use App\Models\ClientSlider;
-use App\Models\ServiceCard;
-use App\Models\RetailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class HeroSliderController extends Controller
 {
-    public function index()
-    {
-        $sliderImages = HeroImage::orderBy('created_at', 'desc')->get();
-        $clientSliders = ClientSlider::orderBy('order')->get();
-        $serviceCards = ServiceCard::orderBy('created_at', 'asc')->get();
-        $retailServices = RetailService::orderBy('created_at', 'asc')->get();
-            
-        return view('homepage', compact('sliderImages', 'clientSliders', 'serviceCards', 'retailServices'));
-    }
-
     public function storeHeroSlider(Request $request)
     {
         $request->validate([
@@ -80,5 +67,28 @@ class HeroSliderController extends Controller
         }
         
         return redirect()->back()->with('success', 'Hero Slider berhasil dihapus');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:hero_images,id'
+        ]);
+
+        $sliders = HeroImage::whereIn('id', $request->ids)->get();
+
+        foreach ($sliders as $slider) {
+            if (Storage::disk('public')->exists($slider->image)) {
+                Storage::disk('public')->delete($slider->image);
+            }
+        }
+
+        HeroImage::whereIn('id', $request->ids)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Slider berhasil dihapus'
+        ]);
     }
 } 

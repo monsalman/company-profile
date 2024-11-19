@@ -10,8 +10,9 @@ use App\Http\Controllers\PageTitleController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\ServiceCardController;
 use App\Http\Controllers\RetailServiceController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', [HeroSliderController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -24,15 +25,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/icons/update-logo', [IconController::class, 'updateLogo'])->name('icons.updateLogo');
     Route::post('/heroslider', [HeroSliderController::class, 'storeHeroSlider'])->name('heroslider.store');
     Route::delete('/heroslider/{id}', [HeroSliderController::class, 'destroyHeroSlider'])->name('heroslider.destroy');
+    Route::post('/hero-content/update', [HeroContentController::class, 'update'])->name('hero-content.update');
+    Route::post('/heroslider/delete-multiple', [HeroSliderController::class, 'deleteMultiple'])->name('heroslider.deleteMultiple');
     Route::post('/clientslider', [ClientSliderController::class, 'store'])->name('clientslider.store');
     Route::delete('/clientslider/{id}', [ClientSliderController::class, 'destroy'])->name('clientslider.destroy');
-    Route::post('/hero-content/update', [HeroContentController::class, 'update'])->name('hero-content.update');
+    Route::post('/clientslider/delete-multiple', [ClientSliderController::class, 'deleteMultiple'])->name('clientslider.deleteMultiple');
     Route::post('/page-titles/update', [PageTitleController::class, 'update'])->name('page-titles.update');
     Route::post('/layanan/update', [LayananController::class, 'update'])->name('layanan.update');
     Route::post('/layanan/update-retail', [LayananController::class, 'updateRetail'])->name('layanan.update-retail');
     Route::resource('service-cards', ServiceCardController::class);
     Route::resource('retail-services', RetailServiceController::class);
-    Route::post('/clientslider/delete-multiple', [ClientSliderController::class, 'deleteMultiple'])->name('clientslider.deleteMultiple');
 });
 
 Route::fallback(function () {
