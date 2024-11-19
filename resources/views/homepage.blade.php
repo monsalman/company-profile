@@ -1053,11 +1053,9 @@
                         </div>
                     </div>
                 @empty
-                    @auth
-                        <div class="col-12 text-center">
-                            <p>Belum ada service card. Silakan tambahkan.</p>
-                        </div>  
-                    @endauth
+                    <div class="col-12 text-center">
+                        <p>Belum ada service card</p>
+                    </div>
                 @endforelse
             </div>
 
@@ -1613,19 +1611,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Service Card</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form id="serviceCardForm" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" id="serviceCardId">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Gambar</label>
-                            <input type="file" class="form-control" name="image" id="image" accept="image/*">
-                            <small class="text-muted">Format: JPG, PNG, GIF. Maksimal 2MB</small>
                             <div id="imagePreview" class="mt-2 text-center" style="display: none;">
                                 <img src="" alt="Preview" style="max-height: 150px;">
                             </div>
+                            <label class="form-label">Gambar</label>
+                            <input type="file" class="form-control" name="image" id="image" accept="image/*">
+                            <small class="text-muted">Format: JPG, PNG, GIF. Maksimal 2MB</small>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Title</label>
@@ -1651,7 +1648,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p>Apakah Anda yakin ingin menghapus service card ini?</p>
@@ -1670,19 +1666,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Retail Service Card</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form id="retailServiceCardForm" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" id="retailServiceCardId">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Gambar</label>
-                            <input type="file" class="form-control" name="image" id="retailServiceCardImage" accept="image/*">
-                            <small class="text-muted">Format: JPG, PNG, GIF. Maksimal 2MB</small>
                             <div id="retailServiceCardImagePreview" class="mt-2 text-center" style="display: none;">
                                 <img src="" alt="Preview" style="max-height: 150px;">
                             </div>
+                            <label class="form-label">Gambar</label>
+                            <input type="file" class="form-control" name="image" id="retailServiceCardImage" accept="image/*">
+                            <small class="text-muted">Format: JPG, PNG, GIF. Maksimal 2MB</small>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Title</label>
@@ -1708,7 +1703,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p>Apakah Anda yakin ingin menghapus retail service ini?</p>
@@ -2304,8 +2298,16 @@
     });
 
     function showAddServiceCardModal() {
+        // Reset form
         document.getElementById('serviceCardForm').reset();
+        // Reset ID
         document.getElementById('serviceCardId').value = '';
+        // Reset preview gambar
+        const preview = document.getElementById('imagePreview');
+        const previewImg = preview.querySelector('img');
+        previewImg.src = ''; // Kosongkan src gambar
+        preview.style.display = 'none'; // Sembunyikan preview
+        // Tampilkan modal
         serviceCardModal.show();
     }
 
