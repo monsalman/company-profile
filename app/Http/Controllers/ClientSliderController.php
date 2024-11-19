@@ -61,4 +61,27 @@ class ClientSliderController extends Controller
         
         return redirect()->back()->with('success', 'Client berhasil dihapus');
     }
+
+    public function deleteMultiple(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:client_sliders,id'
+        ]);
+
+        $clients = ClientSlider::whereIn('id', $request->ids)->get();
+
+        foreach ($clients as $client) {
+            if (Storage::disk('public')->exists($client->image)) {
+                Storage::disk('public')->delete($client->image);
+            }
+        }
+
+        ClientSlider::whereIn('id', $request->ids)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Client berhasil dihapus'
+        ]);
+    }
 } 

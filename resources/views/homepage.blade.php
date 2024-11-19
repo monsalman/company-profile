@@ -611,6 +611,181 @@
         .nav-button-logout:hover i {
             transform: translateY(-2px);
         }
+
+        /* Tambahkan style untuk backdrop gelap */
+        .modal-backdrop.delete-selected-backdrop {
+            opacity: 0.8;
+            background-color: #000;
+            z-index: 1080;
+        }
+
+        /* Tambahkan style untuk modal delete selected */
+        #deleteSelectedConfirmationModal {
+            z-index: 1085;
+        }
+
+        /* Pastikan modal berada di atas backdrop */
+        .modal-dialog {
+            position: relative;
+            z-index: 1090;
+        }
+
+        /* Tambahkan style untuk checkbox dan card yang dipilih */
+        .form-check-input:checked {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Update style untuk card yang dipilih */
+        .card.selected {
+            border: 2px solid #dc3545 !important;
+        }
+
+        .card.selected .card-footer {
+            background-color: #dc3545 !important;
+            border-top-color: #dc3545 !important;
+            transition: all 0.3s ease;
+        }
+
+        .card.selected .card-footer small {
+            color: #fff !important;
+        }
+
+        /* Hilangkan outline focus pada checkbox */
+        .form-check-input:focus {
+            box-shadow: none !important;
+            outline: none !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Update style untuk checkbox */
+        .form-check-input {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #dee2e6 !important; /* Border abu-abu default */
+        }
+
+        /* Style saat checkbox di-focus */
+        .form-check-input:focus {
+            border-color: #dee2e6 !important;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important; /* Outline merah semi-transparan */
+        }
+
+        /* Style saat checkbox diceklis */
+        .form-check-input:checked {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Style saat checkbox diceklis dan di-focus */
+        .form-check-input:checked:focus {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+        }
+
+        /* Optional: Tambahkan hover effect */
+        .form-check-input:hover {
+            border-color: #dc3545 !important;
+        }
+
+        /* Tambahkan style untuk animasi loading */
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .loading-text, .normal-text {
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        /* Style untuk mobile navbar */
+        @media (max-width: 991.98px) {
+            .navbar-collapse .nav-link {
+                position: relative;
+                transition: all 0.3s ease;
+                padding: 0.8rem 1rem !important;
+                border-radius: 5px;
+            }
+
+            .navbar-collapse .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: 0;
+                left: 0;
+                background-color: #dc3545;
+                transition: width 0.3s ease;
+            }
+
+            .navbar-collapse .nav-link:hover,
+            .navbar-collapse .nav-link:active,
+            .navbar-collapse .nav-link.active {
+                background-color: rgba(220, 53, 69, 0.1);
+                color: #dc3545 !important;
+                padding-left: 1.5rem !important;
+            }
+
+            .navbar-collapse .nav-link:hover::after,
+            .navbar-collapse .nav-link:active::after,
+            .navbar-collapse .nav-link.active::after {
+                width: 100%;
+            }
+
+            .navbar-collapse .nav-link i {
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-collapse .nav-link:hover i,
+            .navbar-collapse .nav-link:active i,
+            .navbar-collapse .nav-link.active i {
+                transform: translateX(5px);
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .nav-link {
+                position: relative;
+                transition: all 0.3s ease;
+                padding: 0.8rem 1rem !important;
+                border-radius: 5px;
+            }
+
+            .nav-link.active {
+                background-color: rgba(220, 53, 69, 0.1);
+                color: #dc3545 !important;
+                padding-left: 1.5rem !important;
+            }
+
+            .nav-link.active i {
+                transform: translateX(5px);
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: 0;
+                left: 0;
+                background-color: #dc3545;
+                transition: width 0.3s ease;
+            }
+
+            .nav-link.active::after {
+                width: 100%;
+            }
+
+            .nav-link i {
+                transition: transform 0.3s ease;
+            }
+        }
     </style>
 </head>
 <body>
@@ -635,13 +810,13 @@
             <!-- Tampilan Desktop -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#portofolio"><i class="bi bi-briefcase me-1"></i>Portofolio</a></li>
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portofolio"><i class="bi bi-briefcase me-1"></i>Portofolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
                     @auth
-                        <li class="nav-item d-none d-lg-block">
+                        <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-link nav-button-logout">
@@ -1062,7 +1237,7 @@
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary w-100">
-                                    <i class="bi bi-plus-circle me-2"></i>Upload
+                                    <i class="bi bi-upload me-2"></i>Upload
                                 </button>
                             </div>
                         </div>
@@ -1179,7 +1354,7 @@
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary w-100">
-                                    <i class="bi bi-plus-circle me-2"></i>Upload
+                                    <i class="bi bi-upload me-2"></i>Upload
                                 </button>
                             </div>
                         </div>
@@ -1187,12 +1362,40 @@
 
                     <hr class="my-4">
 
-                    <h6 class="mb-3">Daftar Logo Client</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0">Daftar Logo Client</h6>
+                        <div class="d-flex gap-2">
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2" 
+                                    id="selectAllBtn"
+                                    onclick="toggleSelectAll()">
+                                <i class="bi bi-check-all"></i>
+                                <span>Pilih Semua</span>
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-danger btn-sm d-flex align-items-center gap-2" 
+                                    id="deleteSelectedBtn" 
+                                    style="display: none;"
+                                    onclick="confirmDeleteSelected()">
+                                <i class="bi bi-trash"></i>
+                                <span>Hapus Terpilih (<span id="selectedItemCount">0</span>)</span>
+                            </button>
+                        </div>
+                    </div>
+                    
                     <div class="row g-3">
                         @forelse($clientSliders as $client)
                             <div class="col-md-4" data-client-id="{{ $client->id }}">
-                                <div class="card h-100">
+                                <div class="card h-100" onclick="toggleCheckbox(event, {{ $client->id }})">
                                     <div class="position-relative">
+                                        <div class="position-absolute top-0 start-0 m-2">
+                                            <input type="checkbox" 
+                                                   class="form-check-input client-checkbox" 
+                                                   value="{{ $client->id }}"
+                                                   style="transform: scale(1.2);"
+                                                   onclick="event.stopPropagation()">
+                                        </div>
+                                        
                                         <img src="{{ asset('storage/' . $client->image) }}" 
                                              class="card-img-top p-2" 
                                              alt="Client Logo"
@@ -1205,7 +1408,7 @@
                                     </div>
                                     <div class="card-footer bg-light">
                                         <small class="text-muted">
-                                            Ditambahkan: {{ $client->created_at->diffForHumans(['parts' => 1, 'join' => ' ', 'syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) }}
+                                            Ditambahkan: {{ $client->created_at->diffForHumans() }}
                                         </small>
                                     </div>
                                 </div>
@@ -1483,6 +1686,26 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update modal konfirmasi delete -->
+    <div class="modal fade" id="deleteSelectedConfirmationModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" onclick="event.stopPropagation()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus <span id="selectedCount">0</span> logo client yang dipilih?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeDeleteConfirmation()">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn" onclick="deleteSelectedClients()">
+                        <i class="bi bi-trash me-2"></i>Hapus
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1813,49 +2036,27 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+        const navLinks = document.querySelectorAll('.nav-link');
         
-        // Event listener untuk click pada nav-link
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault();
+                // Hapus kelas active dari semua link
+                navLinks.forEach(l => l.classList.remove('active'));
                 
-                // Hapus active class dari semua link
-                navLinks.forEach(link => link.classList.remove('active'));
-                
-                // Tambahkan active class ke link yang diklik
+                // Tambah kelas active ke link yang diklik
                 this.classList.add('active');
-                
-                // Ambil target section
-                const targetId = this.getAttribute('href').split('#')[1];
-                const targetSection = document.getElementById(targetId);
-                
-                // Scroll ke section dengan smooth behavior
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Update URL tanpa reload
-                    history.pushState(null, null, `#${targetId}`);
+
+                // Jika dalam mode mobile, tutup sidebar setelah delay
+                if (window.innerWidth < 992) {
+                    setTimeout(() => {
+                        const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('mobileSidebar'));
+                        if (offcanvas) {
+                            offcanvas.hide();
+                        }
+                    }, 300); // Delay 300ms untuk memberi waktu animasi
                 }
             });
         });
-
-        // Set initial active state
-        function setInitialActiveState() {
-            const currentHash = window.location.hash || '#beranda';
-            const activeLink = document.querySelector(`.navbar-nav .nav-link[href="${currentHash}"]`);
-            
-            if (activeLink) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                activeLink.classList.add('active');
-            }
-        }
-
-        // Jalankan initial state
-        setInitialActiveState();
     });
     </script>
 
@@ -2260,6 +2461,243 @@
             console.error('Error:', error);
             alert('Terjadi kesalahan saat menghapus data');
         });
+    }
+    </script>
+
+    <script>
+    let deleteSelectedModal;
+    let selectedClientIds = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        deleteSelectedModal = new bootstrap.Modal(document.getElementById('deleteSelectedConfirmationModal'));
+        
+        // Event listener untuk checkbox
+        document.querySelectorAll('.client-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                updateDeleteSelectedButton();
+            });
+        });
+    });
+
+    function confirmDeleteSelected() {
+        selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
+                            .map(checkbox => checkbox.value);
+        
+        if (selectedClientIds.length > 0) {
+            // Update jumlah item yang dipilih di modal konfirmasi
+            document.getElementById('selectedCount').textContent = selectedClientIds.length;
+            
+            // Tampilkan modal
+            deleteSelectedModal.show();
+            // Tambahkan class khusus untuk backdrop
+            document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-backdrop');
+        }
+    }
+
+    function closeDeleteConfirmation() {
+        deleteSelectedModal.hide();
+        // Hapus class backdrop
+        const backdrop = document.querySelector('.delete-selected-backdrop');
+        if (backdrop) {
+            backdrop.classList.remove('delete-selected-backdrop');
+        }
+    }
+
+    // Tambahkan event listener untuk click di luar modal
+    document.getElementById('deleteSelectedConfirmationModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeDeleteConfirmation();
+        }
+    });
+
+    // Modifikasi fungsi deleteSelectedClients
+    function deleteSelectedClients() {
+        // Dapatkan referensi button
+        const deleteBtn = document.getElementById('confirmDeleteBtn');
+        const originalContent = deleteBtn.innerHTML;
+        
+        // Disable button dan tampilkan loading
+        deleteBtn.disabled = true;
+        deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menghapus...';
+        
+        fetch('/clientslider/delete-multiple', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                ids: selectedClientIds
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Tutup modal konfirmasi
+                deleteSelectedModal.hide();
+                
+                // Reset semua checkbox dan tampilan
+                document.querySelectorAll('.client-checkbox:checked').forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.closest('.card').classList.remove('selected');
+                });
+                
+                // Reset selectedClientIds
+                selectedClientIds = [];
+                
+                // Reset tombol Pilih Semua
+                isAllSelected = false;
+                const selectAllBtn = document.getElementById('selectAllBtn');
+                selectAllBtn.classList.remove('btn-secondary');
+                selectAllBtn.classList.add('btn-outline-secondary');
+                
+                // Update tampilan tombol hapus terpilih
+                updateDeleteSelectedButton();
+                
+                // Refresh tampilan
+                fetch(window.location.href)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        // Update daftar client di modal
+                        const clientList = document.querySelector('#manageClientModal .row.g-3');
+                        const newClientList = doc.querySelector('#manageClientModal .row.g-3');
+                        if (clientList && newClientList) {
+                            clientList.innerHTML = newClientList.innerHTML;
+                        }
+                        
+                        // Update slider client di halaman
+                        const clientSlider = document.querySelector('.client-slider');
+                        const newClientSlider = doc.querySelector('.client-slider');
+                        if (clientSlider && newClientSlider) {
+                            clientSlider.innerHTML = newClientSlider.innerHTML;
+                        }
+                    });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat menghapus data');
+        })
+        .finally(() => {
+            // Reset button state
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = originalContent;
+        });
+    }
+    </script>
+
+    <script>
+    function toggleCheckbox(event, clientId) {
+        // Hindari toggle jika yang diklik adalah tombol hapus
+        if (event.target.closest('.btn-warning')) {
+            return;
+        }
+        
+        const checkbox = event.currentTarget.querySelector('.client-checkbox');
+        const card = event.currentTarget;
+        
+        // Toggle checkbox
+        checkbox.checked = !checkbox.checked;
+        
+        // Toggle class selected pada card
+        if (checkbox.checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+        
+        // Update tampilan tombol hapus terpilih
+        updateDeleteSelectedButton();
+    }
+
+    function updateDeleteSelectedButton() {
+        const selectedCount = document.querySelectorAll('.client-checkbox:checked').length;
+        const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+        const selectedItemCount = document.getElementById('selectedItemCount');
+        
+        if (selectedCount > 0) {
+            deleteSelectedBtn.style.display = 'flex';
+            selectedItemCount.textContent = selectedCount;
+        } else {
+            deleteSelectedBtn.style.display = 'none';
+            selectedItemCount.textContent = '0'; // Tambahkan ini untuk reset counter
+        }
+    }
+
+    // Pastikan event listener checkbox juga diperbarui
+    document.querySelectorAll('.client-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const card = this.closest('.card');
+            if (this.checked) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+            updateDeleteSelectedButton();
+        });
+    });
+    </script>
+
+    <script>
+    let isAllSelected = false;
+
+    function toggleSelectAll() {
+        isAllSelected = !isAllSelected;
+        const checkboxes = document.querySelectorAll('.client-checkbox');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isAllSelected;
+            const card = checkbox.closest('.card');
+            if (isAllSelected) {
+                card.classList.add('selected');
+                selectAllBtn.classList.remove('btn-outline-secondary');
+                selectAllBtn.classList.add('btn-secondary');
+            } else {
+                card.classList.remove('selected');
+                selectAllBtn.classList.remove('btn-secondary');
+                selectAllBtn.classList.add('btn-outline-secondary');
+            }
+        });
+        
+        updateDeleteSelectedButton();
+    }
+
+    // Update fungsi updateDeleteSelectedButton untuk memperbarui tampilan tombol Pilih Semua
+    function updateDeleteSelectedButton() {
+        const totalCheckboxes = document.querySelectorAll('.client-checkbox').length;
+        const selectedCount = document.querySelectorAll('.client-checkbox:checked').length;
+        const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+        const selectedItemCount = document.getElementById('selectedItemCount');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        
+        if (selectedCount > 0) {
+            deleteSelectedBtn.style.display = 'flex';
+            selectedItemCount.textContent = selectedCount;
+            
+            // Update tampilan tombol Pilih Semua
+            if (selectedCount === totalCheckboxes) {
+                isAllSelected = true;
+                selectAllBtn.classList.remove('btn-outline-secondary');
+                selectAllBtn.classList.add('btn-secondary');
+            } else {
+                isAllSelected = false;
+                selectAllBtn.classList.remove('btn-secondary');
+                selectAllBtn.classList.add('btn-outline-secondary');
+            }
+        } else {
+            deleteSelectedBtn.style.display = 'none';
+            selectedItemCount.textContent = '0';
+            
+            // Reset tombol Pilih Semua
+            isAllSelected = false;
+            selectAllBtn.classList.remove('btn-secondary');
+            selectAllBtn.classList.add('btn-outline-secondary');
+        }
     }
     </script>
 </body>

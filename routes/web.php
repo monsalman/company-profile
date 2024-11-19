@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/layanan/update-retail', [LayananController::class, 'updateRetail'])->name('layanan.update-retail');
     Route::resource('service-cards', ServiceCardController::class);
     Route::resource('retail-services', RetailServiceController::class);
+    Route::post('/clientslider/delete-multiple', [ClientSliderController::class, 'deleteMultiple'])->name('clientslider.deleteMultiple');
 });
 
 Route::fallback(function () {
