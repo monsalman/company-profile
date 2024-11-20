@@ -2610,7 +2610,6 @@
                             .map(checkbox => checkbox.value);
         
         if (selectedClientIds.length === 0) {
-            alert('Pilih minimal satu item untuk dihapus');
             return;
         }
 
@@ -2975,30 +2974,41 @@
     }
 
     function confirmDeleteSelectedSliders() {
+        // Cek jumlah item yang dipilih
         const selectedCount = document.querySelectorAll('.slider-checkbox:checked').length;
+        
+        if (selectedCount === 0) {
+            return;
+        }
+        
+        // Update jumlah item yang akan dihapus di modal
         document.getElementById('selectedSlidersCount').textContent = selectedCount;
         
-        const deleteSelectedModal = new bootstrap.Modal(document.getElementById('deleteSelectedSlidersConfirmationModal'));
-        deleteSelectedModal.show();
+        // Tampilkan modal konfirmasi
+        const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteSelectedSlidersConfirmationModal'));
+        deleteConfirmModal.show();
         
-        // Tambahkan class untuk backdrop gelap
-        document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-backdrop');
+        // Tambahkan class untuk backdrop
+        document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-sliders-backdrop');
     }
 
+    // Update tombol "Hapus Terpilih" untuk menggunakan fungsi baru
+    document.getElementById('deleteSelectedSlidersBtn').onclick = confirmDeleteSelectedSliders;
+
     function closeDeleteSlidersConfirmation() {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('deleteSelectedSlidersConfirmationModal'));
-        modal.hide();
+        // Tutup modal konfirmasi delete
+        const deleteConfirmModal = bootstrap.Modal.getInstance(document.getElementById('deleteSelectedSlidersConfirmationModal'));
+        deleteConfirmModal.hide();
+        
+        // Hapus backdrop modal konfirmasi
+        const backdrop = document.querySelector('.modal-backdrop.delete-selected-sliders-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
     }
 
     function deleteSelectedSliders() {
-        const selectedSliderIds = Array.from(document.querySelectorAll('.slider-checkbox:checked'))
-                                 .map(checkbox => checkbox.value);
-        
-        const deleteBtn = document.getElementById('confirmDeleteSlidersBtn');
-        const originalContent = deleteBtn.innerHTML;
-        
-        deleteBtn.disabled = true;
-        deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menghapus...';
+        const selectedIds = Array.from(document.querySelectorAll('.slider-checkbox:checked')).map(cb => cb.value);
         
         fetch('/heroslider/delete-multiple', {
             method: 'POST',
@@ -3007,56 +3017,50 @@
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'X-Requested-With': 'XMLHttpRequest'
             },
-            body: JSON.stringify({
-                ids: selectedSliderIds
-            })
+            body: JSON.stringify({ ids: selectedIds })
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Tutup modal konfirmasi delete
-                deleteSelectedSlidersModal.hide();
+                // Tutup modal konfirmasi
+                closeDeleteSlidersConfirmation();
                 
-                // Hapus item yang sudah dihapus dari tampilan
-                selectedSliderIds.forEach(id => {
-                    const sliderElement = document.querySelector(`[data-slider-id="${id}"]`);
-                    if (sliderElement) {
-                        sliderElement.remove();
+                // Hapus elemen-elemen yang sudah dihapus dari DOM
+                selectedIds.forEach(id => {
+                    const element = document.querySelector(`[data-slider-id="${id}"]`);
+                    if (element) {
+                        element.remove();
                     }
                 });
                 
-                // Reset checkbox dan tampilan
-                document.querySelectorAll('.slider-checkbox:checked').forEach(checkbox => {
-                    checkbox.checked = false;
-                    checkbox.closest('.card').classList.remove('selected');
-                });
+                // Reset counter dan sembunyikan tombol delete
+                document.getElementById('selectedSliderCount').textContent = '0';
+                document.getElementById('deleteSelectedSlidersBtn').style.display = 'none';
                 
-                // Reset tombol pilih semua
-                isAllSlidersSelected = false;
+                // Reset tombol "Pilih Semua"
                 const selectAllBtn = document.getElementById('selectAllSliderBtn');
-                selectAllBtn.classList.remove('btn-secondary');
+                selectAllBtn.innerHTML = '<i class="bi bi-check-all"></i><span>Pilih Semua</span>';
+                selectAllBtn.classList.remove('btn-danger');
                 selectAllBtn.classList.add('btn-outline-secondary');
                 
-                // Update tombol hapus terpilih
-                updateDeleteSelectedSlidersButton();
-                
-                // Tampilkan pesan sukses jika diperlukan
-                // ... (optional)
-                
-                // Hapus backdrop modal konfirmasi
-                const backdrop = document.querySelector('.modal-backdrop.delete-selected-sliders-backdrop');
-                if (backdrop) {
-                    backdrop.classList.remove('delete-selected-sliders-backdrop');
-                }
+                // Refresh carousel di halaman utama
+                fetch(window.location.href)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        const carousel = document.querySelector('#heroCarousel .carousel-inner');
+                        const newCarousel = doc.querySelector('#heroCarousel .carousel-inner');
+                        if (carousel && newCarousel) {
+                            carousel.innerHTML = newCarousel.innerHTML;
+                        }
+                    });
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Terjadi kesalahan saat menghapus data');
-        })
-        .finally(() => {
-            deleteBtn.disabled = false;
-            deleteBtn.innerHTML = originalContent;
+            alert('Terjadi kesalahan saat menghapus slider');
         });
     }
     </script>
