@@ -1823,12 +1823,24 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
-    </script>
 
-    <script>
     let currentSliderId = null;
     let deleteModal = null;
     let manageModal = null;
+    let currentClientId = null;
+    let deleteClientModal = null;
+    let manageClientModal = null;
+    let serviceCardModal;
+    let deleteServiceCardModal;
+    let currentServiceCardId;
+    let retailServiceCardModal;
+    let currentRetailServiceCardId = null;
+    let deleteRetailServiceCardModal;
+    let deleteSelectedModal;
+    let isAllSelected = false;
+    let isAllSlidersSelected = false;
+    let deleteSelectedSlidersModal;
+    let selectedClientIds = [];
 
     document.addEventListener('DOMContentLoaded', function() {
         deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
@@ -1931,9 +1943,7 @@
     function refreshPage() {
         window.location.reload();
     }
-    </script>
 
-    <script>
     function handleFileSelect(event, previewId) {
         const file = event.target.files[0];
         const preview = document.getElementById(previewId);
@@ -2038,12 +2048,6 @@
             console.error('Error:', error);
         });
     });
-    </script>
-
-    <script>
-    let currentClientId = null;
-    let deleteClientModal = null;
-    let manageClientModal = null;
 
     document.addEventListener('DOMContentLoaded', function() {
         deleteClientModal = new bootstrap.Modal(document.getElementById('deleteClientConfirmationModal'));
@@ -2141,9 +2145,7 @@
         deleteClientModal.hide();
         currentClientId = null;
     }
-    </script>
 
-    <script>
     document.addEventListener('DOMContentLoaded', function() {
         const navLinks = document.querySelectorAll('.nav-link');
         
@@ -2167,9 +2169,7 @@
             });
         });
     });
-    </script>
 
-<script>
     document.querySelector('#heroContentModal form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -2195,8 +2195,7 @@
             console.error('Error:', error);
         });
     });
-    </script>
-    <script>
+
     document.querySelector('#pageTitlesModal form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -2219,8 +2218,7 @@
             console.error('Error:', error);
         });
     });
-    </script>
-    <script>
+
     document.querySelector('#layananModal form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -2243,8 +2241,7 @@
             console.error('Error:', error);
         });
     });
-    </script>
-    <script>
+
     document.querySelector('#retailServiceModal form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -2267,11 +2264,6 @@
             console.error('Error:', error);
         });
     });
-    </script>
-    <script>
-    let serviceCardModal;
-    let deleteServiceCardModal;
-    let currentServiceCardId;
 
     document.addEventListener('DOMContentLoaded', function() {
         // Inisialisasi modal
@@ -2415,9 +2407,7 @@
             console.error('Error:', error);
         });
     }
-    </script>
 
-    <script>
     document.getElementById('image').addEventListener('change', function(e) {
         const preview = document.getElementById('imagePreview');
         const previewImg = preview.querySelector('img');
@@ -2434,13 +2424,6 @@
             preview.style.display = 'none';
         }
     });
-    </script>
-
-    <!-- Tambahkan script untuk retail service -->
-    <script>
-    let retailServiceCardModal;
-    let currentRetailServiceCardId = null;
-    let deleteRetailServiceCardModal;
 
     document.addEventListener('DOMContentLoaded', function() {
         // Inisialisasi modal
@@ -2579,11 +2562,6 @@
             alert('Terjadi kesalahan saat menghapus data');
         });
     }
-    </script>
-
-    <script>
-    let deleteSelectedModal;
-    let selectedClientIds = [];
 
     document.addEventListener('DOMContentLoaded', function() {
         deleteSelectedModal = new bootstrap.Modal(document.getElementById('deleteSelectedConfirmationModal'));
@@ -2781,9 +2759,7 @@
             deleteBtn.innerHTML = originalContent;
         });
     }
-    </script>
 
-    <script>
     function toggleCheckbox(event, clientId) {
         // Hindari toggle jika yang diklik adalah tombol hapus
         if (event.target.closest('.btn-warning')) {
@@ -2833,10 +2809,6 @@
             updateDeleteSelectedButton();
         });
     });
-    </script>
-
-    <script>
-    let isAllSelected = false;
 
     function toggleSelectAll() {
         isAllSelected = !isAllSelected;
@@ -2892,11 +2864,6 @@
             selectAllBtn.classList.add('btn-outline-secondary');
         }
     }
-    </script>
-
-    <script>
-    let isAllSlidersSelected = false;
-    let deleteSelectedSlidersModal;
 
     document.addEventListener('DOMContentLoaded', function() {
         deleteSelectedSlidersModal = new bootstrap.Modal(document.getElementById('deleteSelectedSlidersConfirmationModal'));
@@ -3063,9 +3030,7 @@
             alert('Terjadi kesalahan saat menghapus slider');
         });
     }
-    </script>
 
-    <script>
     function handleCheckboxClick(event, checkbox) {
         event.stopPropagation();
         
