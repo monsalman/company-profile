@@ -1223,13 +1223,19 @@
                             </div>
                         </div>
                         @endforelse
-                        @auth
+
                         <div class="text-center mb-4">
-                            <a href="{{ route('portfolio.create') }}" class="btn btn-warning">
-                                <i class="bi bi-plus-circle me-2"></i>Tambah Portofolio
+                            <a href="{{ route('portfolio.index') }}" class="btn btn-outline-danger mb-3">
+                                <i class="bi bi-collection me-2"></i>Lihat Semua Portofolio
                             </a>
+                            @auth
+                            <div>
+                                <a href="{{ route('portfolio.create') }}" class="btn btn-warning">
+                                    <i class="bi bi-plus-circle me-2"></i>Tambah Portofolio
+                                </a>
+                            </div>
+                            @endauth
                         </div>
-                        @endauth
                     </div>
                 </div>
             </div>

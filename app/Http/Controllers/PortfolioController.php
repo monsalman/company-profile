@@ -11,7 +11,7 @@ class PortfolioController extends Controller
     public function index()
     {
         $portfolios = Portfolio::latest()->get();
-        return view('portfolio.index', compact('portfolios'));
+        return view('portfolio', compact('portfolios'));
     }
 
     public function create()
