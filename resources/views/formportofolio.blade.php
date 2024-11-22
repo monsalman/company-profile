@@ -120,7 +120,7 @@
                                          id="imagePreview">
                                     <span class="remove-image" onclick="removeImage()">×</span>
                                 </div>
-                                <label class="form-label">Gambar Portfolioo</label>
+                                <label class="form-label">Gambar Portfolio</label>
                                 <input type="file" 
                                        class="form-control @error('image') is-invalid @enderror" 
                                        name="image" 

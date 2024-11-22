@@ -1344,7 +1344,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-2"></i>Simpan</button>
                     </div>
                 </form>
             </div>
@@ -1485,7 +1485,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Hero Content</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('hero-content.update') }}" method="POST" id="heroContentForm">
                     @csrf
@@ -1503,7 +1502,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-2"></i>Simpan</button>
                     </div>
                 </form>
             </div>
@@ -1629,7 +1628,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Page Titles</h5>
+                    <h5 class="modal-title">Edit Page Title</h5>
                 </div>
                 <form action="{{ route('page-titles.update') }}" method="POST">
                     @csrf
@@ -1655,7 +1654,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-2"></i>Simpan</button>
                     </div>
                 </form>
             </div>
@@ -1684,7 +1683,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-2"></i>Simpan</button>
                     </div>
                 </form>
             </div>
@@ -1713,7 +1712,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-2"></i>Simpan</button>
                     </div>
                 </form>
             </div>
@@ -1750,7 +1749,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-2"></i>Simpan</button>
                     </div>
                 </form>
             </div>
@@ -1805,7 +1804,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-save me-2"></i>Simpan</button>
                     </div>
                 </form>
             </div>
@@ -1968,7 +1967,7 @@
             .then(data => {
                 this.reset();
                 submitButton.disabled = false;
-                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
+                submitButton.innerHTML = '<i class="bi bi-upload me-2"></i>Upload';
                 
                 if (data.success) {
                     // Refresh tampilan
@@ -1993,7 +1992,7 @@
             .catch(error => {
                 console.error('Error:', error);
                 submitButton.disabled = false;
-                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
+                submitButton.innerHTML = '<i class="bi bi-upload me-2"></i>Upload';
             });
         });
     });
@@ -2174,7 +2173,7 @@
             .then(data => {
                 this.reset();
                 submitButton.disabled = false;
-                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
+                submitButton.innerHTML = '<i class="bi bi-upload me-2"></i>Upload';
                 
                 if (data.success) {
                     // Refresh tampilan
@@ -2199,7 +2198,7 @@
             .catch(error => {
                 console.error('Error:', error);
                 submitButton.disabled = false;
-                submitButton.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Upload';
+                submitButton.innerHTML = '<i class="bi bi-upload me-2"></i>Upload';
             });
         });
     });
