@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/portfolio/{portfolio}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');
     Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update');
     Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
+    Route::post('/upload-image', [PortfolioController::class, 'uploadImage'])->name('upload.image');
 });
 
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');

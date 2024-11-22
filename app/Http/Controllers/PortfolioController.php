@@ -95,4 +95,25 @@ class PortfolioController extends Controller
             ], 500);
         }
     }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('portfolio-content', $fileName, 'public');
+            
+            $url = '/storage/' . $filePath;
+            
+            return response()->json([
+                'url' => $url
+            ]);
+        }
+        
+        return response()->json([
+            'error' => [
+                'message' => 'Tidak ada file yang diupload'
+            ]
+        ], 400);
+    }
 }

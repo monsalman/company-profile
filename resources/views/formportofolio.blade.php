@@ -194,12 +194,57 @@
             document.getElementById('imagePreview').src = '';
         }
 
-        // Inisialisasi CKEditor
-        let editor;
-        
+        // Tambahkan class adapter upload
+        class MyUploadAdapter {
+            constructor(loader) {
+                this.loader = loader;
+            }
+
+            upload() {
+                return this.loader.file
+                    .then(file => new Promise((resolve, reject) => {
+                        const formData = new FormData();
+                        formData.append('upload', file);
+
+                        // Gunakan URL yang sama dengan protokol halaman saat ini
+                        const uploadUrl = window.location.protocol + '//' + window.location.host + '/upload-image';
+
+                        fetch(uploadUrl, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(response => {
+                            // Gunakan URL yang sama dengan protokol halaman saat ini
+                            const imageUrl = window.location.protocol + '//' + window.location.host + response.url;
+                            resolve({
+                                default: imageUrl
+                            });
+                        })
+                        .catch(error => reject(error));
+                    }));
+            }
+
+            abort() {
+                // Batalkan upload jika diperlukan
+            }
+        }
+
+        // Plugin function untuk menginisialisasi adapter
+        function MyCustomUploadAdapterPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new MyUploadAdapter(loader);
+            };
+        }
+
+        // Update inisialisasi CKEditor
         ClassicEditor
             .create(document.querySelector('#editor'), {
-                toolbar: ['heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList'],
+                extraPlugins: [MyCustomUploadAdapterPlugin],
+                toolbar: ['heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'uploadImage'],
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },

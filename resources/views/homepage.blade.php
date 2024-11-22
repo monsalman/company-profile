@@ -1191,20 +1191,25 @@
                         alt="{{ $portfolio->title }}"
                         style="height: 200px; object-fit: cover;">
                         <div class="card-body">
-                                <h5 class="card-title">{{ $portfolio->title }}</h5>
-                                <p class="card-text">{!! Str::limit(strip_tags($portfolio->description), 100) !!}</p>
+                                <h5 class="card-title fw-bold">{{ $portfolio->title }}</h5>
+                                <p class="card-text">
+                                {!! Str::limit($portfolio->description, 100, '...') !!}
+                                    @if (strlen($portfolio->description) > 100)
+                                        <a href="" class="text-danger">See More</a>
+                                    @endif
+                                </p>
                             </div>
                             @auth
                                 <div class="card-footer bg-white border-0 pb-3">
                                     <div class="d-flex gap-2 justify-content-end">
                                         <a href="{{ route('portfolio.edit', $portfolio->id) }}" 
                                            class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil me-1"></i>Edit
+                                            <i class="bi bi-pencil"></i>
                                         </a>
                                         <button type="button" 
                                         class="btn btn-sm btn-danger"
                                         onclick="confirmDeletePortfolio({{ $portfolio->id }})">
-                                        <i class="bi bi-trash me-1"></i>Hapus
+                                        <i class="bi bi-trash"></i>
                                         </button>
                                     </div>
                                 </div>
