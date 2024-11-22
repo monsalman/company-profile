@@ -11,6 +11,7 @@ use App\Http\Controllers\LayananController;
 use App\Http\Controllers\ServiceCardController;
 use App\Http\Controllers\RetailServiceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PortfolioController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -35,7 +36,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/layanan/update-retail', [LayananController::class, 'updateRetail'])->name('layanan.update-retail');
     Route::resource('service-cards', ServiceCardController::class);
     Route::resource('retail-services', RetailServiceController::class);
+    Route::get('/portfolio/create', [PortfolioController::class, 'create'])->name('portfolio.create');
+    Route::post('/portfolio', [PortfolioController::class, 'store'])->name('portfolio.store');
+    Route::get('/portfolio/{portfolio}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');
+    Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update');
+    Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
 });
+
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
 
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);

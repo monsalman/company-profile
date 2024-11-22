@@ -1098,8 +1098,10 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-12 text-center">
-                        <p>Belum ada service card</p>
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            Belum ada service card
+                        </div>
                     </div>
                 @endforelse
             </div>
@@ -1157,9 +1159,11 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-12 text-center">
-                        <p class="text-muted">Belum ada retail service</p>
-                    </div>
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            Belum ada retail service
+                        </div>
+                    </div> 
                 @endforelse
             </div>
             
@@ -1173,13 +1177,78 @@
         </div>
     </section>
 
-    <section id="portofolio" class="py-5 bg-light">
+    <section id="portofolio" class="py-3 bg-light">
         <div class="container">
             <h2 class="text-center section-title">Portofolio</h2>
+            
+            
             <div class="row g-4">
+                @forelse($portfolios as $portfolio)
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <img src="{{ asset('storage/' . $portfolio->image) }}" 
+                        class="card-img-top" 
+                        alt="{{ $portfolio->title }}"
+                        style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                                <h5 class="card-title">{{ $portfolio->title }}</h5>
+                                <p class="card-text">{!! Str::limit(strip_tags($portfolio->description), 100) !!}</p>
+                            </div>
+                            @auth
+                                <div class="card-footer bg-white border-0 pb-3">
+                                    <div class="d-flex gap-2 justify-content-end">
+                                        <a href="{{ route('portfolio.edit', $portfolio->id) }}" 
+                                           class="btn btn-sm btn-warning">
+                                            <i class="bi bi-pencil me-1"></i>Edit
+                                        </a>
+                                        <button type="button" 
+                                        class="btn btn-sm btn-danger"
+                                        onclick="confirmDeletePortfolio({{ $portfolio->id }})">
+                                        <i class="bi bi-trash me-1"></i>Hapus
+                                        </button>
+                                    </div>
+                                </div>
+                                @endauth
+                            </div>
+                        </div>
+                        @empty
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                Belum ada portofolio
+                            </div>
+                        </div>
+                        @endforelse
+                        @auth
+                        <div class="text-center mb-4">
+                            <a href="{{ route('portfolio.create') }}" class="btn btn-warning">
+                                <i class="bi bi-plus-circle me-2"></i>Tambah Portofolio
+                            </a>
+                        </div>
+                        @endauth
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Modal Konfirmasi Delete Portfolio -->
+    <div class="modal fade" id="deletePortfolioModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus portofolio ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" onclick="deletePortfolio()">
+                        <i class="bi bi-trash me-2"></i>Hapus
+                    </button>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <section id="kontak" class="py-5">
         <div class="container">
@@ -3046,6 +3115,49 @@
         
         // Update tampilan tombol delete selected
         updateDeleteSelectedSlidersButton();
+    }
+
+    let deletePortfolioModal;
+    let portfolioIdToDelete;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        deletePortfolioModal = new bootstrap.Modal(document.getElementById('deletePortfolioModal'));
+    });
+
+    function confirmDeletePortfolio(id) {
+        portfolioIdToDelete = id;
+        deletePortfolioModal.show();
+    }
+
+    function deletePortfolio() {
+        if (!portfolioIdToDelete) return;
+
+        fetch(`/portfolio/${portfolioIdToDelete}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Hapus card dari DOM
+                const portfolioCard = document.querySelector(`[data-portfolio-id="${portfolioIdToDelete}"]`);
+                if (portfolioCard) {
+                    portfolioCard.remove();
+                }
+                
+                // Refresh halaman untuk memperbarui tampilan
+                window.location.reload();
+            }
+            deletePortfolioModal.hide();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            deletePortfolioModal.hide();
+        });
     }
     </script>
 </body>
