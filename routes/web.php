@@ -18,6 +18,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');
+    Route::get('/portfolio/{portfolio:slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
 });
 
 Route::middleware('auth')->group(function () {
