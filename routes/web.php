@@ -18,6 +18,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');
+    Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show'); 
 });
 
 Route::middleware('auth')->group(function () {
@@ -42,7 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update');
     Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
     Route::post('/upload-image', [PortfolioController::class, 'uploadImage'])->name('upload.image');
-    Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
 });
 
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
