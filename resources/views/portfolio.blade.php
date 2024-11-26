@@ -145,11 +145,10 @@
                                         {!! Str::limit($portfolio->description, 200, '...') !!}
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                                        <button class="btn btn-outline-danger btn-sm" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#portfolioModal{{ $portfolio->id }}">
+                                        <a href="{{ route('portfolio.show', $portfolio->slug) }}" 
+                                           class="btn btn-outline-danger btn-sm">
                                             Baca Selengkapnya
-                                        </button>
+                                        </a>
                                         @auth
                                             <div class="d-flex gap-2">
                                                 <a href="{{ route('portfolio.edit', $portfolio->id) }}" 

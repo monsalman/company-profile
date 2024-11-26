@@ -1195,7 +1195,7 @@
                                 <p class="card-text">
                                 {!! Str::limit($portfolio->description, 100, '...') !!}
                                     @if (strlen($portfolio->description) > 100)
-                                        <a href="" class="text-danger">See More</a>
+                                        <a href="{{ route('portfolio.show', $portfolio->slug) }}" class="text-danger">See More</a>
                                     @endif
                                 </p>
                             </div>

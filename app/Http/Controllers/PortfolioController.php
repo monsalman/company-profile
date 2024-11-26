@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PortfolioController extends Controller
 {
@@ -32,7 +33,8 @@ class PortfolioController extends Controller
         Portfolio::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
-            'image' => $imagePath
+            'image' => $imagePath,
+            'slug' => Str::slug($validated['title'])
         ]);
 
         return redirect()->route('home')
@@ -115,5 +117,11 @@ class PortfolioController extends Controller
                 'message' => 'Tidak ada file yang diupload'
             ]
         ], 400);
+    }
+
+    public function show($slug)
+    {
+        $portfolio = Portfolio::where('slug', $slug)->firstOrFail();
+        return view('detailportfolio', compact('portfolio'));
     }
 }

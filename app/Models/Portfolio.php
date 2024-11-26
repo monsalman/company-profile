@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Portfolio extends Model
 {
@@ -15,7 +16,23 @@ class Portfolio extends Model
         'title',
         'description',
         'image',
+        'slug'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($portfolio) {
+            $portfolio->slug = Str::slug($portfolio->title);
+        });
+        
+        static::updating(function ($portfolio) {
+            if ($portfolio->isDirty('title')) {
+                $portfolio->slug = Str::slug($portfolio->title);
+            }
+        });
+    }
 
     public function deleteImage()
     {
