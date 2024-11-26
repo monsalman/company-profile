@@ -37,7 +37,7 @@ class PortfolioController extends Controller
             'slug' => Str::slug($validated['title'])
         ]);
 
-        return redirect()->route('home')
+        return redirect()->route('home', ['#portfolio'])
                         ->with('success', 'Portfolio berhasil ditambahkan');
     }
 
@@ -71,7 +71,7 @@ class PortfolioController extends Controller
 
             $portfolio->update($data);
 
-            return redirect()->route('home')
+            return redirect()->route('home', ['#portfolio'])
                             ->with('success', 'Portfolio berhasil diperbarui');
         } catch (\Exception $e) {
             return redirect()->back()

@@ -158,7 +158,7 @@
                             </div>
 
                             <div class="d-flex gap-2">
-                                <a href="{{ route('home') }}#portofolio" class="btn btn-secondary">
+                                <a href="{{ route('home') }}#portfolio" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left me-2"></i>Kembali
                                 </a>
                                 <button type="submit" class="btn btn-danger">

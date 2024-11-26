@@ -1177,7 +1177,7 @@
         </div>
     </section>
 
-    <section id="portofolio" class="py-3 bg-light">
+    <section id="portfolio" class="py-3 bg-light">
         <div class="container">
             <h2 class="text-center section-title">Portofolio</h2>
             
