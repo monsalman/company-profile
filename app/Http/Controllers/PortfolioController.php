@@ -116,9 +116,4 @@ class PortfolioController extends Controller
             ]
         ], 400);
     }
-
-    public function show(Portfolio $portfolio)
-    {
-        return view('portfolio-detail', compact('portfolio'));
-    }
 }

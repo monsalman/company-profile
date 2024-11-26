@@ -23,19 +23,4 @@ class Portfolio extends Model
             unlink(storage_path('app/public/' . $this->image));
         }
     }
-
-    protected static function boot()
-    {
-        parent::boot();
-        
-        static::creating(function ($portfolio) {
-            // Mengubah spasi menjadi tanda hubung
-            $portfolio->slug = \Str::slug($portfolio->title, '-');
-        });
-        
-        static::updating(function ($portfolio) {
-            // Mengubah spasi menjadi tanda hubung
-            $portfolio->slug = \Str::slug($portfolio->title, '-');
-        });
-    }
 }
