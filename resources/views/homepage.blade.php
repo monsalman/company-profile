@@ -878,7 +878,7 @@
                     <li class="nav-item"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portofolio"><i class="bi bi-briefcase me-1"></i>Portofolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio"><i class="bi bi-briefcase me-1"></i>Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
                     @auth
                         <li class="nav-item">

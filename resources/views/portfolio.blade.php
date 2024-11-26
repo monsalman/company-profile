@@ -117,7 +117,7 @@
 <body class="bg-light">
     <div class="container py-5">
         <div class="d-flex align-items-center mb-5">
-            <a href="{{ route('home') }}" class="btn btn-danger me-3" title="Kembali ke Beranda">
+            <a href="{{ route('home', ['#portfolio']) }}" class="btn btn-danger me-3" title="Kembali ke Beranda">
                 <i class="bi bi-arrow-left"></i>
             </a>
             <h1 class="section-title mb-0">Portofolio Kami</h1>
