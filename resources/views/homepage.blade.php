@@ -851,6 +851,204 @@
             background-color: rgba(0, 0, 0, 0.9) !important;
             z-index: 1055;
         }
+
+        #tentang {
+            background-color: #fff;
+        }
+
+        #tentang p {
+            text-align: justify;
+            margin-bottom: 1.5rem;
+        }
+
+        #tentang h3 {
+            margin-bottom: 2rem;
+        }
+
+        .vision-card, .mission-card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.05);
+            height: 100%;
+            position: relative; /* Tambahkan ini */
+        }
+
+        .vision-card:hover, .mission-card:hover {
+            /* Hapus transform translateY */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+        .card-description {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+
+        .vision-card:hover .card-description,
+        .mission-card:hover .card-description {
+            max-height: 200px;
+            opacity: 1;
+            transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
+        }
+
+        @media (max-width: 768px) {
+            .card-description {
+                max-height: 0;
+                opacity: 0;
+            }
+            
+            .vision-card.active .card-description,
+            .mission-card.active .card-description {
+                max-height: 200px;
+                opacity: 1;
+            }
+        }
+
+        /* Tambahkan CSS berikut di bagian <style> atau file CSS Anda */
+        .vision-card,
+        .mission-card {
+            transition: all 0.3s ease;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .vision-card .card-description,
+        .mission-card .card-description {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .vision-card:hover,
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+        .vision-card:hover .card-description,
+        .mission-card:hover .card-description {
+            max-height: 200px;
+            opacity: 1;
+        }
+
+        .vision-card .card-body,
+        .mission-card .card-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .vision-card .card-title,
+        .mission-card .card-title {
+            margin-bottom: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Tambahkan efek hover untuk ikon */
+        .vision-card:hover .bi,
+        .mission-card:hover .bi {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        /* Pastikan card tetap stabil dengan minimum height */
+        .vision-card,
+        .mission-card {
+            min-height: 150px;
+        }
+
+        /* Tambahkan animasi smooth untuk transisi */
+        @keyframes slideDown {
+            from {
+                max-height: 0;
+                opacity: 0;
+            }
+            to {
+                max-height: 200px;
+                opacity: 1;
+            }
+        }
+
+        .vision-card:hover .card-description,
+        .mission-card:hover .card-description {
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .vision-card,
+        .mission-card {
+            position: relative;
+            transition: all 0.3s ease;
+            height: 120px; /* Tinggi default card */
+            overflow: hidden;
+        }
+
+        .card-description {
+            position: absolute;
+            top: 80px; /* Sesuaikan dengan tinggi header */
+            left: 0;
+            right: 0;
+            padding: 0 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .vision-card:hover,
+        .mission-card:hover {
+            height: 250px; /* Tinggi card saat di-hover */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+        .vision-card:hover .card-description,
+        .mission-card:hover .card-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Efek hover untuk ikon */
+        .vision-card .bi,
+        .mission-card .bi {
+            transition: transform 0.3s ease;
+        }
+
+        .vision-card:hover .bi,
+        .mission-card:hover .bi {
+            transform: scale(1.1);
+        }
+
+        /* Pastikan row tidak terpengaruh perubahan tinggi card */
+        .row {
+            align-items: flex-start;
+        }
+
+        /* Animasi smooth untuk transisi */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .vision-card:hover .card-description,
+        .mission-card:hover .card-description {
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        /* Menambahkan transition untuk box-shadow */
+        .vision-card,
+        .mission-card {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -925,8 +1123,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#portofolio">
-                        <i class="bi bi-briefcase me-2"></i>Portofolio
+                    <a class="nav-link" href="#portfolio">
+                        <i class="bi bi-briefcase me-2"></i>Portfolio
                     </a>
                 </li>
                 <li class="nav-item">
@@ -1182,7 +1380,7 @@
             <h2 class="text-center section-title">Portofolio</h2>
             
             
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 @forelse($portfolios as $portfolio)
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100">
@@ -1261,7 +1459,74 @@
         </div>
     </div>
 
-    <section id="kontak" class="py-5">
+    <section id="tentang" class="py-3">
+        <div class="container">
+            <h2 class="text-center section-title">Tentang Kami</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="text-center mb-5">
+                        <h3 class="mb-4" style="color: #E31E2D; font-size: 2.5rem; font-weight: bold;">
+                            Profile Singkat Kami
+                            @auth
+                                <a href="#" class="ms-2 text-danger" style="font-size: 1.5rem;" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            @endauth
+                        </h3>
+                        
+                        <p class="mb-4" style="color: #666; font-size: 1.1rem; line-height: 1.8;">
+                            Dengan semangat dan potensi anak muda yang mempunyai cita-cita akan mengembangkan Teknologi Informasi yang dapat di jangkau dan berguna bagi masyarakat di semua kalangan, kami memulainya dengan membuat beberapa produk layanan yang berbasis Online Technology, seperti Online Shop, Market Place, Corporate Website, dll.
+                        </p>
+                        
+                        <p style="color: #666; font-size: 1.1rem; line-height: 1.8;">
+                            Hingga pada akhirnya kami resmi menggunakan bendera PT Digital Fatih Indonesia (DFI) pada bulan Desember 2015 dan berganti menjadi PT Digital Forte Indonesia pada Febuari 2022. Sesuai Perijinan dan Legalitas yang dibuat, DFI bergerak dalam bidang usaha IT Development baik Software maupun Hardware.
+                        </p>
+
+                        <!-- Visi & Misi Cards -->
+                        <div class="row g-4 mt-5">
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm vision-card">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-eye-fill text-danger me-3" style="font-size: 2rem;"></i>
+                                            <h4 class="card-title mb-0" style="color: #E31E2D; font-weight: bold;">
+                                                Visi
+                                            </h4>
+                                        </div>
+                                        <div class="card-description">
+                                            <p class="card-text mt-3" style="color: #666; font-size: 1rem; line-height: 1.6; text-align: left;">
+                                                Menjadi perusahaan IT terdepan yang memberikan solusi teknologi inovatif dan terjangkau bagi semua kalangan masyarakat.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm mission-card">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-bullseye text-danger me-3" style="font-size: 2rem;"></i>
+                                            <h4 class="card-title mb-0" style="color: #E31E2D; font-weight: bold;">
+                                                Misi
+                                            </h4>
+                                        </div>
+                                        <div class="card-description">
+                                            <p class="card-text mt-3" style="color: #666; font-size: 1rem; line-height: 1.6; text-align: left;">
+                                                Mengembangkan produk dan layanan IT berkualitas tinggi yang memenuhi kebutuhan klien, mendorong inovasi teknologi, dan berkontribusi pada kemajuan digital Indonesia.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontak" class="py-3">
         <div class="container">
             <h2 class="text-center section-title">Kontak Kami</h2>
             <!-- Isi konten kontak disini -->
