@@ -13,6 +13,7 @@ use App\Http\Controllers\RetailServiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileKamiController;
+use App\Http\Controllers\VisiMisiController;
 
 
 Route::middleware('guest')->group(function () {
@@ -49,6 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/retail-services', [RetailServiceController::class, 'store'])->name('retail-services.store');
     Route::put('/retail-services/{retailService}', [RetailServiceController::class, 'update'])->name('retail-services.update');
     Route::delete('/retail-services/{retailService}', [RetailServiceController::class, 'destroy'])->name('retail-services.destroy');
+    Route::get('/visi-misi', [VisiMisiController::class, 'index'])->name('visi-misi.index');
+    Route::put('/visi-misi', [VisiMisiController::class, 'update'])->name('visi-misi.update');
 });
 
 

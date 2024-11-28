@@ -1349,7 +1349,7 @@
                 <div class="col-lg-10">
                     <div class="text-center mb-5">
                         <h3 class="mb-4" style="color: #E31E2D; font-size: 2rem; font-weight: bold;">
-                            {{ \App\Models\ProfileKami::first()?->title ?? 'Profile Singkat Kami' }}
+                            {{ \App\Models\ProfileKami::first()?->title ?? 'Belum di konfigurasi' }}
                             @auth
                                 <a href="#" class="ms-2 text-danger" style="font-size: 2rem;" data-bs-toggle="modal" data-bs-target="#profilekamiModal">
                                     <i class="bi bi-pencil-square"></i>
@@ -1358,11 +1358,11 @@
                         </h3>
                         
                         <p class="mb-4" style="color: #666; font-size: 1rem; line-height: 1.4; max-width: 1200px;">
-                            {{ \App\Models\ProfileKami::first()?->description_1 ?? 'Dengan semangat dan potensi anak muda...' }}
+                            {{ \App\Models\ProfileKami::first()?->description_1 ?? 'Belum di konfigurasi' }}
                         </p>
                         
                         <p class="mb-3" style="color: #666; font-size: 1rem; line-height: 1.4; max-width: 1200px;">
-                            {{ \App\Models\ProfileKami::first()?->description_2 ?? 'Hingga pada akhirnya kami resmi...' }}
+                            {{ \App\Models\ProfileKami::first()?->description_2 ?? 'Belum di konfigurasi' }}
                         </p>
 
                         <!-- Ubah mt-5 menjadi mt-4 untuk mengurangi jarak -->
@@ -2086,6 +2086,47 @@
         @csrf
         @method('DELETE')
     </form>
+
+    <!-- Tambahkan modal ini sebelum penutup tag body -->
+    <div class="modal fade" id="visiMisiModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Visi & Misi</h5>
+                </div>
+                <form action="{{ route('visi-misi.update') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Judul Visi</label>
+                            <input type="text" class="form-control" name="visi" 
+                                   value="{{ $visiMisi->visi ?? 'Visi Perusahaan' }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi Visi</label>
+                            <textarea class="form-control" name="visi_deskripsi" rows="4" required>{{ $visiMisi->visi_deskripsi ?? 'Deskripsi visi perusahaan' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Judul Misi</label>
+                            <input type="text" class="form-control" name="misi" 
+                                   value="{{ $visiMisi->misi ?? 'Misi Perusahaan' }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi Misi</label>
+                            <textarea class="form-control" name="misi_deskripsi" rows="4" required>{{ $visiMisi->misi_deskripsi ?? 'Deskripsi misi perusahaan' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-save me-2"></i>Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
