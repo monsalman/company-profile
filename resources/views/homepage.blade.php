@@ -865,160 +865,39 @@
             margin-bottom: 2rem;
         }
 
-        .vision-card, .mission-card {
+        /* Update style untuk vision-card dan mission-card */
+        .vision-card,
+        .mission-card {
+            position: relative;
             transition: all 0.3s ease;
-            border: none;
+            height: 80px; /* Kurangi tinggi default */
+            overflow: hidden;
             border-radius: 20px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.05);
-            height: 100%;
-            position: relative; /* Tambahkan ini */
-        }
-
-        .vision-card:hover, .mission-card:hover {
-            /* Hapus transform translateY */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-        }
-
-        .card-description {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-            opacity: 0;
-        }
-
-        .vision-card:hover .card-description,
-        .mission-card:hover .card-description {
-            max-height: 200px;
-            opacity: 1;
-            transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
-        }
-
-        @media (max-width: 768px) {
-            .card-description {
-                max-height: 0;
-                opacity: 0;
-            }
-            
-            .vision-card.active .card-description,
-            .mission-card.active .card-description {
-                max-height: 200px;
-                opacity: 1;
-            }
-        }
-
-        /* Tambahkan CSS berikut di bagian <style> atau file CSS Anda */
-        .vision-card,
-        .mission-card {
-            transition: all 0.3s ease;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .vision-card .card-description,
-        .mission-card .card-description {
-            max-height: 0;
-            opacity: 0;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .vision-card:hover,
-        .mission-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-        }
-
-        .vision-card:hover .card-description,
-        .mission-card:hover .card-description {
-            max-height: 200px;
-            opacity: 1;
-        }
-
-        .vision-card .card-body,
-        .mission-card .card-body {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .vision-card .card-title,
-        .mission-card .card-title {
-            margin-bottom: 0;
-            transition: all 0.3s ease;
-        }
-
-        /* Tambahkan efek hover untuk ikon */
-        .vision-card:hover .bi,
-        .mission-card:hover .bi {
-            transform: scale(1.1);
-            transition: transform 0.3s ease;
-        }
-
-        /* Pastikan card tetap stabil dengan minimum height */
-        .vision-card,
-        .mission-card {
-            min-height: 150px;
-        }
-
-        /* Tambahkan animasi smooth untuk transisi */
-        @keyframes slideDown {
-            from {
-                max-height: 0;
-                opacity: 0;
-            }
-            to {
-                max-height: 200px;
-                opacity: 1;
-            }
-        }
-
-        .vision-card:hover .card-description,
-        .mission-card:hover .card-description {
-            animation: slideDown 0.3s ease forwards;
-        }
-
-        .vision-card,
-        .mission-card {
-            position: relative;
-            transition: all 0.3s ease;
-            height: 120px; /* Tinggi default card */
-            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(227, 30, 45, 0.1); /* Tambah shadow merah */
         }
 
         .card-description {
             position: absolute;
-            top: 80px; /* Sesuaikan dengan tinggi header */
+            top: 60px; /* Kurangi jarak dari atas */
             left: 0;
             right: 0;
             padding: 0 1.5rem;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px); /* Kurangi jarak transformasi */
             transition: all 0.3s ease;
             pointer-events: none;
         }
 
         .vision-card:hover,
         .mission-card:hover {
-            height: 250px; /* Tinggi card saat di-hover */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+            height: 200px; /* Kurangi tinggi saat hover */
+            box-shadow: 0 8px 16px rgba(227, 30, 45, 0.2) !important; /* Shadow merah lebih kuat saat hover */
         }
 
         .vision-card:hover .card-description,
         .mission-card:hover .card-description {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        /* Efek hover untuk ikon */
-        .vision-card .bi,
-        .mission-card .bi {
-            transition: transform 0.3s ease;
-        }
-
-        .vision-card:hover .bi,
-        .mission-card:hover .bi {
-            transform: scale(1.1);
         }
 
         /* Pastikan row tidak terpengaruh perubahan tinggi card */
@@ -1030,7 +909,7 @@
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -1043,11 +922,16 @@
             animation: slideDown 0.3s ease forwards;
         }
 
-        /* Menambahkan transition untuk box-shadow */
-        .vision-card,
-        .mission-card {
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+        /* Update padding untuk card body */
+        .vision-card .card-body,
+        .mission-card .card-body {
+            padding: 1rem 1.5rem !important; /* Kurangi padding */
+        }
+
+        /* Update margin untuk text description */
+        .card-description p {
+            margin-top: 0.5rem !important; /* Kurangi margin top */
+            margin-bottom: 0.5rem !important; /* Kurangi margin bottom */
         }
     </style>
 </head>
@@ -1341,7 +1225,7 @@
                                     <div class="mt-3">
                                         <button type="button" 
                                                 class="btn btn-sm btn-warning me-2" 
-                                                onclick="editRetailServiceCard('{{ $service->id }}', '{{ $service->title }}', '{{ $service->description }}', '{{ asset('storage/' . $service->image) }}')"
+                                                onclick="editRetailServiceCard('{{ $service->id }}', '{{ urlencode($service->title) }}', '{{ urlencode($service->description) }}', '{{ urlencode(asset('storage/' . $service->image)) }}')"
                                                 title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </button>
@@ -1466,25 +1350,25 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="text-center mb-5">
-                        <h3 class="mb-4" style="color: #E31E2D; font-size: 2.5rem; font-weight: bold;">
-                            Profile Singkat Kami
+                        <h3 class="mb-4" style="color: #E31E2D; font-size: 2rem; font-weight: bold;">
+                            {{ \App\Models\ProfileKami::first()?->title ?? 'Profile Singkat Kami' }}
                             @auth
-                                <a href="#" class="ms-2 text-danger" style="font-size: 1.5rem;" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                <a href="#" class="ms-2 text-danger" style="font-size: 2rem;" data-bs-toggle="modal" data-bs-target="#profilekamiModal">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                             @endauth
                         </h3>
                         
-                        <p class="mb-4" style="color: #666; font-size: 1.1rem; line-height: 1.8;">
-                            Dengan semangat dan potensi anak muda yang mempunyai cita-cita akan mengembangkan Teknologi Informasi yang dapat di jangkau dan berguna bagi masyarakat di semua kalangan, kami memulainya dengan membuat beberapa produk layanan yang berbasis Online Technology, seperti Online Shop, Market Place, Corporate Website, dll.
+                        <p class="mb-4" style="color: #666; font-size: 1rem; line-height: 1.4; max-width: 1200px;">
+                            {{ \App\Models\ProfileKami::first()?->description_1 ?? 'Dengan semangat dan potensi anak muda...' }}
                         </p>
                         
-                        <p style="color: #666; font-size: 1.1rem; line-height: 1.8;">
-                            Hingga pada akhirnya kami resmi menggunakan bendera PT Digital Fatih Indonesia (DFI) pada bulan Desember 2015 dan berganti menjadi PT Digital Forte Indonesia pada Febuari 2022. Sesuai Perijinan dan Legalitas yang dibuat, DFI bergerak dalam bidang usaha IT Development baik Software maupun Hardware.
+                        <p class="mb-3" style="color: #666; font-size: 1rem; line-height: 1.4; max-width: 1200px;">
+                            {{ \App\Models\ProfileKami::first()?->description_2 ?? 'Hingga pada akhirnya kami resmi...' }}
                         </p>
 
-                        <!-- Visi & Misi Cards -->
-                        <div class="row g-4 mt-5">
+                        <!-- Ubah mt-5 menjadi mt-4 untuk mengurangi jarak -->
+                        <div class="row g-4 mt-3">
                             <div class="col-md-6">
                                 <div class="card border-0 shadow-sm vision-card">
                                     <div class="card-body p-4">
@@ -1513,7 +1397,7 @@
                                         </div>
                                         <div class="card-description">
                                             <p class="card-text mt-3" style="color: #666; font-size: 1rem; line-height: 1.6; text-align: left;">
-                                                Mengembangkan produk dan layanan IT berkualitas tinggi yang memenuhi kebutuhan klien, mendorong inovasi teknologi, dan berkontribusi pada kemajuan digital Indonesia.
+                                                Mengembangkan solusi teknologi yang inovatif dan berkualitas tinggi untuk memenuhi kebutuhan klien kami.
                                             </p>
                                         </div>
                                     </div>
@@ -1970,7 +1854,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Retail Service</h5>
+                    <h5 class="modal-title">Edit Retail</h5>
                 </div>
                 <form action="{{ route('layanan.update-retail') }}" method="POST">
                     @csrf
@@ -2151,6 +2035,50 @@
                         <i class="bi bi-trash me-2"></i>Hapus
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tambahkan modal ini sebelum tag penutup </body> -->
+    <div class="modal fade" id="profilekamiModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Profil Perusahaan</h5>
+                </div>
+                <form action="{{ route('profilekami.update') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Judul</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   name="title" 
+                                   value="{{ \App\Models\ProfileKami::first()?->title ?? 'Profile Singkat Kami' }}" 
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi 1</label>
+                            <textarea class="form-control" 
+                                      name="description_1" 
+                                      rows="8" 
+                                      required>{{ \App\Models\ProfileKami::first()?->description_1 ?? 'Dengan semangat dan potensi anak muda yang mempunyai cita-cita akan mengembangkan Teknologi Informasi yang dapat di jangkau dan berguna bagi masyarakat di semua kalangan, kami memulainya dengan membuat beberapa produk layanan yang berbasis Online Technology, seperti Online Shop, Market Place, Corporate Website, dll.' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi 2</label>
+                            <textarea class="form-control" 
+                                      name="description_2" 
+                                      rows="8" 
+                                      required>{{ \App\Models\ProfileKami::first()?->description_2 ?? 'Hingga pada akhirnya kami resmi menggunakan bendera PT Digital Fatih Indonesia (DFI) pada bulan Desember 2015 dan berganti menjadi PT Digital Forte Indonesia pada Febuari 2022. Sesuai Perijinan dan Legalitas yang dibuat, DFI bergerak dalam bidang usaha IT Development baik Software maupun Hardware' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-save me-2"></i>Simpan
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -2857,24 +2785,30 @@
 
     // Fungsi untuk edit retail service card
     function editRetailServiceCard(id, title, description, imageUrl) {
-        // Reset form
-        document.getElementById('retailServiceCardForm').reset();
+        // Pastikan retailServiceCardModal sudah diinisialisasi
+        if (!retailServiceCardModal) {
+            retailServiceCardModal = new bootstrap.Modal(document.getElementById('retailServiceCardModal'));
+        }
         
-        // Set nilai-nilai form
+        // Reset dan isi form
+        const form = document.getElementById('retailServiceCardForm');
+        form.reset();
+        
+        // Set nilai input dengan escape HTML untuk keamanan
         document.getElementById('retailServiceCardId').value = id;
-        document.getElementById('retailServiceCardTitle').value = title;
-        document.getElementById('retailServiceCardDescription').value = description;
+        document.getElementById('retailServiceCardTitle').value = decodeURIComponent(title.replace(/\+/g, ' '));
+        document.getElementById('retailServiceCardDescription').value = decodeURIComponent(description.replace(/\+/g, ' '));
         
-        // Set preview gambar jika ada
+        // Set preview gambar
         const preview = document.getElementById('retailServiceCardImagePreview');
         const previewImg = preview.querySelector('img');
         if (imageUrl) {
-            previewImg.src = imageUrl;
+            previewImg.src = decodeURIComponent(imageUrl.replace(/\+/g, ' '));
             preview.style.display = 'block';
         } else {
             preview.style.display = 'none';
         }
-        
+
         // Tampilkan modal
         retailServiceCardModal.show();
     }
@@ -3434,6 +3368,33 @@
             deletePortfolioModal.hide();
         });
     }
+
+    // Tambahkan di dalam tag <script> yang sudah ada
+    document.querySelector('#profilekamiModal form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Tutup modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('profilekamiModal'));
+                modal.hide();
+                
+                // Refresh halaman
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
     </script>
 </body>
 </html>
