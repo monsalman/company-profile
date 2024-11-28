@@ -987,7 +987,6 @@
     <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileSidebar">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title">Menu</h5>
-            <!-- <button type="button" class="btn-close text-white" data-bs-dismiss="offcanvas"></button> -->
         </div>
         <div class="offcanvas-body">
             <ul class="nav flex-column">
@@ -997,18 +996,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#tentang">
-                        <i class="bi bi-person me-2"></i>Tentang Kami
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#layanan">
                         <i class="bi bi-gear me-2"></i>Layanan
                     </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#portfolio">
                         <i class="bi bi-briefcase me-2"></i>Portfolio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tentang">
+                        <i class="bi bi-person me-2"></i>Tentang Kami
                     </a>
                 </li>
                 <li class="nav-item">
