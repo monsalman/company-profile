@@ -958,9 +958,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
                     <li class="nav-item"><a class="nav-link" href="#portfolio"><i class="bi bi-briefcase me-1"></i>Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
                     @auth
                         <li class="nav-item">
@@ -1410,7 +1410,7 @@
         </div>
     </section>
 
-    <section id="kontak" class="py-3">
+    <section id="kontak" class="py-3 bg-light">
         <div class="container">
             <h2 class="text-center section-title">Kontak Kami</h2>
             <!-- Isi konten kontak disini -->
@@ -1657,7 +1657,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows="3" required>{{ $heroContent?->description ?? 'Mengefisiensikan Bisnis Anda dengan menjadikanya terstruktur, termonitor dan tepat sasaran. Digital Forte Membantu banyak pelaku usaha dengan teknologi terkini dan user friendly' }}</textarea>
+                            <textarea class="form-control" name="description" rows="4" required>{{ $heroContent?->description ?? 'Mengefisiensikan Bisnis Anda dengan menjadikanya terstruktur, termonitor dan tepat sasaran. Digital Forte Membantu banyak pelaku usaha dengan teknologi terkini dan user friendly' }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1838,7 +1838,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="description" rows="4" required>{{ \App\Models\Layanan::where('key', 'service_custom')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
+                            <textarea class="form-control" name="description" rows="5" required>{{ \App\Models\Layanan::where('key', 'service_custom')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1867,7 +1867,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="description" rows="4" required>{{ \App\Models\Layanan::where('key', 'service_retail')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
+                            <textarea class="form-control" name="description" rows="5" required>{{ \App\Models\Layanan::where('key', 'service_retail')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

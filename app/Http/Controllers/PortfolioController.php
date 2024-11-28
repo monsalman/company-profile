@@ -28,7 +28,8 @@ class PortfolioController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $imagePath = $request->file('image')->store('portfolios', 'public');
+        $originalName = $request->file('image')->getClientOriginalName();
+        $imagePath = $request->file('image')->storeAs('portfolios', $originalName, 'public');
         
         Portfolio::create([
             'title' => $validated['title'],
@@ -61,11 +62,11 @@ class PortfolioController extends Controller
             ];
 
             if ($request->hasFile('image')) {
-                // Hapus gambar lama jika ada
                 if ($portfolio->image) {
                     Storage::disk('public')->delete($portfolio->image);
                 }
-                $imagePath = $request->file('image')->store('portfolios', 'public');
+                $originalName = $request->file('image')->getClientOriginalName();
+                $imagePath = $request->file('image')->storeAs('portfolios', $originalName, 'public');
                 $data['image'] = $imagePath;
             }
 
@@ -102,7 +103,7 @@ class PortfolioController extends Controller
     {
         if ($request->hasFile('upload')) {
             $file = $request->file('upload');
-            $fileName = time() . '_' . $file->getClientOriginalName();
+            $fileName = $file->getClientOriginalName();
             $filePath = $file->storeAs('portfolio-content', $fileName, 'public');
             
             $url = '/storage/' . $filePath;

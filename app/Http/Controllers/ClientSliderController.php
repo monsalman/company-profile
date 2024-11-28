@@ -20,7 +20,8 @@ class ClientSliderController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 try {
-                    $path = $image->store('client-sliders', 'public');
+                    $originalName = $image->getClientOriginalName();
+                    $path = $image->storeAs('client-sliders', $originalName, 'public');
                     
                     ClientSlider::create([
                         'image' => $path,
