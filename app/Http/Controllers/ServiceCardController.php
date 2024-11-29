@@ -22,8 +22,7 @@ class ServiceCardController extends Controller
             'description' => 'required'
         ]);
 
-        $originalName = $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('service-cards', $originalName, 'public');
+        $path = $request->file('image')->store('service-cards', 'public');
         
         ServiceCard::create([
             'image' => $path,
@@ -55,8 +54,7 @@ class ServiceCardController extends Controller
                 if (Storage::disk('public')->exists($serviceCard->image)) {
                     Storage::disk('public')->delete($serviceCard->image);
                 }
-                $originalName = $request->file('image')->getClientOriginalName();
-                $data['image'] = $request->file('image')->storeAs('service-cards', $originalName, 'public');
+                $data['image'] = $request->file('image')->store('service-cards', 'public');
             }
 
             $serviceCard->update($data);

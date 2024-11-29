@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class VisiMisi extends Model
 {
     protected $table = 'visi_misi';
-    protected $fillable = ['visi', 'visi_deskripsi', 'misi', 'misi_deskripsi'];
+    protected $fillable = ['key', 'content'];
 } 

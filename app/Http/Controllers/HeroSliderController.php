@@ -21,9 +21,7 @@ class HeroSliderController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 try {
-                    $originalName = $image->getClientOriginalName();
-                    
-                    $path = $image->storeAs('hero-images', $originalName, 'public');
+                    $path = $image->store('hero-images', 'public');
 
                     $slider = HeroImage::create([
                         'image' => $path,

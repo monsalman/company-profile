@@ -114,7 +114,6 @@
 
         .btn-light:hover {
             color: #fff !important;
-            /* border-color: #dc3545 !important; */
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
         }
@@ -157,7 +156,6 @@
             z-index: 3;
         }
 
-        /* Responsive styles */
         @media (max-width: 991.98px) {
             .hero-section {
                 padding: 100px 0 60px;
@@ -166,7 +164,6 @@
             
             .hero-content {
                 text-align: center;
-                /* margin-bottom: 40px; */
             }
             
             .hero-content h1 {
@@ -269,7 +266,6 @@
             }
         }
 
-        /* Tambahkan breakpoint khusus untuk iPhone SE */
         @media (max-width: 375px) {
             .btn-light, .btn-outline-light {
                 padding: 6px 10px !important;
@@ -293,7 +289,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Responsive styles */
         @media (max-width: 991.98px) {
             .btn-large {
                 padding: 15px 30px;
@@ -317,7 +312,6 @@
             }
         }
 
-        /* Tambahkan breakpoint khusus untuk iPhone SE */
         @media (max-width: 375px) {
             .btn-large {
                 padding: 10px 16px !important;
@@ -368,7 +362,6 @@
             z-index: 1085;
         }
 
-        /* Tambahkan styles untuk sidebar */
         .offcanvas {
             width: 280px !important;
         }
@@ -416,7 +409,6 @@
             height: 24px;
         }
 
-        /* Styles untuk animasi navbar desktop */
         .navbar-nav .nav-link {
             position: relative;
             padding: 0.5rem 1rem;
@@ -441,7 +433,6 @@
             color: #dc3545;
         }
 
-        /* Animasi untuk active state */
         .navbar-nav .nav-link.active::after {
             width: 100%;
         }
@@ -450,7 +441,6 @@
             color: #dc3545;
         }
 
-        /* Reset style Bootstrap default */
         .navbar-nav .nav-link {
             border: none !important;
             background: none !important;
@@ -459,7 +449,6 @@
             transition: color 0.3s ease;
         }
 
-        /* Hapus semua style default Bootstrap saat hover/focus/active */
         .navbar-nav .nav-link:hover,
         .navbar-nav .nav-link:focus,
         .navbar-nav .nav-link:active,
@@ -470,7 +459,6 @@
             outline: none !important;
         }
 
-        /* Style untuk garis bawah - hanya untuk active state */
         .navbar-nav .nav-link::after {
             content: '';
             position: absolute;
@@ -483,13 +471,11 @@
             border-radius: 3px;
         }
 
-        /* Hanya tampilkan garis bawah saat active dan tetap ada saat hover */
         .navbar-nav .nav-link.active::after,
         .navbar-nav .nav-link.active:hover::after {
             width: 100%;
         }
 
-        /* Warna teks saat hover dan active */
         .navbar-nav .nav-link:hover {
             color: #dc3545;
         }
@@ -498,24 +484,20 @@
             color: #dc3545;
         }
 
-        /* Tambahkan smooth scroll */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Sesuaikan padding section untuk navbar fixed */
         section {
             scroll-margin-top: 70px;
         }
 
-        /* Mobile responsive */
         @media (max-width: 768px) {
             .nav-link:active::after {
                 width: 100%;
             }
         }
 
-        /* Hapus style navbar lama dan tambahkan yang baru */
         .navbar {
             background-color: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(10px);
@@ -582,7 +564,6 @@
             }
         }
 
-        /* Hapus hover effect untuk garis bawah pada link yang tidak active */
         .navbar-nav .nav-link:not(.active):hover::after {
             width: 0;
         }
@@ -619,24 +600,20 @@
             z-index: 1080;
         }
 
-        /* Pastikan modal delete confirmation berada di atas backdrop */
         #deleteSelectedSlidersConfirmationModal {
             z-index: 1085;
         }
 
-        /* Pastikan modal dialog berada di atas backdrop */
         .modal-dialog {
             position: relative;
             z-index: 1090;
         }
 
-        /* Tambahkan style untuk checkbox dan card yang dipilih */
         .form-check-input:checked {
             background-color: #dc3545 !important;
             border-color: #dc3545 !important;
         }
 
-        /* Update style untuk card yang dipilih */
         .card.selected {
             border: 2px solid #dc3545 !important;
         }
@@ -651,44 +628,37 @@
             color: #fff !important;
         }
 
-        /* Hilangkan outline focus pada checkbox */
         .form-check-input:focus {
             box-shadow: none !important;
             outline: none !important;
             border-color: #dc3545 !important;
         }
 
-        /* Update style untuk checkbox */
         .form-check-input {
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid #dee2e6 !important; /* Border abu-abu default */
+            border: 2px solid #dee2e6 !important;
         }
 
-        /* Style saat checkbox di-focus */
         .form-check-input:focus {
             border-color: #dee2e6 !important;
-            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important; /* Outline merah semi-transparan */
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
         }
 
-        /* Style saat checkbox diceklis */
         .form-check-input:checked {
             background-color: #dc3545 !important;
             border-color: #dc3545 !important;
         }
 
-        /* Style saat checkbox diceklis dan di-focus */
         .form-check-input:checked:focus {
             border-color: #dc3545 !important;
             box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
         }
 
-        /* Optional: Tambahkan hover effect */
         .form-check-input:hover {
             border-color: #dc3545 !important;
         }
 
-        /* Tambahkan style untuk animasi loading */
         .btn:disabled {
             cursor: not-allowed;
             opacity: 0.7;
@@ -704,7 +674,6 @@
             display: none !important;
         }
 
-        /* Style untuk mobile navbar */
         @media (max-width: 991.98px) {
             .navbar-collapse .nav-link {
                 position: relative;
@@ -787,13 +756,11 @@
             }
         }
 
-        /* Style untuk kedua modal konfirmasi delete */
         #deleteSelectedConfirmationModal,
         #deleteSelectedSlidersConfirmationModal {
             z-index: 1085;
         }
 
-        /* Style untuk backdrop kedua modal */
         .modal-backdrop.delete-selected-backdrop,
         .modal-backdrop.delete-selected-sliders-backdrop {
             opacity: 0.8;
@@ -801,33 +768,28 @@
             z-index: 1080;
         }
 
-        /* Pastikan modal berada di atas backdrop */
         .modal-dialog {
             position: relative;
             z-index: 1090;
         }
 
-        /* Tambahkan style untuk backdrop gelap */
         .modal-backdrop.delete-confirmation-backdrop {
             opacity: 0.8;
             background-color: #000;
             z-index: 1080;
         }
 
-        /* Pastikan modal delete confirmation berada di atas backdrop */
         #deleteConfirmationModal {
             z-index: 1085;
         }
 
-        /* Pastikan modal dialog berada di atas backdrop */
         .modal-dialog {
             position: relative;
             z-index: 1090;
         }
 
-        /* Style untuk modal kelola client saat modal konfirmasi muncul */
         .modal.fade.show.dim-background {
-            background-color: rgba(0, 0, 0, 0.9) !important; /* Opacity konsisten 0.9 */
+            background-color: rgba(0, 0, 0, 0.9) !important;
         }
 
         .modal.fade.show.dim-background .modal-content {
@@ -835,19 +797,16 @@
             background-color: #fff !important;
         }
 
-        /* Style untuk modal konfirmasi */
         #deleteSelectedConfirmationModal {
             z-index: 1060;
         }
 
-        /* Style untuk dialog konfirmasi */
         #deleteSelectedConfirmationModal .modal-dialog {
             z-index: 1070;
         }
 
-        /* Overlay gelap di belakang modal konfirmasi */
         .modal-backdrop.delete-confirmation-backdrop {
-            opacity: 0.9 !important; /* Opacity konsisten 0.9 */
+            opacity: 0.9 !important; 
             background-color: rgba(0, 0, 0, 0.9) !important;
             z-index: 1055;
         }
@@ -865,33 +824,32 @@
             margin-bottom: 2rem;
         }
 
-        /* Update style untuk vision-card dan mission-card */
         .vision-card,
         .mission-card {
             position: relative;
             transition: all 0.3s ease;
-            height: 80px; /* Kurangi tinggi default */
+            height: 80px; 
             overflow: hidden;
             border-radius: 20px;
-            box-shadow: 0 4px 8px rgba(227, 30, 45, 0.1); /* Tambah shadow merah */
+            box-shadow: 0 4px 8px rgba(227, 30, 45, 0.1);
         }
 
         .card-description {
             position: absolute;
-            top: 60px; /* Kurangi jarak dari atas */
+            top: 60px;
             left: 0;
             right: 0;
             padding: 0 1.5rem;
             opacity: 0;
-            transform: translateY(10px); /* Kurangi jarak transformasi */
+            transform: translateY(10px);
             transition: all 0.3s ease;
             pointer-events: none;
         }
 
         .vision-card:hover,
         .mission-card:hover {
-            height: 200px; /* Kurangi tinggi saat hover */
-            box-shadow: 0 8px 16px rgba(227, 30, 45, 0.2) !important; /* Shadow merah lebih kuat saat hover */
+            height: 200px;
+            box-shadow: 0 8px 16px rgba(227, 30, 45, 0.2) !important; 
         }
 
         .vision-card:hover .card-description,
@@ -900,12 +858,10 @@
             transform: translateY(0);
         }
 
-        /* Pastikan row tidak terpengaruh perubahan tinggi card */
         .row {
             align-items: flex-start;
         }
 
-        /* Animasi smooth untuk transisi */
         @keyframes slideDown {
             from {
                 opacity: 0;
@@ -922,16 +878,14 @@
             animation: slideDown 0.3s ease forwards;
         }
 
-        /* Update padding untuk card body */
         .vision-card .card-body,
         .mission-card .card-body {
-            padding: 1rem 1.5rem !important; /* Kurangi padding */
+            padding: 1rem 1.5rem !important;
         }
 
-        /* Update margin untuk text description */
         .card-description p {
-            margin-top: 0.5rem !important; /* Kurangi margin top */
-            margin-bottom: 0.5rem !important; /* Kurangi margin bottom */
+            margin-top: 0.5rem !important; 
+            margin-bottom: 0.5rem !important; 
         }
     </style>
 </head>
@@ -954,13 +908,12 @@
                 @endauth
             </div>
 
-            <!-- Tampilan Desktop -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#beranda"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" href="#layanan"><i class="bi bi-gear me-1"></i>Layanan</a></li>
                     <li class="nav-item"><a class="nav-link" href="#portfolio"><i class="bi bi-briefcase me-1"></i>Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#tentang"><i class="bi bi-person me-1"></i>Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link" href="#informasi"><i class="bi bi-info-circle me-1"></i>Informasi</a></li>
                     @auth
                         <li class="nav-item">
@@ -975,7 +928,6 @@
                 </ul>
             </div>
 
-            <!-- Tombol Toggle Sidebar Mobile -->
             <button class="navbar-toggler d-lg-none border-0 d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
                 <i class="bi bi-list text-danger fs-4"></i>
                 <span class="text-danger" style="font-size: 14px;">Menu</span>
@@ -983,7 +935,6 @@
         </div>
     </nav>
 
-    <!-- Sidebar Mobile -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileSidebar">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title">Menu</h5>
@@ -996,17 +947,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#layanan">
-                        <i class="bi bi-gear me-2"></i>Layanan
-                    </a>
-                <li class="nav-item">
-                    <a class="nav-link" href="#portfolio">
-                        <i class="bi bi-briefcase me-2"></i>Portfolio
+                    <a class="nav-link" href="#tentang">
+                        <i class="bi bi-person me-2"></i>Tentang Kami
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#tentang">
-                        <i class="bi bi-person me-2"></i>Tentang Kami
+                    <a class="nav-link" href="#layanan">
+                        <i class="bi bi-gear me-2"></i>Layanan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#portfolio">
+                        <i class="bi bi-briefcase me-2"></i>Portfolio
                     </a>
                 </li>
                 <li class="nav-item">
@@ -1210,15 +1162,15 @@
             
             <div class="row g-4 justify-content-center">
                 @forelse($retailServices as $service)
-                    <div class="col-12 col-md-6 col-lg-3"> <!-- Ubah dari col-lg-4 menjadi col-lg-3 untuk 4 card per baris -->
+                    <div class="col-12 col-md-6 col-lg-3"> 
                         <div class="service-card card">
                             <div class="card-body text-center p-4">
                                 <img src="{{ asset('storage/' . $service->image) }}" 
                                      alt="{{ $service->title }}" 
                                      class="mb-3" 
-                                     style="height: 100px; width: auto;"> <!-- Ubah dari height: 64px menjadi height: 100px -->
-                                <h4 style="font-size: 1rem;">{{ $service->title }}</h4> <!-- Perkecil ukuran title -->
-                                <p class="text-muted" style="font-size: 0.9rem;">{{ $service->description }}</p> <!-- Perkecil ukuran description -->
+                                     style="height: 100px; width: auto;">
+                                <h4 style="font-size: 1.5rem;">{{ $service->title }}</h4>
+                                <p class="text-muted" style="font-size: 1rem;">{{ $service->description }}</p>
                                 @auth
                                     <div class="mt-3">
                                         <button type="button" 
@@ -1321,7 +1273,6 @@
             </div>
     </section>
 
-    <!-- Modal Konfirmasi Delete Portfolio -->
     <div class="modal fade" id="deletePortfolioModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1347,7 +1298,7 @@
             
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="text-center mb-5">
+                    <div class="text-center">
                         <h3 class="mb-4" style="color: #E31E2D; font-size: 2rem; font-weight: bold;">
                             {{ \App\Models\ProfileKami::first()?->title ?? 'Belum di konfigurasi' }}
                             @auth
@@ -1365,7 +1316,6 @@
                             {{ \App\Models\ProfileKami::first()?->description_2 ?? 'Belum di konfigurasi' }}
                         </p>
 
-                        <!-- Ubah mt-5 menjadi mt-4 untuk mengurangi jarak -->
                         <div class="row g-4 mt-3">
                             <div class="col-md-6">
                                 <div class="card border-0 shadow-sm vision-card">
@@ -1378,7 +1328,7 @@
                                         </div>
                                         <div class="card-description">
                                             <p class="card-text mt-3" style="color: #666; font-size: 1rem; line-height: 1.6; text-align: left;">
-                                                Menjadi perusahaan IT terdepan yang memberikan solusi teknologi inovatif dan terjangkau bagi semua kalangan masyarakat.
+                                                {{ \App\Models\VisiMisi::where('key', 'visi')->first()?->content ?? 'Belum di konfigurasi' }}
                                             </p>
                                         </div>
                                     </div>
@@ -1395,7 +1345,7 @@
                                         </div>
                                         <div class="card-description">
                                             <p class="card-text mt-3" style="color: #666; font-size: 1rem; line-height: 1.6; text-align: left;">
-                                                Mengembangkan solusi teknologi yang inovatif dan berkualitas tinggi untuk memenuhi kebutuhan klien kami.
+                                                {{ \App\Models\VisiMisi::where('key', 'misi')->first()?->content ?? 'Belum di konfigurasi' }}
                                             </p>
                                         </div>
                                     </div>
@@ -1408,10 +1358,21 @@
         </div>
     </section>
 
-    <section id="kontak" class="py-3 bg-light">
+    @auth
+        <div class="text-center">
+            <button type="button" 
+                    class="btn btn-warning d-flex align-items-center gap-2 mx-auto" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#visiMisiModal">
+                <i class="bi bi-pencil-square"></i>
+                <span>Edit Visi & Misi</span>
+            </button>
+        </div>
+    @endauth
+
+    <section id="kontak" class="py-3">
         <div class="container">
             <h2 class="text-center section-title">Kontak Kami</h2>
-            <!-- Isi konten kontak disini -->
         </div>
     </section>
 
@@ -1509,7 +1470,6 @@
         </div>
     </div>
 
-    <!-- Update bagian modal manageSliderModal -->
     <div class="modal fade" id="manageSliderModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -1599,7 +1559,6 @@
         </div>
     </div>
 
-    <!-- Tambahkan modal konfirmasi delete multiple -->
     <div class="modal fade" id="deleteSelectedSlidersConfirmationModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1619,7 +1578,6 @@
         </div>
     </div>
 
-    <!-- Update modal konfirmasi delete slider -->
     <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1655,7 +1613,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows="4" required>{{ $heroContent?->description ?? 'Mengefisiensikan Bisnis Anda dengan menjadikanya terstruktur, termonitor dan tepat sasaran. Digital Forte Membantu banyak pelaku usaha dengan teknologi terkini dan user friendly' }}</textarea>
+                            <textarea class="form-control" name="description" rows="3" required>{{ $heroContent?->description ?? 'Mengefisiensikan Bisnis Anda dengan menjadikanya terstruktur, termonitor dan tepat sasaran. Digital Forte Membantu banyak pelaku usaha dengan teknologi terkini dan user friendly' }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1769,7 +1727,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Konfirmasi Hapus</h5>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <div class="modal-body">
                     <p>Apakah Anda yakin ingin menghapus logo client ini?</p>
@@ -1836,7 +1793,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="description" rows="5" required>{{ \App\Models\Layanan::where('key', 'service_custom')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
+                            <textarea class="form-control" name="description" rows="4" required>{{ \App\Models\Layanan::where('key', 'service_custom')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1865,7 +1822,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="description" rows="5" required>{{ \App\Models\Layanan::where('key', 'service_retail')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
+                            <textarea class="form-control" name="description" rows="4" required>{{ \App\Models\Layanan::where('key', 'service_retail')->first()?->description ?? 'Pengembangan perangkat lunak customisasi adalah proses merancang, membuat, menyebarkan, dan memelihara perangkat lunak yang bertujuan agar dapat digunakan dalam sekumpulan pengguna, fungsi, atau organisasi tertentu.' }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1877,7 +1834,6 @@
         </div>
     </div>
 
-    <!-- Modal untuk Add/Edit Service Card -->
     <div class="modal fade" id="serviceCardModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1914,7 +1870,6 @@
         </div>
     </div>
 
-    <!-- Modal Konfirmasi Delete Service Card -->
     <div class="modal fade" id="deleteServiceCardModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1932,7 +1887,6 @@
         </div>
     </div>
 
-    <!-- Modal untuk Add/Edit Retail Service -->
     <div class="modal fade" id="retailServiceCardModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1969,7 +1923,6 @@
         </div>
     </div>
 
-    <!-- Modal Konfirmasi Delete Retail Service -->
     <div class="modal fade" id="deleteRetailServiceModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1987,8 +1940,7 @@
         </div>
     </div>
 
-    <!-- Hapus atau ubah modal lama (untuk edit judul/deskripsi) -->
-    <div class="modal fade" id="editRetailTitleModal" tabindex="-1"> <!-- Ubah ID menjadi editRetailTitleModal -->
+    <div class="modal fade" id="editRetailTitleModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2017,7 +1969,6 @@
         </div>
     </div>
 
-    <!-- Update modal konfirmasi delete -->
     <div class="modal fade" id="deleteSelectedConfirmationModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -2037,7 +1988,6 @@
         </div>
     </div>
 
-    <!-- Tambahkan modal ini sebelum tag penutup </body> -->
     <div class="modal fade" id="profilekamiModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -2081,40 +2031,33 @@
         </div>
     </div>
 
-    <!-- Tambahkan form tersembunyi untuk delete -->
     <form id="delete-form" method="POST" style="display: none;">
         @csrf
         @method('DELETE')
     </form>
 
-    <!-- Tambahkan modal ini sebelum penutup tag body -->
     <div class="modal fade" id="visiMisiModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Visi & Misi</h5>
                 </div>
-                <form action="{{ route('visi-misi.update') }}" method="POST">
-                    @csrf
+                <form id="visiMisiForm" action="{{ route('visimisi.update') }}" method="POST">
+                    @csrf 
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Judul Visi</label>
-                            <input type="text" class="form-control" name="visi" 
-                                   value="{{ $visiMisi->visi ?? 'Visi Perusahaan' }}" required>
+                            <label class="form-label">Visi</label>
+                            <textarea class="form-control" 
+                                     name="visi" 
+                                     rows="4" 
+                                     required>{{ \App\Models\VisiMisi::where('key', 'visi')->first()?->content ?? 'Menjadi perusahaan IT terdepan yang memberikan solusi teknologi inovatif dan terjangkau bagi semua kalangan masyarakat.'}}</textarea>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Deskripsi Visi</label>
-                            <textarea class="form-control" name="visi_deskripsi" rows="4" required>{{ $visiMisi->visi_deskripsi ?? 'Deskripsi visi perusahaan' }}</textarea>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Judul Misi</label>
-                            <input type="text" class="form-control" name="misi" 
-                                   value="{{ $visiMisi->misi ?? 'Misi Perusahaan' }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Deskripsi Misi</label>
-                            <textarea class="form-control" name="misi_deskripsi" rows="4" required>{{ $visiMisi->misi_deskripsi ?? 'Deskripsi misi perusahaan' }}</textarea>
+                            <label class="form-label">Misi</label>
+                            <textarea class="form-control" 
+                                     name="misi" 
+                                     rows="4" 
+                                     required>{{ \App\Models\VisiMisi::where('key', 'misi')->first()?->content ?? 'Mengembangkan solusi teknologi yang inovatif dan berkualitas tinggi untuk memenuhi kebutuhan klien kami.'}}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -2160,7 +2103,7 @@
         document.getElementById('confirmDelete').addEventListener('click', function() {
             if (currentSliderId) {
                 const form = document.getElementById('delete-form');
-                form.action = `/heroslider/${currentSliderId}`; // Set action URL
+                form.action = `/heroslider/${currentSliderId}`;
                 
                 fetch(form.action, {
                     method: 'POST',
@@ -2172,16 +2115,13 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Tutup modal
                         deleteModal.hide();
                         
-                        // Hapus elemen dari DOM
                         const sliderElement = document.querySelector(`[data-slider-id="${currentSliderId}"]`);
                         if (sliderElement) {
                             sliderElement.remove();
                         }
                         
-                        // Reset currentSliderId
                         currentSliderId = null;
                     }
                 })
@@ -2213,19 +2153,16 @@
                 submitButton.innerHTML = '<i class="bi bi-upload me-2"></i>Upload';
                 
                 if (data.success) {
-                    // Refresh tampilan
                     fetch(window.location.href)
                         .then(response => response.text())
                         .then(html => {
                             const parser = new DOMParser();
                             const doc = parser.parseFromString(html, 'text/html');
                             
-                            // Update daftar slider di modal
                             const sliderList = document.querySelector('.modal-body .row.g-3');
                             const newSliderList = doc.querySelector('.modal-body .row.g-3');
                             sliderList.innerHTML = newSliderList.innerHTML;
                             
-                            // Update carousel di halaman
                             const carousel = document.querySelector('#heroCarousel .carousel-inner');
                             const newCarousel = doc.querySelector('#heroCarousel .carousel-inner');
                             carousel.innerHTML = newCarousel.innerHTML;
@@ -2243,7 +2180,6 @@
     function deleteSlider(id) {
         currentSliderId = id;
         deleteModal.show();
-        // Tambahkan class untuk backdrop gelap
         document.querySelector('.modal-backdrop:last-child').classList.add('delete-confirmation-backdrop');
     }
 
@@ -2258,7 +2194,7 @@
     function handleFileSelect(event, previewId) {
         const file = event.target.files[0];
         const preview = document.getElementById(previewId);
-        const type = previewId.replace('Preview', ''); // favicon atau logo
+        const type = previewId.replace('Preview', '');
         const closeButton = preview.parentElement.querySelector('.btn-close');
         
         if (file) {
@@ -2266,8 +2202,6 @@
             reader.onload = function(e) {
                 preview.src = e.target.result;
                 preview.style.display = 'block';
-                
-                // Tambahkan tombol close jika belum ada
                 if (!closeButton) {
                     const button = document.createElement('button');
                     button.type = 'button';
@@ -2295,18 +2229,13 @@
         const input = document.getElementById(type);
         const closeButton = preview.parentElement.querySelector('.btn-close');
         
-        // Reset preview ke gambar default
         preview.src = type === 'favicon' ? "{{ asset('favicon.png') }}" : "{{ asset('logo.png') }}";
-        
-        // Clear input file
         input.value = '';
         
-        // Sembunyikan tombol close
         if (closeButton) {
             closeButton.style.display = 'none';
         }
         
-        // Tambahkan hidden input untuk menandai penghapusan
         const existingHidden = input.parentNode.querySelector(`input[name="remove_${type}"]`);
         if (existingHidden) {
             existingHidden.remove();
@@ -2319,7 +2248,6 @@
         input.parentNode.appendChild(hiddenInput);
     }
 
-    // Event handler untuk form submit
     document.querySelector('#logoModal form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -2333,7 +2261,6 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Update favicon di browser
                 const faviconLink = document.querySelector('link[rel="icon"]');
                 if (faviconLink) {
                     const newPath = data.favicon_removed ? 
@@ -2342,17 +2269,15 @@
                     faviconLink.href = newPath + "?v=" + data.timestamp;
                 }
                 
-                // Tutup modal
                 const modal = document.getElementById('logoModal');
                 const modalInstance = bootstrap.Modal.getInstance(modal);
                 if (modalInstance) {
                     modalInstance.hide();
                 }
 
-                // Refresh halaman setelah modal tertutup
                 setTimeout(() => {
                     window.location.reload();
-                }, 300); // Delay 300ms untuk memastikan modal tertutup dengan mulus
+                }, 300); 
             }
         })
         .catch(error => {
@@ -2378,16 +2303,13 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Tutup modal
                         deleteClientModal.hide();
                         
-                        // Refresh tampilan
                         const clientElement = document.querySelector(`[data-client-id="${currentClientId}"]`);
                         if (clientElement) {
                             clientElement.remove();
                         }
                         
-                        // Reset currentClientId
                         currentClientId = null;
                     }
                 })
@@ -2419,19 +2341,16 @@
                 submitButton.innerHTML = '<i class="bi bi-upload me-2"></i>Upload';
                 
                 if (data.success) {
-                    // Refresh tampilan
                     fetch(window.location.href)
                         .then(response => response.text())
                         .then(html => {
                             const parser = new DOMParser();
                             const doc = parser.parseFromString(html, 'text/html');
                             
-                            // Update daftar client di modal
                             const clientList = document.querySelector('#manageClientModal .row.g-3');
                             const newClientList = doc.querySelector('#manageClientModal .row.g-3');
                             clientList.innerHTML = newClientList.innerHTML;
                             
-                            // Update slider client di halaman
                             const clientSlider = document.querySelector('.client-slider');
                             const newClientSlider = doc.querySelector('.client-slider');
                             clientSlider.innerHTML = newClientSlider.innerHTML;
@@ -2462,20 +2381,17 @@
         
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                // Hapus kelas active dari semua link
                 navLinks.forEach(l => l.classList.remove('active'));
                 
-                // Tambah kelas active ke link yang diklik
                 this.classList.add('active');
 
-                // Jika dalam mode mobile, tutup sidebar setelah delay
                 if (window.innerWidth < 992) {
                     setTimeout(() => {
                         const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('mobileSidebar'));
                         if (offcanvas) {
                             offcanvas.hide();
                         }
-                    }, 300); // Delay 300ms untuk memberi waktu animasi
+                    }, 300);
                 }
             });
         });
@@ -2494,11 +2410,9 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Tutup modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('heroContentModal'));
                 modal.hide();
                 
-                // Refresh halaman
                 window.location.reload();
             }
         })
@@ -2577,11 +2491,9 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Inisialisasi modal
         serviceCardModal = new bootstrap.Modal(document.getElementById('serviceCardModal'));
         deleteServiceCardModal = new bootstrap.Modal(document.getElementById('deleteServiceCardModal'));
 
-        // Handle form submission
         const serviceCardForm = document.getElementById('serviceCardForm');
         if (serviceCardForm) {
             serviceCardForm.addEventListener('submit', async function(e) {
@@ -2592,7 +2504,6 @@
                     const id = formData.get('id');
                     const url = id ? `/service-cards/${id}` : '/service-cards';
                     
-                    // Tambahkan method_field untuk PUT request
                     if (id) {
                         formData.append('_method', 'PUT');
                     }
@@ -2602,7 +2513,7 @@
                     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
 
                     const response = await fetch(url, {
-                        method: 'POST', // Selalu gunakan POST, _method akan menentukan method sebenarnya
+                        method: 'POST', 
                         body: formData,
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -2634,7 +2545,6 @@
             });
         }
 
-        // Event listener untuk preview gambar
         const imageInput = document.getElementById('image');
         if (imageInput) {
             imageInput.addEventListener('change', function(e) {
@@ -2655,32 +2565,23 @@
     });
 
     function showAddServiceCardModal() {
-        // Reset form
         document.getElementById('serviceCardForm').reset();
-        // Reset ID
         document.getElementById('serviceCardId').value = '';
-        // Reset preview gambar
         const preview = document.getElementById('imagePreview');
         const previewImg = preview.querySelector('img');
-        previewImg.src = ''; // Kosongkan src gambar
-        preview.style.display = 'none'; // Sembunyikan preview
-        // Tampilkan modal
+        previewImg.src = ''; 
+        preview.style.display = 'none'; 
         serviceCardModal.show();
     }
 
     function editServiceCard(id, title, description, imageUrl) {
-        // Ambil data dari button yang diklik
         const button = event.target.closest('button');
         
-        // Reset form
         document.getElementById('serviceCardForm').reset();
-        
-        // Set nilai-nilai form
         document.getElementById('serviceCardId').value = id;
         document.getElementById('title').value = title;
         document.getElementById('description').value = description;
-        
-        // Set preview gambar jika ada
+
         const preview = document.getElementById('imagePreview');
         const previewImg = preview.querySelector('img');
         if (imageUrl) {
@@ -2690,7 +2591,6 @@
             preview.style.display = 'none';
         }
         
-        // Tampilkan modal
         serviceCardModal.show();
     }
 
@@ -2737,12 +2637,9 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Inisialisasi modal
         retailServiceCardModal = new bootstrap.Modal(document.getElementById('retailServiceCardModal'));
-        // Inisialisasi modal delete
         deleteRetailServiceCardModal = new bootstrap.Modal(document.getElementById('deleteRetailServiceModal'));
 
-        // Handle form submission
         const retailServiceCardForm = document.getElementById('retailServiceCardForm');
         if (retailServiceCardForm) {
             retailServiceCardForm.addEventListener('submit', async function(e) {
@@ -2753,7 +2650,6 @@
                     const id = formData.get('id');
                     const url = id ? `/retail-services/${id}` : '/retail-services';
                     
-                    // Tambahkan method_field untuk PUT request
                     if (id) {
                         formData.append('_method', 'PUT');
                     }
@@ -2763,7 +2659,7 @@
                     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
 
                     const response = await fetch(url, {
-                        method: 'POST', // Selalu gunakan POST, _method akan menentukan method sebenarnya
+                        method: 'POST', 
                         body: formData,
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -2795,7 +2691,6 @@
             });
         }
 
-        // Preview image
         const retailServiceCardImage = document.getElementById('retailServiceCardImage');
         if (retailServiceCardImage) {
             retailServiceCardImage.addEventListener('change', function(e) {
@@ -2822,23 +2717,18 @@
         retailServiceCardModal.show();
     }
 
-    // Fungsi untuk edit retail service card
     function editRetailServiceCard(id, title, description, imageUrl) {
-        // Pastikan retailServiceCardModal sudah diinisialisasi
         if (!retailServiceCardModal) {
             retailServiceCardModal = new bootstrap.Modal(document.getElementById('retailServiceCardModal'));
         }
         
-        // Reset dan isi form
         const form = document.getElementById('retailServiceCardForm');
         form.reset();
         
-        // Set nilai input dengan escape HTML untuk keamanan
         document.getElementById('retailServiceCardId').value = id;
         document.getElementById('retailServiceCardTitle').value = decodeURIComponent(title.replace(/\+/g, ' '));
         document.getElementById('retailServiceCardDescription').value = decodeURIComponent(description.replace(/\+/g, ' '));
         
-        // Set preview gambar
         const preview = document.getElementById('retailServiceCardImagePreview');
         const previewImg = preview.querySelector('img');
         if (imageUrl) {
@@ -2848,17 +2738,14 @@
             preview.style.display = 'none';
         }
 
-        // Tampilkan modal
         retailServiceCardModal.show();
     }
 
-    // Fungsi untuk menampilkan modal konfirmasi delete
     function deleteRetailServiceCard(id) {
         currentRetailServiceCardId = id;
         deleteRetailServiceCardModal.show();
     }
 
-    // Fungsi untuk mengeksekusi delete
     function confirmDeleteRetailService() {
         fetch(`/retail-services/${currentRetailServiceCardId}`, {
             method: 'DELETE',
@@ -2883,14 +2770,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         deleteSelectedModal = new bootstrap.Modal(document.getElementById('deleteSelectedConfirmationModal'));
         
-        // Event listener untuk checkbox
         document.querySelectorAll('.client-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 updateDeleteSelectedButton();
             });
     });
 
-    // Event listener untuk tombol hapus terpilih
     const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
     if (deleteSelectedBtn) {
         deleteSelectedBtn.addEventListener('click', function() {
@@ -2899,7 +2784,6 @@
     }
     });
 
-    // Fungsi untuk menampilkan modal konfirmasi
     function confirmDeleteSelected() {
         const selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
                             .map(checkbox => checkbox.value);
@@ -2908,29 +2792,18 @@
             return;
         }
 
-        // Update text jumlah item yang akan dihapus di modal
         document.getElementById('selectedCount').textContent = selectedClientIds.length;
-        
-        // Tambahkan class untuk menggelapkan background tapi bukan modal content
         document.getElementById('manageClientModal').classList.add('dim-background');
-        
-        // Tampilkan modal konfirmasi
         deleteSelectedModal.show();
-        
-        // Tambahkan class khusus untuk backdrop
         document.querySelector('.modal-backdrop:last-child').classList.add('delete-confirmation-backdrop');
     }
 
-    // Fungsi untuk menghapus item yang dipilih (dipanggil dari modal konfirmasi)
     function deleteSelectedClients() {
         const selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
                             .map(checkbox => checkbox.value);
-        
-        // Dapatkan referensi button
         const deleteBtn = document.getElementById('confirmDeleteBtn');
         const originalContent = deleteBtn.innerHTML;
         
-        // Disable button dan tampilkan loading
         deleteBtn.disabled = true;
         deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menghapus...';
         
@@ -2953,7 +2826,6 @@
         })
         .then(data => {
             if (data.success) {
-                // Hapus elemen dari DOM
                 selectedClientIds.forEach(id => {
                     const clientElement = document.querySelector(`[data-client-id="${id}"]`);
                     if (clientElement) {
@@ -2961,17 +2833,11 @@
                     }
                 });
 
-                // Reset state
                 selectedClientIds.length = 0;
                 isAllSelected = false;
                 
-                // Update UI
                 updateDeleteSelectedButton();
-                
-                // Tutup modal
                 deleteSelectedModal.hide();
-                
-                // Optional: Refresh halaman
                 window.location.reload();
             } else {
                 throw new Error(data.message || 'Terjadi kesalahan saat menghapus');
@@ -2982,7 +2848,6 @@
             alert('Terjadi kesalahan saat menghapus data');
         })
         .finally(() => {
-            // Reset button state
             deleteBtn.disabled = false;
             deleteBtn.innerHTML = originalContent;
         });
@@ -2990,26 +2855,21 @@
 
     function closeDeleteConfirmation() {
         deleteSelectedModal.hide();
-        // Hapus class dim-background saat modal konfirmasi ditutup
         document.getElementById('manageClientModal').classList.remove('dim-background');
         
-        // Hapus class backdrop
         const backdrop = document.querySelector('.modal-backdrop.delete-confirmation-backdrop');
         if (backdrop) {
             backdrop.classList.remove('delete-confirmation-backdrop');
         }
     }
 
-    // Tambahkan event listener untuk click di luar modal
     document.getElementById('deleteSelectedConfirmationModal').addEventListener('click', function(event) {
         if (event.target === this) {
             closeDeleteConfirmation();
         }
     });
 
-    // Modifikasi fungsi deleteSelectedClients
     function deleteSelectedClients() {
-        // Dapatkan ID yang dipilih
         const selectedClientIds = Array.from(document.querySelectorAll('.client-checkbox:checked'))
                                 .map(checkbox => checkbox.value);
         
@@ -3018,11 +2878,9 @@
             return;
         }
 
-        // Dapatkan referensi button
         const deleteBtn = document.getElementById('confirmDeleteBtn');
         const originalContent = deleteBtn.innerHTML;
         
-        // Disable button dan tampilkan loading
         deleteBtn.disabled = true;
         deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menghapus...';
         
@@ -3045,7 +2903,6 @@
         })
         .then(data => {
             if (data.success) {
-                // Hapus elemen dari DOM
                 selectedClientIds.forEach(id => {
                     const clientElement = document.querySelector(`[data-client-id="${id}"]`);
                     if (clientElement) {
@@ -3053,14 +2910,10 @@
                     }
                 });
 
-                // Reset state
                 selectedClientIds.length = 0;
                 isAllSelected = false;
                 
-                // Update UI
                 updateDeleteSelectedButton();
-                
-                // Tutup modal
                 deleteSelectedModal.hide();
             } else {
                 throw new Error(data.message || 'Terjadi kesalahan saat menghapus');
@@ -3071,14 +2924,12 @@
             alert('Terjadi kesalahan saat menghapus data');
         })
         .finally(() => {
-            // Reset button state
             deleteBtn.disabled = false;
             deleteBtn.innerHTML = originalContent;
         });
     }
 
     function toggleCheckbox(event, clientId) {
-        // Hindari toggle jika yang diklik adalah tombol hapus
         if (event.target.closest('.btn-warning')) {
             return;
         }
@@ -3086,17 +2937,14 @@
         const checkbox = event.currentTarget.querySelector('.client-checkbox');
         const card = event.currentTarget;
         
-        // Toggle checkbox
         checkbox.checked = !checkbox.checked;
         
-        // Toggle class selected pada card
         if (checkbox.checked) {
             card.classList.add('selected');
         } else {
             card.classList.remove('selected');
         }
         
-        // Update tampilan tombol hapus terpilih
         updateDeleteSelectedButton();
     }
 
@@ -3110,11 +2958,10 @@
             selectedItemCount.textContent = selectedCount;
         } else {
             deleteSelectedBtn.style.display = 'none';
-            selectedItemCount.textContent = '0'; // Tambahkan ini untuk reset counter
+            selectedItemCount.textContent = '0'; 
         }
     }
 
-    // Pastikan event listener checkbox juga diperbarui
     document.querySelectorAll('.client-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             const card = this.closest('.card');
@@ -3149,7 +2996,6 @@
         updateDeleteSelectedButton();
     }
 
-    // Update fungsi updateDeleteSelectedButton untuk memperbarui tampilan tombol Pilih Semua
     function updateDeleteSelectedButton() {
         const totalCheckboxes = document.querySelectorAll('.client-checkbox').length;
         const selectedCount = document.querySelectorAll('.client-checkbox:checked').length;
@@ -3161,7 +3007,6 @@
             deleteSelectedBtn.style.display = 'flex';
             selectedItemCount.textContent = selectedCount;
             
-            // Update tampilan tombol Pilih Semua
             if (selectedCount === totalCheckboxes) {
                 isAllSelected = true;
                 selectAllBtn.classList.remove('btn-outline-secondary');
@@ -3175,7 +3020,6 @@
             deleteSelectedBtn.style.display = 'none';
             selectedItemCount.textContent = '0';
             
-            // Reset tombol Pilih Semua
             isAllSelected = false;
             selectAllBtn.classList.remove('btn-secondary');
             selectAllBtn.classList.add('btn-outline-secondary');
@@ -3258,33 +3102,23 @@
     }
 
     function confirmDeleteSelectedSliders() {
-        // Cek jumlah item yang dipilih
         const selectedCount = document.querySelectorAll('.slider-checkbox:checked').length;
         
         if (selectedCount === 0) {
             return;
         }
         
-        // Update jumlah item yang akan dihapus di modal
         document.getElementById('selectedSlidersCount').textContent = selectedCount;
-        
-        // Tampilkan modal konfirmasi
         const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteSelectedSlidersConfirmationModal'));
         deleteConfirmModal.show();
-        
-        // Tambahkan class untuk backdrop
         document.querySelector('.modal-backdrop:last-child').classList.add('delete-selected-sliders-backdrop');
     }
 
-    // Update tombol "Hapus Terpilih" untuk menggunakan fungsi baru
     document.getElementById('deleteSelectedSlidersBtn').onclick = confirmDeleteSelectedSliders;
 
     function closeDeleteSlidersConfirmation() {
-        // Tutup modal konfirmasi delete
         const deleteConfirmModal = bootstrap.Modal.getInstance(document.getElementById('deleteSelectedSlidersConfirmationModal'));
         deleteConfirmModal.hide();
-        
-        // Hapus backdrop modal konfirmasi
         const backdrop = document.querySelector('.modal-backdrop.delete-selected-sliders-backdrop');
         if (backdrop) {
             backdrop.remove();
@@ -3306,10 +3140,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Tutup modal konfirmasi
                 closeDeleteSlidersConfirmation();
-                
-                // Hapus elemen-elemen yang sudah dihapus dari DOM
                 selectedIds.forEach(id => {
                     const element = document.querySelector(`[data-slider-id="${id}"]`);
                     if (element) {
@@ -3317,17 +3148,14 @@
                     }
                 });
                 
-                // Reset counter dan sembunyikan tombol delete
                 document.getElementById('selectedSliderCount').textContent = '0';
                 document.getElementById('deleteSelectedSlidersBtn').style.display = 'none';
                 
-                // Reset tombol "Pilih Semua"
                 const selectAllBtn = document.getElementById('selectAllSliderBtn');
                 selectAllBtn.innerHTML = '<i class="bi bi-check-all"></i><span>Pilih Semua</span>';
                 selectAllBtn.classList.remove('btn-danger');
                 selectAllBtn.classList.add('btn-outline-secondary');
                 
-                // Refresh carousel di halaman utama
                 fetch(window.location.href)
                     .then(response => response.text())
                     .then(html => {
@@ -3351,17 +3179,14 @@
     function handleCheckboxClick(event, checkbox) {
         event.stopPropagation();
         
-        // Dapatkan card parent
         const card = checkbox.closest('.card');
         
-        // Toggle class selected berdasarkan status checkbox
         if (checkbox.checked) {
             card.classList.add('selected');
         } else {
             card.classList.remove('selected');
         }
         
-        // Update tampilan tombol delete selected
         updateDeleteSelectedSlidersButton();
     }
 
@@ -3391,13 +3216,11 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Hapus card dari DOM
                 const portfolioCard = document.querySelector(`[data-portfolio-id="${portfolioIdToDelete}"]`);
                 if (portfolioCard) {
                     portfolioCard.remove();
                 }
                 
-                // Refresh halaman untuk memperbarui tampilan
                 window.location.reload();
             }
             deletePortfolioModal.hide();
@@ -3408,7 +3231,6 @@
         });
     }
 
-    // Tambahkan di dalam tag <script> yang sudah ada
     document.querySelector('#profilekamiModal form').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -3422,17 +3244,55 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Tutup modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('profilekamiModal'));
                 modal.hide();
                 
-                // Refresh halaman
                 window.location.reload();
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('visiMisiForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const submitButton = this.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
+                
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('visiMisiModal'));
+                        modal.hide();
+                        
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menyimpan data');
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = '<i class="bi bi-save me-2"></i>Simpan';
+                });
+            });
+        }
     });
     </script>
 </body>

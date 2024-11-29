@@ -36,8 +36,7 @@ class IconController extends Controller
                 if ($icon && $icon->value && $icon->value !== 'logo.png') {
                     Storage::disk('public')->delete($icon->value);
                 }
-                $originalName = $request->file('logo')->getClientOriginalName();
-                $logoPath = $request->file('logo')->storeAs('logo', $originalName, 'public');
+                $logoPath = $request->file('logo')->store('logo', 'public');
                 Icon::updateOrCreate(
                     ['key' => 'logo'],
                     ['value' => $logoPath]
@@ -61,8 +60,7 @@ class IconController extends Controller
                 if ($icon && $icon->value && $icon->value !== 'favicon.png') {
                     Storage::disk('public')->delete($icon->value);
                 }
-                $originalName = $request->file('favicon')->getClientOriginalName();
-                $faviconPath = $request->file('favicon')->storeAs('favicon', $originalName, 'public');
+                $faviconPath = $request->file('favicon')->store('favicon', 'public');
                 Icon::updateOrCreate(
                     ['key' => 'favicon'],
                     ['value' => $faviconPath]

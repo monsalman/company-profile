@@ -10,35 +10,21 @@ class RetailServiceController extends Controller
 {
     public function store(Request $request)
     {
-        try {
-            $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'title' => 'required|string|max:255',
-                'description' => 'required|string'
-            ]);
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'required',
+            'description' => 'required'
+        ]);
 
-            $originalName = $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->storeAs('retail-services', $originalName, 'public');
-            
-            $retailService = RetailService::create([
-                'image' => $path,
-                'title' => $request->title,
-                'description' => $request->description
-            ]);
+        $path = $request->file('image')->store('retail-services', 'public');
+        
+        RetailService::create([
+            'image' => $path,
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Retail service berhasil ditambahkan',
-                'data' => $retailService
-            ]);
-
-        } catch (\Exception $e) {
-            \Log::error('Error creating retail service: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ], 500);
-        }
+        return response()->json(['success' => true]);
     }
 
     public function update(Request $request, RetailService $retailService)
@@ -56,8 +42,7 @@ class RetailServiceController extends Controller
                 if (Storage::disk('public')->exists($retailService->image)) {
                     Storage::disk('public')->delete($retailService->image);
                 }
-                $originalName = $request->file('image')->getClientOriginalName();
-                $data['image'] = $request->file('image')->storeAs('retail-services', $originalName, 'public');
+                $data['image'] = $request->file('image')->store('retail-services', 'public');
             }
 
             $retailService->update($data);

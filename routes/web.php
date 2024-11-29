@@ -15,13 +15,11 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileKamiController;
 use App\Http\Controllers\VisiMisiController;
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');
-    Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
-    Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
 });
 
 Route::middleware('auth')->group(function () {
@@ -46,14 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update');
     Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
     Route::post('/upload-image', [PortfolioController::class, 'uploadImage'])->name('upload.image');
+    Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
     Route::post('/profilekami/update', [ProfileKamiController::class, 'update'])->name('profilekami.update');
-    Route::post('/retail-services', [RetailServiceController::class, 'store'])->name('retail-services.store');
-    Route::put('/retail-services/{retailService}', [RetailServiceController::class, 'update'])->name('retail-services.update');
-    Route::delete('/retail-services/{retailService}', [RetailServiceController::class, 'destroy'])->name('retail-services.destroy');
-    Route::get('/visi-misi', [VisiMisiController::class, 'index'])->name('visi-misi.index');
-    Route::put('/visi-misi', [VisiMisiController::class, 'update'])->name('visi-misi.update');
+    Route::post('/visimisi/update', [VisiMisiController::class, 'update'])->name('visimisi.update');
 });
 
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
 
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
