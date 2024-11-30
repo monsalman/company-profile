@@ -46,9 +46,12 @@
         }
         .client-logo {
             transition: all 0.3s ease;
-            max-height: 85px;
-            width: 100%;
+            max-height: 100%;
+            max-width: 100%;
+            width: auto;
+            height: auto;
             object-fit: contain;
+            padding: 1px;
         }
         .section-title {
             position: relative;
@@ -337,6 +340,10 @@
             flex: 0 0 250px;
             min-width: 250px;
             padding: 0 10px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         @keyframes slideClient {
@@ -1057,9 +1064,7 @@
                                  class="client-logo">
                         </div>
                     @empty
-                        <div class="client-slide">
-                            <img src="client1.png" alt="Default Client" class="client-logo">
-                        </div>
+                        <div class="client-slide"></div>
                     @endforelse
                     
                     @foreach($clientSliders as $client)
@@ -1257,9 +1262,11 @@
                         @endforelse
 
                         <div class="text-center mb-4">
-                            <a href="{{ route('portfolio.index') }}" class="btn btn-outline-danger mb-3">
-                                <i class="bi bi-collection me-2"></i>Lihat Semua Portofolio
-                            </a>
+                            @if($portfolios->count() >= 3)
+                                <a href="{{ route('portfolio.index') }}" class="btn btn-outline-danger mb-3">
+                                    <i class="bi bi-collection me-2"></i>Lihat Semua Portofolio
+                                </a>
+                            @endif
                             @auth
                             <div>
                                 <a href="{{ route('portfolio.create') }}" class="btn btn-warning">
@@ -3292,7 +3299,7 @@
                     submitButton.innerHTML = '<i class="bi bi-save me-2"></i>Simpan';
                 });
             });
-        }
+        } && 
     });
     </script>
 </body>
