@@ -1246,62 +1246,61 @@
             <div class="row g-4 justify-content-center">
                 @forelse($portfolios as $portfolio)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100">
+                    <div class="card h-100" style="cursor: pointer;" onclick="window.location.href='{{ route('portfolio.show', $portfolio->slug) }}'">
                         <img src="{{ asset('storage/' . $portfolio->image) }}" 
-                        class="card-img-top" 
-                        alt="{{ $portfolio->title }}"
-                        style="height: 200px; object-fit: cover;">
+                             class="card-img-top" 
+                             alt="{{ $portfolio->title }}"
+                             style="height: 200px; object-fit: cover;">
                         <div class="card-body">
-                                <h5 class="card-title fw-bold">{{ $portfolio->title }}</h5>
-                                <p class="card-text">
+                            <h5 class="card-title fw-bold">{{ $portfolio->title }}</h5>
+                            <p class="card-text">
                                 {!! Str::limit($portfolio->description, 100, '...') !!}
-                                    @if (strlen($portfolio->description) > 100)
-                                        <a href="{{ route('portfolio.show', $portfolio->slug) }}" class="text-danger">See More</a>
-                                    @endif
-                                </p>
-                            </div>
-                            @auth
-                                <div class="card-footer bg-white border-0 pb-3">
-                                    <div class="d-flex gap-2 justify-content-end">
-                                        <a href="{{ route('portfolio.edit', $portfolio->id) }}" 
-                                           class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <button type="button" 
-                                        class="btn btn-sm btn-danger"
-                                        onclick="confirmDeletePortfolio({{ $portfolio->id }})">
+                                @if (strlen($portfolio->description) > 100)
+                                    <span class="text-danger">See More</span>
+                                @endif
+                            </p>
+                        </div>
+                        @auth
+                            <div class="card-footer bg-white border-0 pb-3" onclick="event.stopPropagation()">
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <a href="{{ route('portfolio.edit', $portfolio->id) }}" 
+                                       class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button type="button" 
+                                            class="btn btn-sm btn-danger"
+                                            onclick="confirmDeletePortfolio({{ $portfolio->id }})">
                                         <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
+                                    </button>
                                 </div>
-                                @endauth
                             </div>
-                        </div>
-                        @empty
-                        <div class="col-12">
-                            <div class="alert alert-info text-center">
-                                Belum ada portofolio
-                            </div>
-                        </div>
-                        @endforelse
-
-                        <div class="text-center mb-4">
-                            @if($portfolios->count() >= 3)
-                                <a href="{{ route('portfolio.index') }}" class="btn btn-outline-danger mb-3">
-                                    <i class="bi bi-collection me-2"></i>Lihat Semua Portofolio
-                                </a>
-                            @endif
-                            @auth
-                            <div>
-                                <a href="{{ route('portfolio.create') }}" class="btn btn-warning">
-                                    <i class="bi bi-plus-circle me-2"></i>Tambah Portofolio
-                                </a>
-                            </div>
-                            @endauth
-                        </div>
+                        @endauth
                     </div>
                 </div>
+                @empty
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Belum ada portofolio
+                    </div>
+                </div>
+                @endforelse
+
+                <div class="text-center mb-4">
+                    @if($portfolios->count() >= 3)
+                        <a href="{{ route('portfolio.index') }}" class="btn btn-outline-danger mb-3">
+                            <i class="bi bi-collection me-2"></i>Lihat Semua Portofolio
+                        </a>
+                    @endif
+                    @auth
+                    <div>
+                        <a href="{{ route('portfolio.create') }}" class="btn btn-warning">
+                            <i class="bi bi-plus-circle me-2"></i>Tambah Portofolio
+                        </a>
+                    </div>
+                    @endauth
+                </div>
             </div>
+        </div>
     </section>
 
     <div class="modal fade" id="deletePortfolioModal" tabindex="-1">
