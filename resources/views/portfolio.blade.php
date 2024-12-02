@@ -112,6 +112,30 @@
         .back-to-top:hover {
             transform: translateY(-3px);
         }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #dc3545;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b02a37;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #dc3545 #f1f1f1;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -185,6 +209,16 @@
             </div>
         @endauth
     </div>
+
+    <footer class="py-4 bg-dark text-white" style="margin-top: 30px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; {{ date('Y') }} Digital Forte Indonesia.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Modal Konfirmasi Delete -->
     <div class="modal fade" id="deletePortfolioModal" tabindex="-1">

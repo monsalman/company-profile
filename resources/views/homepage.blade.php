@@ -10,6 +10,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #dc3545;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b02a37;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #dc3545 #f1f1f1;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
         }
@@ -1006,8 +1030,8 @@
                         {{ $heroContent?->description ?? 'Belum di konfigurasi' }}
                     </p>
                     <div class="d-flex gap-3">
-                        <a href="#kontak" class="btn btn-light btn-lg px-4 btn-large">Mulai Sekarang</a>
-                        <a href="#layanan" class="btn btn-outline-light btn-lg px-4 btn-large">Pelajari Lebih Lanjut</a>
+                        <a href="#layanan" class="btn btn-light btn-lg px-4 btn-large">Mulai Sekarang</a>
+                        <a href="#portfolio" class="btn btn-outline-light btn-lg px-4 btn-large">Pelajari Lebih Lanjut</a>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
@@ -1377,11 +1401,21 @@
         </div>
     @endauth
 
-    <section id="kontak" class="py-3">
+    <!-- <section id="kontak" class="py-3">
         <div class="container">
             <h2 class="text-center section-title">Kontak Kami</h2>
         </div>
-    </section>
+    </section> -->
+
+    <footer class="py-4 bg-dark text-white" style="margin-top: 30px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; {{ date('Y') }} Digital Forte Indonesia.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <div class="modal fade" id="logoModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -3299,7 +3333,7 @@
                     submitButton.innerHTML = '<i class="bi bi-save me-2"></i>Simpan';
                 });
             });
-        } && 
+        }
     });
     </script>
 </body>

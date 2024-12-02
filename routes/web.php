@@ -44,12 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update');
     Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
     Route::post('/upload-image', [PortfolioController::class, 'uploadImage'])->name('upload.image');
-    Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
     Route::post('/profilekami/update', [ProfileKamiController::class, 'update'])->name('profilekami.update');
     Route::post('/visimisi/update', [VisiMisiController::class, 'update'])->name('visimisi.update');
 });
 
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
+Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
 
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
