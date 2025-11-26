@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "company-profile-api-collection",
+		"name": "Company Profile API",
+		"description": "Collection untuk API Company Profile - Semua endpoint untuk mengambil data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Homepage",
+			"item": [
+				{
+					"name": "Get All Homepage Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/homepage",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"homepage"
+							]
+						},
+						"description": "Mengambil semua data untuk homepage (hero sliders, client sliders, service cards, retail services, portfolios, dan hero content)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk data homepage"
+		},
+		{
+			"name": "Hero Sliders",
+			"item": [
+				{
+					"name": "Get All Hero Sliders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/hero-sliders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"hero-sliders"
+							]
+						},
+						"description": "Mengambil semua hero slider images"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hero Slider by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/hero-sliders/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"hero-sliders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID dari hero slider"
+								}
+							]
+						},
+						"description": "Mengambil hero slider berdasarkan ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk hero sliders"
+		},
+		{
+			"name": "Client Sliders",
+			"item": [
+				{
+					"name": "Get All Client Sliders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/client-sliders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"client-sliders"
+							]
+						},
+						"description": "Mengambil semua client slider images"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client Slider by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/client-sliders/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"client-sliders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID dari client slider"
+								}
+							]
+						},
+						"description": "Mengambil client slider berdasarkan ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk client sliders"
+		},
+		{
+			"name": "Hero Content",
+			"item": [
+				{
+					"name": "Get Hero Content",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/hero-content",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"hero-content"
+							]
+						},
+						"description": "Mengambil hero content (title dan description)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk hero content"
+		},
+		{
+			"name": "Service Cards",
+			"item": [
+				{
+					"name": "Get All Service Cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/service-cards",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"service-cards"
+							]
+						},
+						"description": "Mengambil semua service cards"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Service Card by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/service-cards/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"service-cards",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID dari service card"
+								}
+							]
+						},
+						"description": "Mengambil service card berdasarkan ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk service cards"
+		},
+		{
+			"name": "Retail Services",
+			"item": [
+				{
+					"name": "Get All Retail Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/retail-services",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"retail-services"
+							]
+						},
+						"description": "Mengambil semua retail services"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Retail Service by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/retail-services/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"retail-services",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID dari retail service"
+								}
+							]
+						},
+						"description": "Mengambil retail service berdasarkan ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk retail services"
+		},
+		{
+			"name": "Portfolios",
+			"item": [
+				{
+					"name": "Get All Portfolios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/portfolios",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"portfolios"
+							]
+						},
+						"description": "Mengambil semua portfolios"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Portfolio by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/portfolios/:slug",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"portfolios",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "nama-portfolio",
+									"description": "Slug dari portfolio"
+								}
+							]
+						},
+						"description": "Mengambil portfolio berdasarkan slug"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk portfolios"
+		},
+		{
+			"name": "Layanan",
+			"item": [
+				{
+					"name": "Get All Layanan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/layanan",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"layanan"
+							]
+						},
+						"description": "Mengambil semua layanan"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Layanan by Key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/layanan/:key",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"layanan",
+								":key"
+							],
+							"variable": [
+								{
+									"key": "key",
+									"value": "service_custom",
+									"description": "Key dari layanan (service_custom atau service_retail)"
+								}
+							]
+						},
+						"description": "Mengambil layanan berdasarkan key"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk layanan"
+		},
+		{
+			"name": "Page Titles",
+			"item": [
+				{
+					"name": "Get All Page Titles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/page-titles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"page-titles"
+							]
+						},
+						"description": "Mengambil semua page titles"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Page Title by Key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/page-titles/:key",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"page-titles",
+								":key"
+							],
+							"variable": [
+								{
+									"key": "key",
+									"value": "homepage",
+									"description": "Key dari page title (homepage, login, error_404)"
+								}
+							]
+						},
+						"description": "Mengambil page title berdasarkan key"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk page titles"
+		},
+		{
+			"name": "Profile Kami",
+			"item": [
+				{
+					"name": "Get Profile Kami",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/profile-kami",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"profile-kami"
+							]
+						},
+						"description": "Mengambil data profile kami"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk profile kami"
+		},
+		{
+			"name": "Visi Misi",
+			"item": [
+				{
+					"name": "Get Visi Misi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/visi-misi",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"visi-misi"
+							]
+						},
+						"description": "Mengambil data visi dan misi"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint untuk visi misi"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost/company-profile",
+			"type": "string"
+		}
+	]
+}
+
